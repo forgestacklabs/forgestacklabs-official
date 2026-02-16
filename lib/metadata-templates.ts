@@ -1,91 +1,156 @@
-// Metadata Best Practices for Different Page Types
-// Use these templates for consistent SEO across your site
+
+import { Metadata } from "next";
+
+const BASE_URL = "https://forgestacklabs.com";
 
 // ============================================
-// HOMEPAGE - Maximum SEO Impact
+// HOMEPAGE
 // ============================================
-export const homepageMetadata = {
-  title: "ForgeStack Labs | Forge Stack Labs - Premium Software Development & Design Talent",
-  description: "We design, engineer, and scale reliable digital products for modern businesses—focused on performance, security, and long-term value.",
+export const homepageMetadata: Metadata = {
+  title: "Fuel Station Management Software | ForgeStack Labs",
+  description:
+    "ForgeStack Labs builds operational SaaS for fuel stations and logistics businesses. Daily ops, accounting, reconciliation & automation.",
   keywords: [
+    "fuel station management software India",
+    "petrol pump accounting software",
+    "petrol pump daily operations software",
+    "fuel station automation platform",
     "ForgeStack Labs",
-    "Forge Stack Labs", 
-    "ForgeStack",
-    "software development",
-    "web development",
-    "mobile app development",
-    "design talent",
-    "developer opportunities"
+    "operational software",
   ],
+  alternates: { canonical: `${BASE_URL}/` },
   openGraph: {
-    title: "ForgeStack Labs | Connect with Top Tech Talent",
-    description: "We design, engineer, and scale reliable digital products for modern businesses—focused on performance, security, and long-term value.",
-    url: "https://forgestacklabs.com",
-    images: [{ url: "/og-image.png", width: 1200, height: 630 }],
+    title: "Operational Software Systems for Fuel & Logistics Businesses",
+    description:
+      "We are building a next-generation Fuel Station Management SaaS while partnering with select operational businesses to digitize their systems.",
+    url: BASE_URL,
+    siteName: "ForgeStack Labs",
+    images: [{ url: "/og-homepage.png", width: 1200, height: 630, alt: "ForgeStack Labs — Fuel Station SaaS" }],
+    type: "website",
   },
-}
+};
 
 // ============================================
-// ABOUT PAGE - Brand Recognition
+// ABOUT PAGE
 // ============================================
-export const aboutMetadata = {
-  title: "About Forge Stack Labs (ForgeStack Labs) - Our Story & Mission",
-  description: "Learn about Forge Stack Labs, also known as ForgeStack Labs. We connect skilled developers and designers with companies seeking premium talent. Founded in 2024 with a vision for precision engineering.",
+export const aboutMetadata: Metadata = {
+  title: "About ForgeStack Labs | Operational Software Builders",
+  description:
+    "ForgeStack Labs builds operational SaaS and digital systems for fuel stations, logistics companies, and industrial businesses. Founded to solve real operational problems.",
   keywords: [
     "about ForgeStack Labs",
-    "about Forge Stack Labs",
-    "ForgeStack company",
-    "software development company",
-    "tech talent platform"
+    "operational software company India",
+    "fuel station software builders",
+    "ForgeStack Labs",
   ],
+  alternates: { canonical: `${BASE_URL}/about` },
   openGraph: {
-    title: "About Forge Stack Labs | Our Mission",
-    description: "Discover how Forge Stack Labs (ForgeStack) is revolutionizing tech talent connections.",
+    title: "About ForgeStack Labs | Operational Software Builders",
+    description:
+      "We build fuel station SaaS and operational software for traditional industries. Not a generic agency — product engineers who execute serious systems.",
+    url: `${BASE_URL}/about`,
+    images: [{ url: "/og-about.png", width: 1200, height: 630 }],
+    type: "website",
   },
-}
+};
 
 // ============================================
-// SERVICES PAGE - Keyword Rich
+// SERVICES PAGE
 // ============================================
-export const servicesMetadata = {
-  title: "Services - ForgeStack Labs | Software Development, Web & Mobile Apps",
-  description: "ForgeStack Labs offers premium software development services: custom web applications, mobile app development, digital product design, and technology consulting. Expert developers and designers ready to build your vision.",
+export const servicesMetadata: Metadata = {
+  title: "Services | ForgeStack Labs — Operational Software",
+  description:
+    "ForgeStack Labs offers fuel station SaaS, custom operations software, internal dashboards, logistics automation, and industrial web development.",
   keywords: [
-    "software development services",
-    "web development",
-    "mobile app development",
-    "custom software",
-    "digital product design",
-    "technology consulting",
-    "ForgeStack services"
+    "custom operations management software",
+    "business process automation software",
+    "internal dashboard development",
+    "logistics workflow automation",
+    "industrial business website development",
+    "ForgeStack Labs services",
   ],
+  alternates: { canonical: `${BASE_URL}/services` },
   openGraph: {
     title: "Our Services | ForgeStack Labs",
-    description: "Premium software development, web apps, mobile apps, and digital products.",
+    description:
+      "Fuel station SaaS, custom operational software, logistics automation, and industrial web systems.",
+    url: `${BASE_URL}/services`,
+    images: [{ url: "/og-services.png", width: 1200, height: 630 }],
+    type: "website",
   },
-}
+};
 
 // ============================================
-// CONTACT PAGE - Local SEO
+// CONTACT PAGE
 // ============================================
-export const contactMetadata = {
-  title: "Contact ForgeStack Labs | Get In Touch with Our Team",
-  description: "Get in touch with ForgeStack Labs (Forge Stack Labs). Whether you're seeking tech talent or looking for opportunities, we're here to help. Email, phone, or fill out our contact form.",
+export const contactMetadata: Metadata = {
+  title: "Contact ForgeStack Labs | Book a Strategy Call",
+  description:
+    "Ready to digitize your operations? Get in touch with ForgeStack Labs to explore our fuel station SaaS or discuss a custom software partnership.",
   keywords: [
     "contact ForgeStack Labs",
-    "contact Forge Stack",
-    "hire developers",
-    "hire designers",
-    "software development inquiry"
+    "book strategy call",
+    "fuel station software inquiry",
+    "operational software partnership",
   ],
+  alternates: { canonical: `${BASE_URL}/contact` },
   openGraph: {
-    title: "Contact Us | ForgeStack Labs",
-    description: "Ready to connect? Reach out to ForgeStack Labs today.",
+    title: "Contact ForgeStack Labs | Book a Strategy Call",
+    description: "Ready to digitize your operations? Reach out to ForgeStack Labs today.",
+    url: `${BASE_URL}/contact`,
+    images: [{ url: "/og-contact.png", width: 1200, height: 630 }],
+    type: "website",
   },
-}
+};
 
 // ============================================
-// BLOG/ARTICLES - Content Marketing
+// CAREERS PAGE
+// ============================================
+export const careersMetadata: Metadata = {
+  title: "Careers at ForgeStack Labs | Build Operational SaaS",
+  description:
+    "Join ForgeStack Labs. We're building operational SaaS for fuel stations and logistics. Opportunities for engineers, designers, and product thinkers.",
+  keywords: [
+    "ForgeStack Labs careers",
+    "SaaS startup jobs India",
+    "software engineer jobs",
+    "fuel station software company jobs",
+  ],
+  alternates: { canonical: `${BASE_URL}/careers` },
+  openGraph: {
+    title: "Careers at ForgeStack Labs",
+    description: "Build real operational software. Join the ForgeStack Labs team.",
+    url: `${BASE_URL}/careers`,
+    images: [{ url: "/og-careers.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+};
+
+// ============================================
+// PORTFOLIO / WORK PAGE
+// ============================================
+export const portfolioMetadata: Metadata = {
+  title: "Our Work | ForgeStack Labs — Case Studies & Projects",
+  description:
+    "See how ForgeStack Labs has helped operational businesses digitize their systems — logistics platforms, internal dashboards, and fuel station tools.",
+  keywords: [
+    "ForgeStack Labs portfolio",
+    "operational software case studies",
+    "logistics digital transformation project",
+    "industrial software projects",
+  ],
+  alternates: { canonical: `${BASE_URL}/work` },
+  openGraph: {
+    title: "Our Work | ForgeStack Labs",
+    description: "Operational software projects built with precision engineering.",
+    url: `${BASE_URL}/work`,
+    images: [{ url: "/og-work.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+};
+
+// ============================================
+// BLOG POST (dynamic)
 // ============================================
 export const blogPostMetadata = (post: {
   title: string;
@@ -93,165 +158,206 @@ export const blogPostMetadata = (post: {
   author: string;
   publishedDate: string;
   tags: string[];
-}) => ({
-  title: `${post.title} | ForgeStack Labs Blog`,
+  slug: string;
+}): Metadata => ({
+  title: `${post.title} | ForgeStack Labs`,
   description: post.excerpt,
-  keywords: [...post.tags, "ForgeStack Labs", "Forge Stack", "tech blog"],
+  keywords: [...post.tags, "ForgeStack Labs", "fuel station software", "operational SaaS"],
   authors: [{ name: post.author }],
-  publishedTime: post.publishedDate,
+  alternates: { canonical: `${BASE_URL}/blog/${post.slug}` },
   openGraph: {
     title: post.title,
     description: post.excerpt,
+    url: `${BASE_URL}/blog/${post.slug}`,
     type: "article",
     publishedTime: post.publishedDate,
     authors: [post.author],
+    images: [{ url: "/og-blog.png", width: 1200, height: 630 }],
   },
-  // Article schema
-  articleSchema: {
-    "@context": "https://schema.org",
-    "@type": "Article",
-    "headline": post.title,
-    "description": post.excerpt,
-    "author": {
-      "@type": "Person",
-      "name": post.author
-    },
-    "publisher": {
-      "@type": "Organization",
-      "name": "ForgeStack Labs",
-      "logo": {
-        "@type": "ImageObject",
-        "url": "https://forgestacklabs.com/logo.png"
-      }
-    },
-    "datePublished": post.publishedDate,
-  }
-})
+});
 
 // ============================================
-// CAREERS/OPPORTUNITIES PAGE
+// NEW SEO LANDING PAGES
 // ============================================
-export const careersMetadata = {
-  title: "Careers & Opportunities at ForgeStack Labs | Join Our Team",
-  description: "Join ForgeStack Labs (Forge Stack Labs). We're looking for talented developers, designers, and engineers. Explore opportunities to grow your career with a team that values precision and innovation.",
+
+export const fuelStationSaaSMetadata: Metadata = {
+  title: "Fuel Station Management Software India | ForgeStack",
+  description:
+    "Manage your petrol pump with ForgeStack's SaaS — daily ops, shift tracking, accounting, reconciliation & compliance. Built for India's fuel industry.",
   keywords: [
-    "ForgeStack Labs careers",
-    "Forge Stack jobs",
-    "developer opportunities",
-    "designer jobs",
-    "tech careers",
-    "software engineer jobs"
+    "fuel station management software India",
+    "petrol pump accounting software",
+    "petrol pump shift management",
+    "fuel inventory tracking software",
+    "fuel station SaaS India",
   ],
+  alternates: { canonical: `${BASE_URL}/fuel-station-management-software-india` },
   openGraph: {
-    title: "Join ForgeStack Labs | Careers",
-    description: "Build your career with ForgeStack Labs. Opportunities for developers and designers.",
+    title: "Fuel Station Management Software India | ForgeStack Labs",
+    description:
+      "Purpose-built SaaS for petrol pump daily operations, accounting, reconciliation, and automation.",
+    url: `${BASE_URL}/fuel-station-management-software-india`,
+    images: [{ url: "/og-fuel-station.png", width: 1200, height: 630 }],
+    type: "website",
   },
-  // JobPosting schema
-  jobPostingSchema: {
-    "@context": "https://schema.org",
-    "@type": "JobPosting",
-    "title": "Software Developer",
-    "description": "Join our team...",
-    "hiringOrganization": {
-      "@type": "Organization",
-      "name": "ForgeStack Labs",
-      "sameAs": "https://forgestacklabs.com"
+};
+
+export const petrolPumpAccountingMetadata: Metadata = {
+  title: "Petrol Pump Accounting Software | ForgeStack Labs",
+  description:
+    "Automate petrol pump accounting with ForgeStack. Cash, credit, UPI reconciliation — daily reports, shift logs, and zero-error accounting for fuel stations.",
+  keywords: [
+    "petrol pump accounting software",
+    "fuel station daily accounting",
+    "petrol pump reconciliation system",
+    "fuel station cash management software",
+    "petrol pump billing software India",
+  ],
+  alternates: { canonical: `${BASE_URL}/petrol-pump-accounting-software` },
+  openGraph: {
+    title: "Petrol Pump Accounting Software | ForgeStack Labs",
+    description: "Zero-error daily accounting and reconciliation for fuel stations.",
+    url: `${BASE_URL}/petrol-pump-accounting-software`,
+    images: [{ url: "/og-accounting.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+};
+
+export const logisticsMetadata: Metadata = {
+  title: "Logistics Digital Transformation | ForgeStack Labs",
+  description:
+    "ForgeStack helps logistics companies digitize operations — custom workflow systems, fleet dashboards, and automation platforms. Strategic partnerships only.",
+  keywords: [
+    "digital transformation for logistics companies",
+    "logistics workflow automation India",
+    "logistics operations software",
+    "custom logistics management system",
+    "fleet management dashboard development",
+  ],
+  alternates: { canonical: `${BASE_URL}/logistics-digital-transformation` },
+  openGraph: {
+    title: "Logistics Digital Transformation | ForgeStack Labs",
+    description: "Custom workflow systems and automation platforms for logistics businesses.",
+    url: `${BASE_URL}/logistics-digital-transformation`,
+    images: [{ url: "/og-logistics.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+};
+
+export const customOpsSoftwareMetadata: Metadata = {
+  title: "Custom Operations Management Software | ForgeStack",
+  description:
+    "ForgeStack builds custom operations management software for industrial and logistics businesses — dashboards, workflow automation, and process digitization.",
+  keywords: [
+    "custom operations management software",
+    "business process automation software",
+    "internal dashboard development",
+    "operational software for industrial businesses",
+    "enterprise workflow automation India",
+  ],
+  alternates: { canonical: `${BASE_URL}/custom-operations-management-software` },
+  openGraph: {
+    title: "Custom Operations Management Software | ForgeStack Labs",
+    description: "Dashboards, workflow automation, and process digitization for operational businesses.",
+    url: `${BASE_URL}/custom-operations-management-software`,
+    images: [{ url: "/og-ops-software.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+};
+
+export const industrialWebsiteMetadata: Metadata = {
+  title: "Industrial Business Website Development | ForgeStack",
+  description:
+    "High-performance websites for logistics, industrial, and operational businesses. Built by ForgeStack Labs — conversion-focused, fast, and SEO-optimized.",
+  keywords: [
+    "industrial business website development",
+    "logistics company website design India",
+    "B2B industrial website development",
+    "high-performance website for manufacturing",
+    "operational business website",
+  ],
+  alternates: { canonical: `${BASE_URL}/industrial-business-website-development` },
+  openGraph: {
+    title: "Industrial Business Website Development | ForgeStack Labs",
+    description: "Conversion-focused, fast, SEO-optimized websites for industrial and logistics businesses.",
+    url: `${BASE_URL}/industrial-business-website-development`,
+    images: [{ url: "/og-industrial.png", width: 1200, height: 630 }],
+    type: "website",
+  },
+};
+
+// ============================================
+// SCHEMA MARKUP (inject via <script> in layout)
+// ============================================
+
+export const organizationSchema = {
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  name: "ForgeStack Labs",
+  url: BASE_URL,
+  logo: `${BASE_URL}/logo.png`,
+  description:
+    "Operational software builders for fuel stations and logistics businesses. Building a next-generation Fuel Station Management SaaS.",
+  sameAs: ["https://linkedin.com/company/forgestacklabs"],
+};
+
+export const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: [
+    {
+      "@type": "Question",
+      name: "What is fuel station management software?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Fuel station management software helps petrol pump owners track daily sales, manage shifts, reconcile cash and digital payments, monitor inventory, and generate compliance reports — all in one system.",
+      },
     },
-    "jobLocation": {
-      "@type": "Place",
-      "address": {
-        "@type": "PostalAddress",
-        "addressLocality": "Remote",
-        "addressCountry": "Worldwide"
-      }
-    }
-  }
-}
-
-// ============================================
-// PORTFOLIO/WORK PAGE
-// ============================================
-export const portfolioMetadata = {
-  title: "Our Work - ForgeStack Labs Portfolio | Case Studies & Projects",
-  description: "Explore ForgeStack Labs' portfolio of premium software projects. See how we've helped companies build exceptional digital products with precision engineering and innovative design.",
-  keywords: [
-    "ForgeStack portfolio",
-    "software development case studies",
-    "web development projects",
-    "mobile app examples",
-    "digital product design"
+    {
+      "@type": "Question",
+      name: "How can petrol pumps automate daily accounting?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "With ForgeStack's SaaS, petrol pumps can automatically reconcile nozzle-wise sales, cash collections, UPI payments, and credit transactions — generating accurate daily reports without manual entry.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "How can logistics companies digitize their operations?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "ForgeStack partners with logistics companies to build custom workflow automation systems, fleet dashboards, and operational platforms tailored to their specific business processes.",
+      },
+    },
+    {
+      "@type": "Question",
+      name: "What is business process automation software?",
+      acceptedAnswer: {
+        "@type": "Answer",
+        text: "Business process automation software replaces manual, repetitive tasks with digital workflows — reducing errors, saving time, and giving management real-time visibility into operations.",
+      },
+    },
   ],
-  openGraph: {
-    title: "Our Work | ForgeStack Labs Portfolio",
-    description: "Premium software projects built with precision.",
+};
+
+export const jobPostingSchema = {
+  "@context": "https://schema.org",
+  "@type": "JobPosting",
+  title: "Software Engineer — Operational SaaS",
+  description:
+    "Join ForgeStack Labs to build fuel station management SaaS and operational software for traditional industries.",
+  hiringOrganization: {
+    "@type": "Organization",
+    name: "ForgeStack Labs",
+    sameAs: BASE_URL,
   },
-}
-
-// ============================================
-// PRICING PAGE
-// ============================================
-export const pricingMetadata = {
-  title: "Pricing - ForgeStack Labs | Software Development & Design Rates",
-  description: "Transparent pricing for ForgeStack Labs services. From custom software development to design talent placement. Get a quote for your project or learn about our flexible engagement models.",
-  keywords: [
-    "software development pricing",
-    "web development cost",
-    "mobile app development rates",
-    "ForgeStack Labs pricing",
-    "hire developer cost"
-  ],
-  openGraph: {
-    title: "Pricing | ForgeStack Labs",
-    description: "Transparent pricing for premium software development services.",
+  jobLocation: {
+    "@type": "Place",
+    address: {
+      "@type": "PostalAddress",
+      addressLocality: "Remote",
+      addressCountry: "IN",
+    },
   },
-}
-
-// ============================================
-// TIPS FOR IMPLEMENTATION
-// ============================================
-
-/*
-1. TITLE TAG BEST PRACTICES:
-   - Include primary keyword at the beginning
-   - Keep under 60 characters
-   - Use brand name variations naturally
-   - Make it compelling for clicks
-
-2. DESCRIPTION BEST PRACTICES:
-   - 150-160 characters is ideal
-   - Include primary and secondary keywords
-   - Write for humans first, search engines second
-   - Include call-to-action when appropriate
-   - Use both "ForgeStack" and "Forge Stack" naturally
-
-3. KEYWORD STRATEGY:
-   - Research with Google Keyword Planner
-   - Mix high-volume and long-tail keywords
-   - Include brand name variations in every page
-   - Don't keyword stuff - keep it natural
-
-4. OPEN GRAPH:
-   - Always include unique OG image per page type
-   - Ensure images are 1200x630px
-   - Write compelling OG descriptions
-   - Set correct OG type (website, article, etc.)
-
-5. SCHEMA MARKUP:
-   - Add relevant schema for each page type
-   - Use Article schema for blog posts
-   - Use JobPosting for careers page
-   - Use Product schema if selling services/products
-   - Validate with schema.org validator
-
-6. INTERNAL LINKING:
-   - Link between related pages
-   - Use descriptive anchor text
-   - Include brand name variations in links
-   - Create topic clusters
-
-7. BRAND NAME USAGE:
-   - Use "ForgeStack Labs" most prominently
-   - Naturally include "Forge Stack Labs" throughout
-   - Mention both variations in first paragraph
-   - Don't force it - keep it readable
-*/
+  employmentType: "FULL_TIME",
+};
