@@ -1,21 +1,35 @@
-
 "use client";
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
-  { href: "/", label: "Home" },
-  { href: "/technology", label: "Technology" },
-  { href: "/principles", label: "Approach" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" }
+  { href: "/",              label: "Home" },
+  { href: "/technology",   label: "Products" },
+  { href: "/principles",   label: "Approach" },
+  { href: "/about",        label: "Studio" },
 ];
 
-export default function NavigationAlt() {
-  const pathname = usePathname();
+export default function Navbar() {
+  const pathname      = usePathname();
+  const [scrolled, setScrolled]   = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hoveredLink, setHoveredLink] = useState<string | null>(null);
+
+  // ── Scroll detection ────────────────────────────────────────────────────────
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  // ── Lock body scroll when mobile menu is open ───────────────────────────────
+  useEffect(() => {
+    document.body.style.overflow = isMenuOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [isMenuOpen]);
 
   const isActive = (href: string) => {
     if (href === "/" && pathname === "/") return true;
@@ -25,161 +39,300 @@ export default function NavigationAlt() {
 
   return (
     <>
-      <header className="relative z-20">
-        <div className="mx-auto flex w-full max-w-6xl items-center justify-between px-6 py-6">
-          <Link href="/" className="flex items-center gap-2">
-            <img
-              src="/logo2.png"
-              alt="ForgeStack Labs"
-              className="h-11 w-auto"
-            />
-            <span className="text-base uppercase tracking-[0.25em] text-white/85 hover:text-white transition-colors">
-              FORGESTACK LABS
-            </span>
-          </Link>
-
-          {/* Desktop Navigation */}
-          <nav className="hidden gap-8 md:flex">
-            {links.map((link) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                className={`text-xs uppercase tracking-[0.3em] transition-all duration-300 ${
-                  isActive(link.href)
-                    ? "text-white"
-                    : "text-white/60 hover:text-white"
-                }`}
-              >
-                <span
-                  className={`${
-                    isActive(link.href)
-                      ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-                      : ""
-                  }`}
-                >
-                  {link.label}
-                </span>
-              </Link>
-            ))}
-          </nav>
-
-          {/* Mobile Hamburger Button */}
-          <button
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            className="md:hidden flex flex-col justify-center items-center w-10 h-10 gap-[6px] rounded-lg bg-white/5 hover:bg-white/10 transition-colors"
-            aria-label="Toggle menu"
-          >
-            <span
-              className={`block h-[2px] w-5 bg-white/80 rounded-full transition-all duration-300 origin-center ${
-                isMenuOpen ? "rotate-45 translate-y-[8px]" : ""
-              }`}
-            />
-            <span
-              className={`block h-[2px] w-5 bg-white/80 rounded-full transition-all duration-300 ${
-                isMenuOpen ? "opacity-0 scale-x-0" : ""
-              }`}
-            />
-            <span
-              className={`block h-[2px] w-5 bg-white/80 rounded-full transition-all duration-300 origin-center ${
-                isMenuOpen ? "-rotate-45 -translate-y-[8px]" : ""
-              }`}
-            />
-          </button>
-        </div>
-      </header>
-
-      {/* Mobile Sidebar Overlay */}
-      <div
-        className={`fixed inset-0 z-30 md:hidden transition-opacity duration-300 ${
-          isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
-        }`}
+      <motion.header
+        initial={{ opacity: 0, y: -24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+        className="fixed top-0 left-0 w-full z-50 flex justify-center pointer-events-none"
       >
-        {/* Backdrop */}
         <div
-          className="absolute inset-0 bg-black/60 backdrop-blur-sm"
-          onClick={() => setIsMenuOpen(false)}
-        />
-
-        {/* Sidebar Panel */}
-        <div
-          className={`absolute top-0 right-0 h-full w-72 bg-black/95 border-l border-white/10 flex flex-col transition-transform duration-300 ease-in-out ${
-            isMenuOpen ? "translate-x-0" : "translate-x-full"
-          }`}
+          className="pointer-events-auto w-full transition-all duration-700 ease-in-out px-4 sm:px-6"
+          style={{
+            paddingTop: scrolled ? "12px" : "16px",
+            maxWidth: scrolled ? "860px" : "100%",
+          }}
         >
-          {/* Sidebar Header — Logo + Brand */}
-          <div className="flex items-center justify-between px-6 py-6 border-b border-white/10">
-            <Link href="/" onClick={() => setIsMenuOpen(false)} className="flex items-center gap-2">
-              <img
-                src="/logo2.png"
-                alt="ForgeStack Labs"
-                className="h-8 w-auto"
-              />
-              <span className="text-[11px] uppercase tracking-[0.25em] text-white/80">
-                ForgeStack Labs
+          <motion.div
+            layout
+            transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
+            className="flex items-center justify-between px-5 md:px-7 py-3.5 transition-all duration-700 ease-in-out"
+            style={{
+              background: scrolled
+                ? "rgba(255,255,255,0.55)"
+                : "rgba(255,255,255,0.30)",
+              backdropFilter: scrolled ? "blur(20px)" : "blur(8px)",
+              WebkitBackdropFilter: scrolled ? "blur(20px)" : "blur(8px)",
+              borderRadius: scrolled ? "9999px" : "1.5rem",
+              border: scrolled
+                ? "0.5px solid rgba(255,255,255,0.60)"
+                : "0.5px solid rgba(255,255,255,0.35)",
+              borderTop: "0.5px solid rgba(255,255,255,0.80)",
+              borderLeft: "0.5px solid rgba(255,255,255,0.80)",
+              boxShadow: scrolled
+                ? "0 8px 32px rgba(0,0,0,0.04), 0 1px 0 rgba(255,255,255,0.8) inset"
+                : "0 4px 16px rgba(0,0,0,0.02)",
+            }}
+            whileHover={{
+              boxShadow: "0 20px 40px rgba(0,0,0,0.08), 0 1px 0 rgba(255,255,255,0.8) inset",
+              scale: 1.005,
+            }}
+          >
+            {/* ── BRAND ──────────────────────────────────────────────────── */}
+            <Link
+              href="/"
+              className="flex items-center gap-2.5 group"
+              aria-label="Forgestack Labs home"
+            >
+              {/* Geometric mark */}
+              <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#222222] shrink-0 transition-transform duration-300 group-hover:rotate-3">
+                <svg viewBox="0 0 20 20" fill="none" className="h-[12px] w-[12px]">
+                  <rect x="3"  y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
+                  <rect x="11" y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
+                  <rect x="3"  y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
+                  <rect x="11" y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
+                </svg>
+              </span>
+
+              {/* Wordmark */}
+              <span
+                className="text-[13px] font-bold text-[#222222] tracking-[-0.01em] transition-all duration-500 group-hover:tracking-[0.04em]"
+                style={{ fontFamily: "'Georgia', serif" }}
+              >
+                FORGESTACK LABS
               </span>
             </Link>
 
-            {/* Close Button */}
-            <button
-              onClick={() => setIsMenuOpen(false)}
-              className="flex flex-col justify-center items-center w-8 h-8 gap-[5px] rounded-md bg-white/5 hover:bg-white/10 transition-colors"
-              aria-label="Close menu"
+            {/* ── DESKTOP NAV ────────────────────────────────────────────── */}
+            <nav
+              className="hidden md:flex items-center gap-1"
+              onMouseLeave={() => setHoveredLink(null)}
             >
-              <span className="block h-[2px] w-4 bg-white/80 rounded-full rotate-45 translate-y-[7px]" />
-              <span className="block h-[2px] w-4 bg-white/80 rounded-full opacity-0" />
-              <span className="block h-[2px] w-4 bg-white/80 rounded-full -rotate-45 -translate-y-[7px]" />
-            </button>
-          </div>
+              {links.map((link) => (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  onMouseEnter={() => setHoveredLink(link.href)}
+                  className="relative px-4 py-2 text-[12px] font-medium tracking-wide transition-colors duration-200 z-10"
+                  style={{
+                    color: isActive(link.href)
+                      ? "#222222"
+                      : hoveredLink === link.href
+                      ? "#222222"
+                      : "rgba(34,34,34,0.50)",
+                  }}
+                >
+                  {/* Magnetic capsule */}
+                  <AnimatePresence>
+                    {hoveredLink === link.href && (
+                      <motion.span
+                        layoutId="nav-capsule"
+                        className="absolute inset-0 rounded-full bg-black/[0.05]"
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        transition={{ duration: 0.2 }}
+                      />
+                    )}
+                  </AnimatePresence>
 
-          {/* Sidebar Links */}
-          <nav className="flex flex-col px-6 py-8 gap-1 flex-1">
-            {links.map((link, index) => (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setIsMenuOpen(false)}
-                className={`group flex items-center gap-3 py-3 px-3 rounded-lg transition-all duration-300 ${
-                  isActive(link.href) ? "bg-white/5" : "hover:bg-white/5"
-                }`}
-                style={{ transitionDelay: isMenuOpen ? `${index * 50}ms` : "0ms" }}
+                  {/* Active underline dot */}
+                  {isActive(link.href) && (
+                    <motion.span
+                      layoutId="nav-active-dot"
+                      className="absolute bottom-1 left-1/2 -translate-x-1/2 w-1 h-1 rounded-full bg-[#222222]/40"
+                    />
+                  )}
+
+                  {link.label}
+                </Link>
+              ))}
+            </nav>
+
+            {/* ── CTA + HAMBURGER ────────────────────────────────────────── */}
+            <div className="flex items-center gap-3">
+              {/* CTA — desktop only */}
+              <motion.div className="hidden md:block" whileTap={{ scale: 0.97 }}>
+                <Link
+                  href="/contact"
+                  className="inline-flex items-center gap-2.5 text-[11px] font-medium uppercase tracking-[0.3em] text-white transition-all duration-300"
+                  style={{
+                    background: "#222222",
+                    borderRadius: "9999px",
+                    padding: "9px 20px",
+                    boxShadow: "0 2px 8px rgba(34,34,34,0.12)",
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                      "0 0 20px rgba(0,0,0,0.15), 0 4px 12px rgba(34,34,34,0.2)";
+                    (e.currentTarget as HTMLAnchorElement).style.transform =
+                      "translateY(-1px)";
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLAnchorElement).style.boxShadow =
+                      "0 2px 8px rgba(34,34,34,0.12)";
+                    (e.currentTarget as HTMLAnchorElement).style.transform =
+                      "translateY(0)";
+                  }}
+                >
+                  Propose a Partnership
+                </Link>
+              </motion.div>
+
+              {/* Hamburger — mobile only */}
+              <button
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+                className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] rounded-full bg-black/[0.05] hover:bg-black/10 transition-colors"
+                aria-label="Toggle menu"
               >
                 <span
-                  className={`block w-[2px] h-4 rounded-full transition-all duration-300 ${
-                    isActive(link.href)
-                      ? "bg-gradient-to-b from-indigo-500 via-purple-500 to-pink-500"
-                      : "bg-white/10 group-hover:bg-white/30"
+                  className={`block h-[1.5px] w-4 bg-[#222222]/70 rounded-full transition-all duration-300 origin-center ${
+                    isMenuOpen ? "rotate-45 translate-y-[6.5px]" : ""
                   }`}
                 />
                 <span
-                  className={`text-xs uppercase tracking-[0.3em] transition-all duration-300 ${
-                    isActive(link.href)
-                      ? "bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-transparent"
-                      : "text-white/60 group-hover:text-white"
+                  className={`block h-[1.5px] w-4 bg-[#222222]/70 rounded-full transition-all duration-300 ${
+                    isMenuOpen ? "opacity-0 scale-x-0" : ""
                   }`}
-                >
-                  {link.label}
-                </span>
-              </Link>
-            ))}
-          </nav>
-
-          {/* Sidebar Footer — Contact Info */}
-          <div className="px-6 py-6 border-t border-white/10 flex flex-col gap-3">
-            <p className="text-[10px] uppercase tracking-[0.3em] text-white/30">
-              Get in Touch
-            </p>
-            
-              <a href="mailto:forgestacklabs@forgestacklabs.com"
-              className="text-[11px] text-white/60 hover:text-white transition-colors tracking-wide break-all"
-            >
-              forgestacklabs@forgestacklabs.com
-            </a>
-            <p className="text-[10px] uppercase tracking-[0.25em] text-white/30">
-              India · Global
-            </p>
-          </div>
+                />
+                <span
+                  className={`block h-[1.5px] w-4 bg-[#222222]/70 rounded-full transition-all duration-300 origin-center ${
+                    isMenuOpen ? "-rotate-45 -translate-y-[6.5px]" : ""
+                  }`}
+                />
+              </button>
+            </div>
+          </motion.div>
         </div>
-      </div>
+      </motion.header>
+
+      {/* ── MOBILE SIDEBAR ───────────────────────────────────────────────────── */}
+      <AnimatePresence>
+        {isMenuOpen && (
+          <div className="fixed inset-0 z-40 md:hidden">
+            {/* Backdrop */}
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0 bg-black/20 backdrop-blur-sm"
+              onClick={() => setIsMenuOpen(false)}
+            />
+
+            {/* Sidebar Panel */}
+            <motion.div
+              initial={{ x: "100%" }}
+              animate={{ x: 0 }}
+              exit={{ x: "100%" }}
+              transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              className="absolute top-0 right-0 h-full w-72 flex flex-col"
+              style={{
+                background: "rgba(255,255,255,0.75)",
+                backdropFilter: "blur(32px)",
+                WebkitBackdropFilter: "blur(32px)",
+                borderLeft: "0.5px solid rgba(255,255,255,0.60)",
+                boxShadow: "-20px 0 60px rgba(0,0,0,0.06)",
+              }}
+            >
+              {/* Sidebar header */}
+              <div className="flex items-center justify-between px-6 py-5 border-b border-[#222222]/[0.06]">
+                <Link
+                  href="/"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center gap-2"
+                >
+                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[#222222]">
+                    <svg viewBox="0 0 20 20" fill="none" className="h-[10px] w-[10px]">
+                      <rect x="3"  y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
+                      <rect x="11" y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
+                      <rect x="3"  y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
+                      <rect x="11" y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
+                    </svg>
+                  </span>
+                  <span className="text-[12px] font-bold tracking-[-0.01em] text-[#222222]">
+                    FORGESTACK LABS
+                  </span>
+                </Link>
+
+                <button
+                  onClick={() => setIsMenuOpen(false)}
+                  className="flex items-center justify-center w-7 h-7 rounded-full bg-black/[0.05] hover:bg-black/10 transition-colors"
+                  aria-label="Close menu"
+                >
+                  <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                    <path d="M1 1L9 9M9 1L1 9" stroke="#222222" strokeOpacity="0.6" strokeWidth="1.25" strokeLinecap="round"/>
+                  </svg>
+                </button>
+              </div>
+
+              {/* Nav links */}
+              <nav className="flex flex-col px-4 py-6 gap-1 flex-1">
+                {[...links, { href: "/partnerships", label: "Partnerships" }].map((link, i) => (
+                  <motion.div
+                    key={link.href}
+                    initial={{ opacity: 0, x: 16 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: i * 0.055, duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                  >
+                    <Link
+                      href={link.href}
+                      onClick={() => setIsMenuOpen(false)}
+                      className={`group flex items-center gap-3 py-3 px-3 rounded-2xl transition-all duration-200 ${
+                        isActive(link.href) ? "bg-black/[0.04]" : "hover:bg-black/[0.03]"
+                      }`}
+                    >
+                      <span
+                        className={`block w-[2px] h-4 rounded-full transition-all duration-300 ${
+                          isActive(link.href)
+                            ? "bg-[#222222]/50"
+                            : "bg-black/10 group-hover:bg-black/25"
+                        }`}
+                      />
+                      <span
+                        className={`text-[10px] uppercase tracking-[0.35em] font-medium transition-colors duration-200 ${
+                          isActive(link.href)
+                            ? "text-[#222222]"
+                            : "text-[#222222]/45 group-hover:text-[#222222]"
+                        }`}
+                      >
+                        {link.label}
+                      </span>
+                    </Link>
+                  </motion.div>
+                ))}
+              </nav>
+
+              {/* Sidebar CTA */}
+              <div className="px-5 pb-5">
+                <Link
+                  href="/partnerships"
+                  onClick={() => setIsMenuOpen(false)}
+                  className="block w-full text-center text-[10px] uppercase tracking-[0.35em] font-medium text-white py-3.5 rounded-full transition-all duration-200 active:scale-[0.98]"
+                  style={{ background: "#222222" }}
+                >
+                  Propose a Partnership
+                </Link>
+              </div>
+
+              {/* Sidebar footer */}
+              <div className="px-6 py-5 border-t border-[#222222]/[0.06] space-y-2">
+                <p className="text-[10px] uppercase tracking-[0.3em] text-[#222222]/30 font-light">
+                  Get in Touch
+                </p>
+                <a
+                  href="mailto:forgestacklabs@forgestacklabs.com"
+                  className="block text-[11px] font-light text-[#222222]/45 hover:text-[#222222] transition-colors tracking-wide break-all"
+                >
+                  forgestacklabs@forgestacklabs.com
+                </a>
+                <p className="text-[10px] uppercase tracking-[0.25em] text-[#222222]/25 font-light">
+                  Mangalore · Global
+                </p>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
     </>
   );
 }

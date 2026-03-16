@@ -1,445 +1,427 @@
 "use client";
 
-import { motion, useScroll, useTransform } from "framer-motion";
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+import Link from "next/link";
+import Navbar from "@/components/Navigation";
+import Footer from "@/components/Footer";
 
-export default function PrivacyPolicyPage() {
-  const containerRef = useRef(null);
-  const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"]
-  });
+// ── Types ─────────────────────────────────────────────────────────────────────
+interface ClauseProps {
+  id: string;
+  number: string;
+  title: string;
+  children: React.ReactNode;
+  delay?: number;
+}
 
-  const opacity = useTransform(scrollYProgress, [0, 0.2], [1, 0.95]);
+interface SubclauseProps {
+  title?: string;
+  children: React.ReactNode;
+}
 
-  const SectionTitle = ({ children, delay = 0, number }: { children: string; delay?: number; number: string }) => (
-    <motion.h2
-      initial={{ opacity: 0, y: 30 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.8, delay }}
-      className="text-xl sm:text-2xl md:text-3xl lg:text-4xl font-light tracking-tight mb-4 sm:mb-6"
-      style={{
-        fontFamily: "'Inter', -apple-system, sans-serif",
-        background: 'linear-gradient(135deg, #e8e8f0 0%, #b8b8d0 100%)',
-        WebkitBackgroundClip: 'text',
-        WebkitTextFillColor: 'transparent',
-        backgroundClip: 'text'
-      }}
-    >
-      {number}. {children}
-    </motion.h2>
+interface BulletProps {
+  items: React.ReactNode[];
+}
+
+// ── TOC ───────────────────────────────────────────────────────────────────────
+const TOC_ITEMS = [
+  { id: "c1", label: "1.0  Introduction" },
+  { id: "c2", label: "2.0  Information We Collect" },
+  { id: "c3", label: "3.0  Purpose of Data Processing" },
+  { id: "c4", label: "4.0  Data Security Measures" },
+  { id: "c5", label: "5.0  Data Sharing & Third-Party Disclosures" },
+  { id: "c6", label: "6.0  Data Retention" },
+  { id: "c7", label: "7.0  Your Rights Under DPDPA, 2023" },
+  { id: "c8", label: "8.0  Cookies & Tracking Technologies" },
+  { id: "c9", label: "9.0  Contact & Grievance Officer" },
+];
+
+// ── Primitives ────────────────────────────────────────────────────────────────
+function Bullet({ items }: BulletProps) {
+  return (
+    <ul className="mt-3 space-y-2.5 ml-1">
+      {items.map((item, i) => (
+        <li key={i} className="flex items-start gap-3">
+          <span className="mt-[7px] block w-[3px] h-[3px] rounded-full bg-[#222222]/30 shrink-0" />
+          <span>{item}</span>
+        </li>
+      ))}
+    </ul>
   );
+}
 
-  const Subsection = ({ title, children, delay = 0 }: { title: string; children: React.ReactNode; delay?: number }) => (
-    <motion.div
-      initial={{ opacity: 0, x: -20 }}
-      whileInView={{ opacity: 1, x: 0 }}
-      viewport={{ once: true, margin: "-50px" }}
-      transition={{ duration: 0.6, delay }}
-      className="mb-6 sm:mb-8"
-    >
-      <h3 
-        className="text-base sm:text-lg md:text-xl font-light mb-2 sm:mb-3"
-        style={{ color: '#e8e8f0' }}
-      >
-        {title}
-      </h3>
-      <div 
-        className="text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-2 sm:space-y-3"
-        style={{ color: '#9d9db8' }}
-      >
+function Subclause({ title, children }: SubclauseProps) {
+  return (
+    <div className="mt-6 first:mt-0">
+      {title && (
+        <p className="text-[11px] font-semibold uppercase tracking-[0.3em] text-[#222222]/50 mb-2.5">
+          {title}
+        </p>
+      )}
+      <div className="text-[13px] md:text-sm font-light leading-relaxed text-[#222222]/60 space-y-3">
         {children}
       </div>
-    </motion.div>
+    </div>
   );
+}
+
+// ── Callout box ───────────────────────────────────────────────────────────────
+function Callout({ children }: { children: React.ReactNode }) {
+  return (
+    <div
+      className="mt-5 px-5 py-4 rounded-2xl border border-[#222222]/[0.07]"
+      style={{ background: "rgba(34,34,34,0.03)" }}
+    >
+      <p className="text-[12px] font-light leading-relaxed text-[#222222]/65">
+        {children}
+      </p>
+    </div>
+  );
+}
+
+// ── Clause ────────────────────────────────────────────────────────────────────
+function Clause({ id, number, title, children, delay = 0 }: ClauseProps) {
+  const ref = useRef<HTMLElement>(null);
+  const [visible, setVisible] = useState(false);
+  const [hovered, setHovered] = useState(false);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.07 }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
 
   return (
-    <div ref={containerRef} className="relative min-h-screen bg-[#0a0a0f]">
-      {/* Animated mesh gradient background */}
-      <div className="fixed inset-0 -z-10 overflow-hidden">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,_var(--tw-gradient-stops))] from-indigo-900/20 via-transparent to-transparent animate-gradient-shift" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_right,_var(--tw-gradient-stops))] from-purple-900/20 via-transparent to-transparent animate-gradient-shift-reverse" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/10 via-transparent to-transparent animate-pulse-slow" />
-        
-        {/* Animated grid lines */}
-        <svg className="absolute inset-0 w-full h-full opacity-20">
-          <defs>
-            <pattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse">
-              <path d="M 60 0 L 0 0 0 60" fill="none" stroke="rgba(139, 92, 246, 0.1)" strokeWidth="0.5"/>
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#grid)" />
-        </svg>
+    <section
+      id={id}
+      ref={ref}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="scroll-mt-32 rounded-2xl px-6 py-7 transition-colors duration-300"
+      style={{
+        opacity: visible ? 1 : 0,
+        transform: visible
+          ? hovered ? "translateY(-4px)" : "translateY(0px)"
+          : "translateY(20px)",
+        transition: `opacity 700ms ease ${delay}ms, transform ${hovered ? "300ms" : "700ms"} cubic-bezier(0.16,1,0.3,1) ${hovered ? "0ms" : `${delay}ms`}`,
+        background: hovered ? "rgba(0,0,0,0.02)" : "transparent",
+      }}
+    >
+      <div className="flex items-baseline gap-4 mb-5 pb-3 border-b border-[#222222]/[0.06]">
+        <span className="text-[10px] font-medium uppercase tracking-[0.35em] text-[#222222]/22 tabular-nums shrink-0">
+          {number}
+        </span>
+        <h2 className="text-sm md:text-base font-semibold tracking-[-0.01em] text-[#222222]">
+          {title}
+        </h2>
       </div>
+      {children}
+    </section>
+  );
+}
 
-      {/* Floating particles - reduced on mobile */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden -z-5">
-        {[...Array(30)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full hidden sm:block"
-            style={{
-              width: Math.random() * 4 + 1,
-              height: Math.random() * 4 + 1,
-              background: `radial-gradient(circle, ${
-                ['#818cf8', '#a78bfa', '#c084fc', '#e879f9'][i % 4]
-              }, transparent)`,
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, Math.random() * -300 - 100, 0],
-              x: [0, Math.random() * 100 - 50, 0],
-              opacity: [0, 0.6, 0],
-              scale: [0, 1.5, 0]
-            }}
-            transition={{
-              duration: Math.random() * 25 + 20,
-              repeat: Infinity,
-              delay: Math.random() * 5,
-              ease: "easeInOut"
-            }}
-          />
-        ))}
-      </div>
+// ── Page ──────────────────────────────────────────────────────────────────────
+export default function PrivacyPage() {
+  const [ready, setReady] = useState(false);
+  const [tocOpen, setTocOpen] = useState(false);
 
-      {/* Glowing orbs - reduced on mobile */}
-      {[...Array(3)].map((_, i) => (
-        <motion.div
-          key={`orb-${i}`}
-          className="fixed rounded-full blur-3xl pointer-events-none hidden md:block"
-          style={{
-            width: 300 + Math.random() * 200,
-            height: 300 + Math.random() * 200,
-            background: `radial-gradient(circle, ${
-              ['#818cf8', '#a78bfa', '#c084fc'][i % 3]
-            }15, transparent)`,
-            left: `${20 + i * 30}%`,
-            top: `${10 + i * 25}%`,
-            zIndex: -5
-          }}
-          animate={{
-            x: [0, 60, -40, 0],
-            y: [0, -50, 70, 0],
-            scale: [1, 1.2, 0.9, 1],
-            opacity: [0.2, 0.4, 0.3, 0.2]
-          }}
-          transition={{
-            duration: 15 + i * 3,
-            repeat: Infinity,
-            ease: "easeInOut"
-          }}
-        />
-      ))}
+  useEffect(() => {
+    const t = setTimeout(() => setReady(true), 80);
+    return () => clearTimeout(t);
+  }, []);
 
-      {/* Hero Section */}
-      <motion.section 
-        style={{ opacity }}
-        className="relative pt-24 sm:pt-32 pb-12 sm:pb-20 px-4 sm:px-6"
-      >
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 40 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1.2 }}
-            className="text-center mb-12 sm:mb-16"
-          >
-            <motion.div 
-              className="inline-block relative mb-4 sm:mb-6"
-              whileHover={{ scale: 1.05 }}
-            >
-              <div className="absolute inset-0 blur-xl bg-indigo-500/20 rounded-full" />
-              <p 
-                className="relative text-[9px] sm:text-[10px] md:text-xs uppercase tracking-[0.3em] sm:tracking-[0.5em] font-light px-4 sm:px-6 py-2 rounded-full border border-indigo-500/30"
-                style={{ color: '#9d9db8' }}
-              >
+  const scrollTo = (id: string) => {
+    document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+    setTocOpen(false);
+  };
+
+  const fadeUp = (delay: number): React.CSSProperties => ({
+    opacity: ready ? 1 : 0,
+    transform: ready ? "translateY(0px)" : "translateY(20px)",
+    transition: `opacity 700ms ease ${delay}ms, transform 700ms cubic-bezier(0.16,1,0.3,1) ${delay}ms`,
+  });
+
+  return (
+    <>
+      <Navbar />
+
+      <div className="relative min-h-screen bg-[#F7F7F5] overflow-x-hidden">
+        {/* Ambient blobs */}
+        <div className="fixed inset-0 pointer-events-none" style={{ zIndex: 0 }}>
+          <div className="absolute top-[-15%] left-[-10%] w-[55vw] h-[55vw] rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(210,210,205,0.45) 0%, transparent 70%)", filter: "blur(90px)" }} />
+          <div className="absolute bottom-[-15%] right-[-10%] w-[48vw] h-[48vw] rounded-full"
+            style={{ background: "radial-gradient(circle, rgba(205,205,200,0.35) 0%, transparent 70%)", filter: "blur(90px)" }} />
+        </div>
+
+        <div className="relative" style={{ zIndex: 1 }}>
+
+          {/* ── HERO ──────────────────────────────────────────────────────── */}
+          <div className="text-center pt-36 pb-12 px-6">
+            <div style={fadeUp(0)} className="inline-flex items-center gap-2.5 mb-7 px-4 py-1.5 rounded-full border border-black/[0.06] bg-white/60 backdrop-blur-sm">
+              <span className="relative inline-flex w-1.5 h-1.5">
+                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-green-400 opacity-75" />
+                <span className="relative inline-flex rounded-full w-1.5 h-1.5 bg-green-500" />
+              </span>
+              <span className="text-[10px] uppercase tracking-[0.4em] font-medium text-[#222222]/35">
                 Legal Information
-              </p>
-            </motion.div>
-            
-            <h1 
-              className="text-3xl sm:text-4xl md:text-6xl lg:text-7xl font-extralight tracking-[-0.03em] leading-[1.1] mb-4 sm:mb-6 px-4"
-              style={{ 
-                fontFamily: "'Inter', -apple-system, sans-serif",
-                background: 'linear-gradient(135deg, #e8e8f0 0%, #b8b8d0 100%)',
-                WebkitBackgroundClip: 'text',
-                WebkitTextFillColor: 'transparent',
-                backgroundClip: 'text'
+              </span>
+            </div>
+
+            <h1
+              style={{
+                ...fadeUp(80),
+                fontFamily: "'Georgia', 'Times New Roman', serif",
               }}
+              className="text-4xl md:text-6xl font-light tracking-[-0.03em] text-[#222222] mb-3"
             >
-              Privacy Policy
+              Privacy Protocol
             </h1>
 
-            <motion.div 
-              className="mx-auto h-[1px] bg-gradient-to-r from-transparent via-indigo-500 to-transparent"
-              initial={{ width: 0, opacity: 0 }}
-              animate={{ width: "150px", opacity: 1 }}
-              transition={{ duration: 1, delay: 0.5 }}
-            />
-          </motion.div>
-        </div>
-      </motion.section>
+            <div style={fadeUp(140)} className="flex items-center justify-center gap-4 flex-wrap">
+              <span className="text-[11px] font-medium uppercase tracking-[0.3em] text-[#222222]/35 px-3 py-1 rounded-full border border-[#222222]/10 bg-white/50">
+                Version 4.0.2
+              </span>
+              <span className="text-[#222222]/15">·</span>
+              <span className="text-[11px] font-light text-[#222222]/30 uppercase tracking-[0.3em]">
+                Last Updated: February 2026
+              </span>
+            </div>
+          </div>
 
-      {/* Privacy Policy Content */}
-      <section className="relative py-8 sm:py-16 px-4 sm:px-6 pb-16 sm:pb-32">
-        <div className="max-w-4xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.8 }}
-            className="backdrop-blur-xl bg-gradient-to-br from-white/[0.03] to-white/[0.01] border border-white/[0.08] rounded-xl sm:rounded-2xl p-6 sm:p-8 md:p-12"
+          {/* ── MAIN CARD ─────────────────────────────────────────────────── */}
+          <div
+            className="max-w-4xl mx-auto px-4 sm:px-6 pb-20"
+            style={fadeUp(200)}
           >
-            <motion.p
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              transition={{ delay: 0.2 }}
-              className="text-xs sm:text-sm font-light mb-6 sm:mb-8"
-              style={{ color: '#9d9db8' }}
+            <div
+              className="relative overflow-hidden p-8 md:p-12 my-4 rounded-[2.5rem]"
+              style={{
+                background: "rgba(255,255,255,0.40)",
+                backdropFilter: "blur(12px)",
+                WebkitBackdropFilter: "blur(12px)",
+                border: "0.5px solid rgba(255,255,255,0.60)",
+                borderTop: "0.5px solid rgba(255,255,255,0.80)",
+                borderLeft: "0.5px solid rgba(255,255,255,0.80)",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.04), inset 0 1px 0 rgba(255,255,255,0.85)",
+              }}
             >
-              Effective Date: February 5, 2026
-            </motion.p>
+              {/* Top gloss streak */}
+              <div className="pointer-events-none absolute top-0 left-10 right-10 h-[1px]"
+                style={{ background: "linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent)" }} />
 
-            {/* Introduction */}
-            <SectionTitle number="1" delay={0.1}>Introduction</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>
-                Forgestack Labs LLP (&quot;Forgestack Labs&quot;, &quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is a product-first 
-                technology company incorporated in India. We are committed to protecting the privacy, 
-                confidentiality, and security of personal and business data entrusted to us.
-              </p>
-              <p>This Privacy Policy governs the collection, use, storage, and disclosure of information in connection with:</p>
-              <ul className="list-disc list-inside space-y-2 ml-4">
-                <li><strong>Our Website:</strong> www.forgestacklabs.com</li>
-                <li><strong>Our Products &amp; Platforms:</strong> Including proprietary SaaS applications and software products</li>
-                <li><strong>Our Services:</strong> Custom software development, consulting, and related professional services</li>
-              </ul>
-              <p>
-                By accessing or using our website, products, or services, you agree to the data practices described 
-                in this Privacy Policy, in accordance with the Digital Personal Data Protection Act, 2023 (DPDPA) 
-                and the Information Technology Act, 2000, along with applicable rules and regulations thereunder.
-              </p>
-            </motion.div>
-
-            {/* Information We Collect */}
-            <SectionTitle number="2" delay={0.15}>Information We Collect</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12"
-            >
-              <p className="text-xs sm:text-sm md:text-base font-light leading-relaxed mb-4 sm:mb-6" style={{ color: '#9d9db8' }}>
-                We collect information based on the nature of your interaction with Forgestack Labs.
-              </p>
-
-              <Subsection title="A. Website Visitors & Prospective Clients" delay={0.2}>
-                <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                  <li><strong>Identity &amp; Contact Information:</strong> Name, email address, phone number, company name, and other details submitted through contact forms or inquiries.</li>
-                  <li><strong>Project &amp; Business Information:</strong> Information relating to project requirements, budgets, timelines, or service requests.</li>
-                  <li><strong>Technical Information:</strong> IP address, browser type, device identifiers, and usage metadata collected through cookies and analytics tools for security and performance optimization.</li>
-                </ul>
-              </Subsection>
-
-              <Subsection title="B. Users of Our Products (SaaS / Software Platforms)" delay={0.25}>
-                <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                  <li><strong>Account Information:</strong> Usernames, encrypted passwords, authentication tokens, and role-based access credentials.</li>
-                  <li><strong>Operational &amp; Business Data:</strong> Data entered into our platforms as part of normal usage, including inventory records, staff details, transaction logs, or operational metrics.</li>
-                </ul>
-                <div className="mt-4 p-3 sm:p-4 bg-indigo-500/5 border border-indigo-500/20 rounded-lg">
-                  <p className="text-xs sm:text-sm font-light" style={{ color: '#c8c8d8' }}>
-                    <strong>Important:</strong> For operational and business data processed through our SaaS platforms, 
-                    Forgestack Labs acts strictly as a Data Processor. Ownership and control of such data remain with 
-                    the client. We process this data solely to provide agreed-upon software functionality.
-                  </p>
-                </div>
-                <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4 mt-4">
-                  <li><strong>Usage &amp; System Logs:</strong> Activity timestamps, feature usage patterns, and diagnostic logs used for system monitoring, performance improvement, and issue resolution.</li>
-                </ul>
-              </Subsection>
-            </motion.div>
-
-            {/* Purpose of Data Processing */}
-            <SectionTitle number="3" delay={0.3}>Purpose of Data Processing</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>
-                Forgestack Labs does not sell or commercially exploit personal or business data. Information is 
-                processed strictly for the following lawful purposes:
-              </p>
-              <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                <li><strong>Product Operation:</strong> User authentication, session management, and delivery of core software features.</li>
-                <li><strong>Service Fulfilment:</strong> Execution of contractual obligations, including development, deployment, and maintenance of software solutions.</li>
-                <li><strong>Security &amp; Risk Management:</strong> Fraud detection, access control, monitoring, and safeguarding platform integrity.</li>
-                <li><strong>Communication &amp; Support:</strong> Account notifications, service updates, billing communications, and customer support.</li>
-                <li><strong>Legal &amp; Regulatory Compliance:</strong> Compliance with applicable Indian laws, tax regulations, audits, and lawful governmental requests.</li>
-              </ul>
-            </motion.div>
-
-            {/* Data Security Measures */}
-            <SectionTitle number="4" delay={0.35}>Data Security Measures</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>
-                Security is foundational to our operations. We implement reasonable and industry-accepted safeguards 
-                in line with the IT (Reasonable Security Practices and Procedures) Rules, 2011.
-              </p>
-              <p>Our security framework includes:</p>
-              <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                <li><strong>Encryption in Transit:</strong> All data exchanged between user devices and our servers is secured using SSL/TLS encryption.</li>
-                <li><strong>Encryption at Rest:</strong> Sensitive information, including credentials and databases, is encrypted within our storage systems.</li>
-                <li><strong>Access Controls:</strong> Production data access is strictly limited to authorized personnel and protected by role-based permissions and Multi-Factor Authentication (MFA).</li>
-                <li><strong>Periodic Reviews:</strong> Regular internal assessments of data handling practices to identify and mitigate potential risks.</li>
-              </ul>
-            </motion.div>
-
-            {/* Data Sharing & Third-Party Disclosures */}
-            <SectionTitle number="5" delay={0.4}>Data Sharing &amp; Third-Party Disclosures</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>We disclose information only where necessary to operate our services securely and efficiently.</p>
-              <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                <li><strong>Infrastructure &amp; Hosting Providers:</strong> Trusted cloud service providers (such as AWS, Google Cloud, or Vercel) for hosting and infrastructure management.</li>
-                <li><strong>Analytics Services:</strong> Limited use of analytics tools (e.g., Google Analytics) to evaluate anonymized usage trends.</li>
-                <li><strong>Legal Obligations:</strong> Disclosure when required under applicable laws, court orders, or requests from authorized government agencies.</li>
-              </ul>
-              <p className="mt-4 font-medium" style={{ color: '#e8e8f0' }}>
-                We do not sell, rent, or share personal or business data with advertisers or unauthorized third parties.
-              </p>
-            </motion.div>
-
-            {/* Data Retention */}
-            <SectionTitle number="6" delay={0.45}>Data Retention</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                <li><strong>Client &amp; Contractual Data:</strong> Retained for the duration of the engagement and thereafter as required by applicable tax, accounting, or legal obligations (generally 5–8 years).</li>
-                <li><strong>Product &amp; Operational Data:</strong> Retained while the account remains active. Upon termination, clients may request a data export. Operational data will be deleted from active systems within 60 days, subject to backup retention and legal requirements.</li>
-              </ul>
-            </motion.div>
-
-            {/* Your Rights Under DPDPA */}
-            <SectionTitle number="7" delay={0.5}>Your Rights Under DPDPA, 2023</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>As a Data Principal, you have the right to:</p>
-              <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                <li><strong>Access:</strong> Request information about personal data processed by us.</li>
-                <li><strong>Correction:</strong> Request correction of inaccurate or incomplete personal data.</li>
-                <li><strong>Erasure:</strong> Request deletion of personal data, subject to statutory retention obligations.</li>
-                <li><strong>Grievance Redressal:</strong> Raise concerns regarding data protection or privacy practices.</li>
-              </ul>
-              <p className="mt-4">Requests may be made using the contact details provided below.</p>
-            </motion.div>
-
-            {/* Cookies & Tracking Technologies */}
-            <SectionTitle number="8" delay={0.55}>Cookies &amp; Tracking Technologies</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="mb-8 sm:mb-12 text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>We use:</p>
-              <ul className="list-disc list-inside space-y-2 ml-2 sm:ml-4">
-                <li><strong>Essential Cookies:</strong> Required for authentication, session management, and security.</li>
-                <li><strong>Non-Essential Cookies:</strong> Analytics cookies, which can be managed through browser settings.</li>
-              </ul>
-              <p className="mt-4">Disabling certain cookies may affect platform functionality.</p>
-            </motion.div>
-
-            {/* Contact Information */}
-            <SectionTitle number="9" delay={0.6}>Contact Information &amp; Grievance Officer</SectionTitle>
-            <motion.div
-              initial={{ opacity: 0 }}
-              whileInView={{ opacity: 1 }}
-              viewport={{ once: true }}
-              className="text-xs sm:text-sm md:text-base font-light leading-relaxed space-y-3 sm:space-y-4"
-              style={{ color: '#9d9db8' }}
-            >
-              <p>
-                For questions, concerns, or requests relating to this Privacy Policy or your personal data, please contact:
-              </p>
-              <div className="mt-4 sm:mt-6 p-4 sm:p-6 bg-gradient-to-br from-indigo-500/5 to-purple-500/5 border border-indigo-500/20 rounded-lg sm:rounded-xl">
-                <p className="font-medium mb-2" style={{ color: '#e8e8f0' }}>Grievance Officer / Privacy Officer</p>
-                <p className="mb-1">Forgestack Labs LLP</p>
-                <motion.a
-                  href="mailto:forgestacklabs@forgestacklabs.com"
-                  className="inline-block hover:opacity-70 transition-opacity break-all"
-                  whileHover={{ x: 5 }}
-                  style={{
-                    background: 'linear-gradient(90deg, #818cf8 0%, #c084fc 100%)',
-                    WebkitBackgroundClip: 'text',
-                    WebkitTextFillColor: 'transparent',
-                    backgroundClip: 'text'
-                  }}
+              {/* ── TABLE OF CONTENTS ─────────────────────────────────────── */}
+              <div
+                className="mb-10 rounded-2xl border border-[#222222]/[0.05] overflow-hidden"
+                style={{ background: "rgba(255,255,255,0.35)" }}
+              >
+                <button
+                  onClick={() => setTocOpen(!tocOpen)}
+                  className="w-full flex items-center justify-between px-6 py-4 text-left hover:bg-black/[0.02] transition-colors duration-200"
                 >
-                  Email: forgestacklabs@forgestacklabs.com
-                </motion.a>
-                <p className="mt-2">Address: Mangaluru, Karnataka, India</p>
-              </div>
-            </motion.div>
-          </motion.div>
-        </div>
-      </section>
+                  <span className="text-[10px] uppercase tracking-[0.4em] font-medium text-[#222222]/40">
+                    Clause Index
+                  </span>
+                  <svg
+                    width="14" height="14" viewBox="0 0 14 14" fill="none"
+                    style={{ transform: tocOpen ? "rotate(180deg)" : "rotate(0deg)", transition: "transform 300ms ease" }}
+                  >
+                    <path d="M2.5 5L7 9.5L11.5 5" stroke="#222222" strokeOpacity="0.35" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </button>
 
-      <style jsx>{`
-        @keyframes gradient-shift {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(10%, 10%) scale(1.1); }
-        }
-        @keyframes gradient-shift-reverse {
-          0%, 100% { transform: translate(0, 0) scale(1); }
-          50% { transform: translate(-10%, -10%) scale(1.1); }
-        }
-        @keyframes pulse-slow {
-          0%, 100% { opacity: 0.1; }
-          50% { opacity: 0.2; }
-        }
-        .animate-gradient-shift {
-          animation: gradient-shift 20s ease-in-out infinite;
-        }
-        .animate-gradient-shift-reverse {
-          animation: gradient-shift-reverse 25s ease-in-out infinite;
-        }
-        .animate-pulse-slow {
-          animation: pulse-slow 15s ease-in-out infinite;
-        }
-      `}</style>
-    </div>
+                {tocOpen && (
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-0.5 px-4 pb-4 pt-1">
+                    {TOC_ITEMS.map((item) => (
+                      <button
+                        key={item.id}
+                        onClick={() => scrollTo(item.id)}
+                        className="text-left px-3 py-2 rounded-xl text-[11px] font-light text-[#222222]/50 hover:text-[#222222] hover:translate-x-1 hover:bg-black/[0.03] transition-all duration-200"
+                      >
+                        {item.label}
+                      </button>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Divider */}
+              <div className="mb-8 h-[1px] bg-gradient-to-r from-transparent via-[#222222]/10 to-transparent" />
+
+              {/* ── CLAUSES ───────────────────────────────────────────────── */}
+              <div className="space-y-2">
+
+                {/* 1.0 Introduction */}
+                <Clause id="c1" number="1.0" title="Introduction" delay={0}>
+                  <Subclause>
+                    <p><strong className="font-semibold text-[#222222]/80">Forgestack Labs LLP</strong> ("Company", "we", "us", or "our") is a product-first technology company incorporated in India. We are committed to protecting the privacy, confidentiality, and security of personal and business data entrusted to us.</p>
+                    <p className="mt-3">This Privacy Protocol governs the collection, use, storage, and disclosure of information in connection with:</p>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Our Website:</strong> www.forgestacklabs.com</>,
+                      <><strong className="font-medium text-[#222222]/75">Our Products & Platforms:</strong> Proprietary SaaS applications and software products</>,
+                      <><strong className="font-medium text-[#222222]/75">Our Services:</strong> Custom software development, consulting, and related professional services</>,
+                    ]} />
+                    <p className="mt-3">By accessing or using our website, products, or services, you agree to the data practices described herein, in accordance with the <strong className="font-medium text-[#222222]/75">Digital Personal Data Protection Act, 2023 (DPDPA)</strong> and the <strong className="font-medium text-[#222222]/75">Information Technology Act, 2000</strong>, along with applicable rules thereunder.</p>
+                  </Subclause>
+                </Clause>
+
+                {/* 2.0 Information We Collect */}
+                <Clause id="c2" number="2.0" title="Information We Collect" delay={40}>
+                  <Subclause>
+                    <p>We collect information based on the nature of your interaction with Forgestack Labs.</p>
+                  </Subclause>
+
+                  <Subclause title="2.1 — Website Visitors & Prospective Clients">
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Identity & Contact Information:</strong> Name, email address, phone number, company name, and other details submitted through contact forms or inquiries.</>,
+                      <><strong className="font-medium text-[#222222]/75">Project & Business Information:</strong> Details relating to project requirements, budgets, timelines, or service requests.</>,
+                      <><strong className="font-medium text-[#222222]/75">Technical Information:</strong> IP address, browser type, device identifiers, and usage metadata collected through cookies and analytics tools.</>,
+                    ]} />
+                  </Subclause>
+
+                  <Subclause title="2.2 — Users of Our Products (SaaS / Software Platforms)">
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Account Information:</strong> Usernames, encrypted passwords, authentication tokens, and role-based access credentials.</>,
+                      <><strong className="font-medium text-[#222222]/75">Operational & Business Data:</strong> Data entered into our platforms as part of normal usage — including inventory records, staff details, transaction logs, or operational metrics.</>,
+                      <><strong className="font-medium text-[#222222]/75">Usage & System Logs:</strong> Activity timestamps, feature usage patterns, and diagnostic logs used for monitoring and issue resolution.</>,
+                    ]} />
+                    <Callout>
+                      <strong className="font-semibold text-[#222222]/80">Data Processor Notice:</strong> For operational and business data processed through our SaaS platforms, Forgestack Labs acts strictly as a Data Processor. Ownership and control of such data remain with the client. We process this data solely to provide agreed-upon software functionality.
+                    </Callout>
+                  </Subclause>
+                </Clause>
+
+                {/* 3.0 Purpose of Data Processing */}
+                <Clause id="c3" number="3.0" title="Purpose of Data Processing" delay={80}>
+                  <Subclause>
+                    <p>Forgestack Labs does not sell or commercially exploit personal or business data. Information is processed strictly for the following lawful purposes:</p>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Product Operation:</strong> User authentication, session management, and delivery of core software features.</>,
+                      <><strong className="font-medium text-[#222222]/75">Service Fulfilment:</strong> Execution of contractual obligations, including development, deployment, and maintenance of software solutions.</>,
+                      <><strong className="font-medium text-[#222222]/75">Security & Risk Management:</strong> Fraud detection, access control, monitoring, and safeguarding platform integrity.</>,
+                      <><strong className="font-medium text-[#222222]/75">Communication & Support:</strong> Account notifications, service updates, billing communications, and customer support.</>,
+                      <><strong className="font-medium text-[#222222]/75">Legal & Regulatory Compliance:</strong> Compliance with applicable Indian laws, tax regulations, audits, and lawful governmental requests.</>,
+                    ]} />
+                  </Subclause>
+                </Clause>
+
+                {/* 4.0 Data Security */}
+                <Clause id="c4" number="4.0" title="Data Security Measures" delay={120}>
+                  <Subclause>
+                    <p>Security is foundational to our operations. We implement reasonable, industry-accepted safeguards in line with the <strong className="font-medium text-[#222222]/75">IT (Reasonable Security Practices and Procedures) Rules, 2011</strong>.</p>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Encryption in Transit:</strong> All data exchanged between user devices and our servers is secured using SSL/TLS encryption.</>,
+                      <><strong className="font-medium text-[#222222]/75">Encryption at Rest:</strong> Sensitive information, including credentials and databases, is encrypted within our storage systems.</>,
+                      <><strong className="font-medium text-[#222222]/75">Access Controls:</strong> Production data access is strictly limited to authorized personnel, protected by role-based permissions and Multi-Factor Authentication (MFA).</>,
+                      <><strong className="font-medium text-[#222222]/75">Periodic Reviews:</strong> Regular internal assessments of data handling practices to identify and mitigate potential risks.</>,
+                    ]} />
+                  </Subclause>
+                </Clause>
+
+                {/* 5.0 Data Sharing */}
+                <Clause id="c5" number="5.0" title="Data Sharing & Third-Party Disclosures" delay={160}>
+                  <Subclause>
+                    <p>We disclose information only where necessary to operate our services securely and efficiently.</p>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Infrastructure & Hosting Providers:</strong> Trusted cloud service providers (such as AWS, Google Cloud, or Vercel) for hosting and infrastructure management.</>,
+                      <><strong className="font-medium text-[#222222]/75">Analytics Services:</strong> Limited use of analytics tools (e.g., Google Analytics) to evaluate anonymized usage trends.</>,
+                      <><strong className="font-medium text-[#222222]/75">Legal Obligations:</strong> Disclosure when required under applicable laws, court orders, or requests from authorized government agencies.</>,
+                    ]} />
+                    <Callout>
+                      <strong className="font-semibold text-[#222222]/80">Our Commitment:</strong> We do not sell, rent, or share personal or business data with advertisers or unauthorized third parties.
+                    </Callout>
+                  </Subclause>
+                </Clause>
+
+                {/* 6.0 Data Retention */}
+                <Clause id="c6" number="6.0" title="Data Retention" delay={200}>
+                  <Subclause>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Client & Contractual Data:</strong> Retained for the duration of the engagement and thereafter as required by applicable tax, accounting, or legal obligations (generally 5–8 years).</>,
+                      <><strong className="font-medium text-[#222222]/75">Product & Operational Data:</strong> Retained while the account remains active. Upon termination, clients may request a data export. Operational data will be deleted from active systems within <strong className="font-medium text-[#222222]/75">60 days</strong>, subject to backup retention and legal requirements.</>,
+                    ]} />
+                  </Subclause>
+                </Clause>
+
+                {/* 7.0 Your Rights */}
+                <Clause id="c7" number="7.0" title="Your Rights Under DPDPA, 2023" delay={240}>
+                  <Subclause>
+                    <p>As a Data Principal under the DPDPA, 2023, you have the right to:</p>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Access:</strong> Request information about personal data processed by us.</>,
+                      <><strong className="font-medium text-[#222222]/75">Correction:</strong> Request correction of inaccurate or incomplete personal data.</>,
+                      <><strong className="font-medium text-[#222222]/75">Erasure:</strong> Request deletion of personal data, subject to statutory retention obligations.</>,
+                      <><strong className="font-medium text-[#222222]/75">Grievance Redressal:</strong> Raise concerns regarding data protection or privacy practices.</>,
+                    ]} />
+                    <p className="mt-3">Requests may be submitted using the contact details in Clause 9.0 below.</p>
+                  </Subclause>
+                </Clause>
+
+                {/* 8.0 Cookies */}
+                <Clause id="c8" number="8.0" title="Cookies & Tracking Technologies" delay={280}>
+                  <Subclause>
+                    <Bullet items={[
+                      <><strong className="font-medium text-[#222222]/75">Essential Cookies:</strong> Required for authentication, session management, and security. These cannot be disabled without affecting platform functionality.</>,
+                      <><strong className="font-medium text-[#222222]/75">Non-Essential Cookies:</strong> Analytics cookies used to evaluate aggregate usage patterns. These can be managed through your browser settings.</>,
+                    ]} />
+                    <p className="mt-3 text-[#222222]/50">Disabling certain cookies may affect platform functionality and your experience.</p>
+                  </Subclause>
+                </Clause>
+
+                {/* 9.0 Contact */}
+                <Clause id="c9" number="9.0" title="Contact & Grievance Officer" delay={320}>
+                  <Subclause>
+                    <p>For questions, concerns, or data rights requests relating to this Privacy Protocol, please contact:</p>
+                    <div
+                      className="mt-5 p-5 rounded-2xl border border-[#222222]/[0.07]"
+                      style={{ background: "rgba(255,255,255,0.5)" }}
+                    >
+                      <p className="text-[11px] uppercase tracking-[0.3em] font-medium text-[#222222]/35 mb-3">Grievance Officer</p>
+                      <p className="text-sm font-semibold text-[#222222]/80 mb-1">Forgestack Labs LLP</p>
+                      <p className="text-[13px] font-light text-[#222222]/50 mb-1">Mangaluru, Karnataka, India</p>
+                      <a
+                        href="mailto:forgestacklabs@forgestacklabs.com"
+                        className="inline-block text-[13px] font-light text-[#222222]/65 underline underline-offset-2 decoration-[#222222]/20 hover:text-[#222222] hover:decoration-[#222222]/50 transition-all duration-200 break-all"
+                      >
+                        forgestacklabs@forgestacklabs.com
+                      </a>
+                    </div>
+                  </Subclause>
+                </Clause>
+
+              </div>
+
+              {/* ── BOTTOM META ───────────────────────────────────────────── */}
+              <div className="mt-12 pt-6 border-t border-[#222222]/[0.05] flex flex-col md:flex-row items-start md:items-center justify-between gap-3">
+                <p className="text-[11px] font-light text-[#222222]/30 leading-relaxed">
+                  © 2026 Forgestack Labs LLP. All rights reserved.
+                </p>
+                <div className="flex items-center gap-4">
+                  <Link href="/privacy" className="text-[11px] font-medium text-[#222222]/60">
+                    Privacy Protocol
+                  </Link>
+                  <span className="text-[#222222]/15">·</span>
+                  <Link href="/terms" className="text-[11px] font-light text-[#222222]/35 hover:text-[#222222]/70 transition-colors duration-200">
+                    Terms of Service
+                  </Link>
+                </div>
+              </div>
+
+              {/* Corner accent */}
+              <div className="pointer-events-none absolute bottom-0 right-0 w-32 h-32 rounded-br-[2.5rem]"
+                style={{ background: "radial-gradient(circle at bottom right, rgba(255,255,255,0.55), transparent)" }} />
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+
+    </>
   );
 }

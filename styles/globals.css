@@ -2,34 +2,180 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ═══════════════════════════════════════════════════════════════
+   FORGESTACK LABS — globals.css
+   Design System : "Monochromatic Spatial Glass" + Obsidian Contrast
+   Background    : NeuralMirrorBackground (canvas + frost overlay)
+   ═══════════════════════════════════════════════════════════════ */
+
+/* ─────────────────────────────────────────────────────────────
+   1. DESIGN TOKENS
+   ───────────────────────────────────────────────────────────── */
 :root {
-  color-scheme: dark;
+  color-scheme: light;
+
+  /* Surface */
+  --bg-main:            #F7F7F5;
+
+  /* Text — Obsidian scale */
+  --text-heading:       #000000;
+  --text-body:          #121212;
+  --text-muted:         rgba(18,18,18,0.55);
+  --text-ghost:         rgba(18,18,18,0.25);
+
+  /* Brand */
+  --accent-sage:        #8BA888;
+  --accent-clay:        #D4A373;
+
+  /* Glass card — bump blur to 3xl (28px) to cut through frost background */
+  --glass-bg:           rgba(255,255,255,0.42);
+  --glass-border:       rgba(255,255,255,0.58);
+  --glass-blur:         28px;
+  --glass-shadow:       0 20px 50px rgba(0,0,0,0.09);
+  --glass-shadow-hover: 0 28px 70px rgba(0,0,0,0.13);
 }
 
-html,
+/* ─────────────────────────────────────────────────────────────
+   2. BASE
+   ───────────────────────────────────────────────────────────── */
+html, body { height: 100%; }
+
 body {
-  height: 100%;
+  background:              var(--bg-main);
+  color:                   var(--text-body);
+  font-weight:             400;
+  font-feature-settings:   "ss01" on, "ss02" on;
+  -webkit-font-smoothing:  antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering:          optimizeLegibility;
 }
 
-body {
-  @apply bg-ink text-white antialiased;
-  font-feature-settings: "ss01" on, "ss02" on;
+/* ─────────────────────────────────────────────────────────────
+   3. TYPOGRAPHY — OBSIDIAN CONTRAST
+   ───────────────────────────────────────────────────────────── */
+h1, h2, h3, h4, h5, h6 {
+  color:       var(--text-heading);
+  font-weight: 500;
 }
 
-::selection {
-  background: rgba(124, 140, 244, 0.3);
+p, li, span, label, td, th {
+  color:       var(--text-body);
+  font-weight: 400;
 }
 
-.glass-panel {
-  background: rgba(15, 17, 23, 0.72);
-  border: 1px solid rgba(124, 140, 244, 0.12);
-  backdrop-filter: blur(16px);
+nav a, .nav-link {
+  color:       var(--text-heading);
+  font-weight: 500;
 }
+
+.text-muted { color: var(--text-muted) !important; }
+.text-ghost { color: var(--text-ghost) !important; }
+
+/* Upgrade any stray font-light to font-normal */
+.font-light { font-weight: 400 !important; }
 
 .section-title {
   @apply text-2xl md:text-3xl font-semibold tracking-tight;
+  color: var(--text-heading);
 }
 
 .section-copy {
-  @apply text-base md:text-lg text-mist leading-relaxed;
+  @apply text-base md:text-lg leading-relaxed;
+  color:       var(--text-muted);
+  font-weight: 400;
 }
+
+/* ─────────────────────────────────────────────────────────────
+   4. GLASS CARD — backdrop-blur-3xl to contrast frost background
+   ───────────────────────────────────────────────────────────── */
+.glass-card {
+  position:                relative;
+  overflow:                hidden;
+  background:              var(--glass-bg);
+  border:                  1px solid var(--glass-border);
+  backdrop-filter:         blur(var(--glass-blur)) saturate(1.5) brightness(1.03);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.5) brightness(1.03);
+  border-radius:           2.5rem;
+  box-shadow:              var(--glass-shadow);
+  transition:              box-shadow 0.5s ease, transform 0.5s ease, filter 0.5s ease;
+}
+
+/* Internal light-sweep — prism refraction layer */
+.glass-card::before {
+  content:        "";
+  position:       absolute;
+  inset:          0;
+  border-radius:  inherit;
+  background: linear-gradient(
+    135deg,
+    rgba(255,255,255,0.28) 0%,
+    rgba(255,255,255,0.04) 50%,
+    rgba(255,255,255,0.14) 100%
+  );
+  pointer-events: none;
+  z-index:        0;
+}
+
+.glass-card > * {
+  position: relative;
+  z-index:  1;
+}
+
+.glass-card:hover {
+  box-shadow: var(--glass-shadow-hover);
+  transform:  translateY(-2px);
+  filter:     contrast(1.018) brightness(1.01);
+}
+
+/* Legacy alias — keeps older components working */
+.glass-panel {
+  background:              var(--glass-bg);
+  border:                  1px solid var(--glass-border);
+  backdrop-filter:         blur(var(--glass-blur)) saturate(1.5);
+  -webkit-backdrop-filter: blur(var(--glass-blur)) saturate(1.5);
+  border-radius:           24px;
+  box-shadow:              var(--glass-shadow);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   5. Z-INDEX LAYER MAP
+   z-0  → Canvas (raw neural particles)
+   z-1  → Frost overlay div (blur + SVG grain) — set in TSX
+   z-2+ → All page content
+   ───────────────────────────────────────────────────────────── */
+canvas[aria-hidden="true"] {
+  position:       fixed;
+  inset:          0;
+  z-index:        0;
+  pointer-events: none;
+  display:        block;
+  will-change:    transform;
+}
+
+section, header, footer, nav, main {
+  position: relative;
+  z-index:  2;
+}
+
+/* ─────────────────────────────────────────────────────────────
+   6. SHADOW SCALE
+   ───────────────────────────────────────────────────────────── */
+.shadow-sm              { box-shadow: 0 4px 20px rgba(0,0,0,0.06) !important; }
+.hover\:shadow-md:hover { box-shadow: var(--glass-shadow) !important; }
+.hover\:shadow-lg:hover { box-shadow: var(--glass-shadow-hover) !important; }
+
+/* ─────────────────────────────────────────────────────────────
+   7. SELECTION
+   ───────────────────────────────────────────────────────────── */
+::selection {
+  background: rgba(139,168,136,0.35);
+  color:      var(--text-heading);
+}
+
+/* ─────────────────────────────────────────────────────────────
+   8. SCROLLBAR
+   ───────────────────────────────────────────────────────────── */
+::-webkit-scrollbar             { width: 5px; }
+::-webkit-scrollbar-track       { background: var(--bg-main); }
+::-webkit-scrollbar-thumb       { background: rgba(18,18,18,0.14); border-radius: 999px; }
+::-webkit-scrollbar-thumb:hover { background: rgba(18,18,18,0.26); }

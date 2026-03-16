@@ -1,102 +1,201 @@
+"use client";
+
 import Link from "next/link";
+import { motion } from "framer-motion";
 
-export default function Footer() {
-  const navMain = [
-    { href: "/", label: "Home" },
-    { href: "/technology", label: "Technology" },
-    { href: "/principles", label: "Approach" },
-    { href: "/about", label: "About" },
-    { href: "/contact", label: "Contact" }
-  ];
+/**
+ * GlassFooter
+ * ──────────────────────────────────────────────────────────────
+ * A large glass "Base Plate" footer featuring:
+ *   - SOC 2 (Upcoming) status badge
+ *   - Local context "Mangalore // 2026"
+ *   - Operational uptime pulse
+ *   - Nav columns + legal
+ */
 
-  const navLegal = [
-    { href: "/privacy", label: "Privacy Policy" },
-    { href: "/terms", label: "Terms of Service" }
-  ];
+const NAV_COLS = [
+  {
+    heading: "Studio",
+    links:   [
+      { label: "About",    href: "/about"        },
+      { label: "Approach", href: "/principles"     },
+      { label: "Technology",href: "/technology"  },
+    ],
+  },
+  {
+    heading: "Work",
+    links:   [
 
+      { label: "Contact",      href: "/contact"      },
+    ],
+  },
+  {
+    heading: "System",
+    links:   [
+      { label: "Privacy", href: "/privacy" },
+      { label: "Terms",   href: "/terms" },
+    ],
+  },
+];
+
+const STATUSES = [
+  { label: "API Gateway",    ok: true  },
+  { label: "Database Layer", ok: true  },
+  { label: "Edge Network",   ok: true  },
+  { label: "SOC 2",          ok: false, note: "Upcoming" },
+];
+
+export default function GlassFooter() {
   return (
-    <footer className="border-t border-white/10">
-      {/* FULL-WIDTH WRAPPER */}
-      <div className="w-full px-4 sm:px-6 lg:px-12 py-8 md:py-10">
-        {/* CENTERED CONTENT */}
-        <div className="mx-auto max-w-7xl">
+    <footer className="relative z-10 px-6 pb-6 pt-0">
+      <div
+        className="
+          relative overflow-hidden
+          rounded-[2.5rem]
+          bg-white/38 backdrop-blur-3xl
+          border border-[0.5px] border-white/60
+          shadow-[0_20px_60px_rgba(0,0,0,0.09)]
+          p-12 md:p-16
+        "
+      >
+        {/* Grain texture */}
+        <svg
+          aria-hidden="true"
+          className="absolute inset-0 w-full h-full pointer-events-none opacity-[0.03]"
+          style={{ mixBlendMode: "multiply" }}
+        >
+          <filter id="footer-grain">
+            <feTurbulence type="fractalNoise" baseFrequency="0.75" numOctaves="3" stitchTiles="stitch" />
+            <feColorMatrix type="saturate" values="0" />
+          </filter>
+          <rect width="100%" height="100%" filter="url(#footer-grain)" />
+        </svg>
 
-          {/* Main footer content */}
-          <div className="flex flex-col gap-6 md:grid md:grid-cols-3 md:gap-10">
+        <div className="relative z-10">
+          {/* Top row */}
+          <div className="flex flex-col md:flex-row justify-between gap-12 mb-14">
 
-            {/* Brand */}
-          <div className="space-y-3">
-  <div className="flex items-center gap-2">
-    <img
-      src="/logo.png"
-      alt="ForgeStack Labs"
-      className="h-9 w-auto"
-    />
-    <h3 className="text-base md:text-lg uppercase tracking-[0.25em] text-white/90">
-      FORGESTACKLABS
-    </h3>
-  </div>
+            {/* Brand column */}
+            <div className="flex flex-col gap-6 max-w-xs">
+              {/* Logo */}
+              <div className="flex items-center gap-3">
+                <div className="w-8 h-8 rounded-xl bg-[#121212] flex items-center justify-center">
+                  <span className="text-[10px] font-bold text-white tracking-tight">FS</span>
+                </div>
+                <span className="text-base font-medium text-[#000000] tracking-tight">
+                  Forgestack Labs
+                </span>
+              </div>
 
-  <p className="text-xs md:text-sm leading-relaxed text-white/50 max-w-xs">
-    We build internal products that solve real industry challenges.
-  </p>
-</div>
-
-
-            {/* Navigation */}
-            <div className="space-y-3">
-              <h4 className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-white/60">
-                Navigation
-              </h4>
-              <nav className="grid grid-cols-2 gap-x-6 gap-y-2">
-                {navMain.map((item) => (
-                  <Link
-                    key={item.href}
-                    href={item.href}
-                    className="text-xs md:text-sm text-white/50 hover:text-white/80 transition"
-                  >
-                    {item.label}
-                  </Link>
-                ))}
-              </nav>
-            </div>
-
-            {/* Contact */}
-            <div className="space-y-3">
-              <h4 className="text-[10px] md:text-xs uppercase tracking-[0.25em] text-white/60">
-                Get in Touch
-              </h4>
-              <a
-                href="mailto:forgestacklabs@forgestacklabs.com"
-                className="block text-xs md:text-sm text-white/50 hover:text-white/80 break-all"
-              >
-                forgestacklabs@forgestacklabs.com
-              </a>
-              <p className="text-xs md:text-sm text-white/50">
-                India · Global
+              <p className="text-sm font-normal leading-relaxed text-[#121212]/50">
+                A founder-led engineering lab. We build precise, durable software systems for partners
+                who demand correctness over speed.
               </p>
-            </div>
-          </div>
 
-          {/* Bottom bar */}
-          <div className="mt-6 pt-4 border-t border-white/10 flex flex-col gap-2">
-            <div className="flex gap-4">
-              {navLegal.map((item) => (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  className="text-[10px] md:text-xs text-white/40 hover:text-white/70 transition"
+              {/* Location context */}
+              <div className="flex items-center gap-2">
+                <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]" />
+                <span
+                  className="text-[9px] uppercase tracking-[0.5em] font-semibold text-[#121212]/35"
+                  style={{ fontFamily: "'Courier New', monospace" }}
                 >
-                  {item.label}
-                </Link>
+                  Mangalore // 2026
+                </span>
+              </div>
+            </div>
+
+            {/* Nav columns */}
+            <div className="grid grid-cols-3 gap-10 md:gap-16">
+              {NAV_COLS.map(col => (
+                <div key={col.heading} className="flex flex-col gap-4">
+                  <p className="text-[9px] uppercase tracking-[0.5em] font-bold text-[#8BA888]">
+                    {col.heading}
+                  </p>
+                  {col.links.map(link => (
+                    <Link
+                      key={link.label}
+                      href={link.href}
+                      className="text-sm font-normal text-[#121212]/50 hover:text-[#000000] transition-colors duration-300"
+                    >
+                      {link.label}
+                    </Link>
+                  ))}
+                </div>
               ))}
             </div>
 
-            <p className="text-[10px] md:text-xs text-white/40">
-              © 2026 Forgestack Labs LLP. All rights reserved.
-            </p>
+            {/* System status column */}
+            <div className="flex flex-col gap-4 min-w-[200px]">
+              <p className="text-[9px] uppercase tracking-[0.5em] font-bold text-[#8BA888]">
+                System Status
+              </p>
+              {STATUSES.map(s => (
+                <div key={s.label} className="flex items-center justify-between gap-4">
+                  <span className="text-[11px] font-normal text-[#121212]/55">{s.label}</span>
+                  <div className="flex items-center gap-1.5">
+                    {s.ok ? (
+                      <>
+                        <span className="relative flex h-[5px] w-[5px]">
+                          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-[#10B981] opacity-60" />
+                          <span className="relative inline-flex rounded-full h-[5px] w-[5px] bg-[#10B981]" />
+                        </span>
+                        <span className="text-[8px] uppercase tracking-[0.4em] font-semibold text-[#10B981]">
+                          Live
+                        </span>
+                      </>
+                    ) : (
+                      <>
+                        <span className="w-[5px] h-[5px] rounded-full bg-[#D4A373]" />
+                        <span className="text-[8px] uppercase tracking-[0.4em] font-semibold text-[#D4A373]">
+                          {s.note}
+                        </span>
+                      </>
+                    )}
+                  </div>
+                </div>
+              ))}
+
+              {/* SOC 2 badge */}
+              <div className="mt-4 flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#D4A373]/8 border border-[#D4A373]/20">
+                <div className="w-6 h-6 rounded-lg bg-[#D4A373]/15 flex items-center justify-center">
+                  <span className="text-[8px] font-bold text-[#D4A373]">S2</span>
+                </div>
+                <div>
+                  <p className="text-[9px] font-bold text-[#D4A373] uppercase tracking-wider">SOC 2</p>
+                  <p className="text-[8px] text-[#121212]/35 uppercase tracking-wider">Roadmap 2025</p>
+                </div>
+              </div>
+            </div>
           </div>
 
+          {/* Hairline */}
+          <div className="w-full h-[0.5px] bg-[#121212]/6 mb-8" />
+
+          {/* Bottom row */}
+          <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+            <p
+              className="text-[9px] text-[#121212]/30 uppercase tracking-[0.4em]"
+              style={{ fontFamily: "'Courier New', monospace" }}
+            >
+              © 2026 Forgestack Labs Pvt. Ltd. · All Rights Reserved
+            </p>
+
+            <div className="flex items-center gap-6">
+              <a
+                href="mailto:forgestacklabs@forgestacklabs.com"
+                className="text-[10px] text-[#121212]/40 hover:text-[#000000] transition-colors uppercase tracking-widest font-medium"
+              >
+                forgestacklabs@forgestacklabs.com
+              </a>
+            </div>
+
+            <p
+              className="text-[9px] text-[#121212]/20 uppercase tracking-[0.5em]"
+              style={{ fontFamily: "'Courier New', monospace" }}
+            >
+              [ BUILT BY THE UNIT ]
+            </p>
+          </div>
         </div>
       </div>
     </footer>
