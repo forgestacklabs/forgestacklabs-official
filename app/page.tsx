@@ -1,314 +1,458 @@
-"use client";
+﻿"use client";
 
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
-import InfiniteBackground from "@/components/Servergridbackground";
+import Image from "next/image";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 
-/**
- * FORGESTACK LABS
- * Design System: Calm Tech / Obsidian Contrast
- * Typography: #000000 headings · #121212 body · font-normal (400) throughout
- */
+const EASE = [0.215, 0.61, 0.355, 1] as const;
 
-export default function HomePage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+};
+
+const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.9, ease: EASE } },
+};
+
+const staggerWrap: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.11, delayChildren: 0.05 } },
+};
+
+const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
+};
+
+const cardReveal: Variants = {
+  hidden: { opacity: 0, y: 44, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.72, ease: EASE },
+  },
+};
+
+const heroWrap: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const heroItem: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+};
+
+const statItem: Variants = {
+  hidden: { opacity: 0, scale: 0.88, y: 16 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 260, damping: 22 },
+  },
+};
+
+const labelReveal: Variants = {
+  hidden: { opacity: 0, x: -18 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
+
+const panelReveal: Variants = {
+  hidden: { opacity: 0, y: 56, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.85, ease: EASE },
+  },
+};
+
+const badgeReveal: Variants = {
+  hidden: { opacity: 0, y: 24, scale: 0.96 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.7, ease: EASE },
+  },
+};
+
+const cardSpring = { type: "spring", stiffness: 220, damping: 18 } as const;
+const pillSpring = { type: "spring", stiffness: 300, damping: 18 } as const;
+const btnSpring  = { type: "spring", stiffness: 320, damping: 20 } as const;
+const linkSpring = { type: "spring", stiffness: 340, damping: 20 } as const;
+
+const VP = { once: false, margin: "-240px" } as const;
+
+function FadeOutSection({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
 
   const { scrollYProgress } = useScroll({
-    target: containerRef,
-    offset: ["start start", "end end"],
+    target: ref,
+    offset: ["start start", "end start"],
   });
 
-  const smoothProgress = useSpring(scrollYProgress, {
-    stiffness: 100,
-    damping: 30,
-    restDelta: 0.001,
-  });
-
-  const heroOpacity = useTransform(smoothProgress, [0, 0.12], [1, 0]);
-  const heroScale  = useTransform(smoothProgress, [0, 0.12], [1, 0.98]);
-  const bgY        = useTransform(smoothProgress, [0, 1], ["0%", "20%"]);
-
-  useEffect(() => { setIsMounted(true); }, []);
-
-  const fadeUp = {
-    hidden: { opacity: 0, y: 25 },
-    visible: (i: number) => ({
-      opacity: 1,
-      y: 0,
-      transition: { delay: 0.1 * i, duration: 0.8, ease: [0.215, 0.61, 0.355, 1] },
-    }),
-  };
-
-  const revealProps = {
-    initial: { opacity: 0, y: 25 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport: { once: true, margin: "-80px" },
-    transition: { duration: 0.8, ease: [0.215, 0.61, 0.355, 1] },
-  };
-
-  if (!isMounted) return <div className="min-h-screen bg-[#F7F7F5]" />;
-
-  /* ── DATA ──────────────────────────────────────────────── */
-  const principles = [
-    {
-      num: "01",
-      color: "text-[#8BA888]",
-      title: "Precision Engineering",
-      copy: "Every system we build is engineered to feel deliberate. Architecture decisions are treated as permanent — nothing rushed, nothing accidental. Explicit over implicit, always.",
-    },
-    {
-      num: "02",
-      color: "text-[#D4A373]",
-      title: "Continuity by Design",
-      copy: "We engineer for longevity. Systems must survive team changes, scale pivots, and five years of evolution. Resilience is not a feature — it is the foundation.",
-    },
-    {
-      num: "03",
-      color: "text-[#121212]/50",   /* ← was text-[#222222]/60 */
-      title: "Disciplined Restraint",
-      copy: "We say no to complexity that doesn't earn its place. Our process favors measured decisions, narrow scope, and long-term correctness over velocity theater.",
-    },
-  ];
-
-  const workCols = [
-    {
-      color: "text-[#8BA888]",
-      title: "What We Build",
-      items: [
-        "Full-stack web & mobile applications",
-        "Internal tooling & operational SaaS",
-        "API design and architecture audits",
-        "Database modeling & performance engineering",
-        "Greenfield MVPs to production-grade systems",
-      ],
-    },
-    {
-      color: "text-[#D4A373]",
-      title: "How We Work",
-      items: [
-        "4-person agile core — no subcontracting ever",
-        "Weekly async updates with full source visibility",
-        "Fixed-scope or monthly retainer engagements",
-        "Direct founder communication at every stage",
-        "Documentation-first, handoff-ready delivery",
-      ],
-    },
-  ];
+  const opacity = useTransform(scrollYProgress, [0.45, 0.9], [1, 0]);
+  const scale   = useTransform(scrollYProgress, [0.45, 0.9], [1, 0.94]);
+  const y       = useTransform(scrollYProgress, [0.45, 0.9], ["0px", "-40px"]);
 
   return (
-    <div
-      ref={containerRef}
-      /* ↓ removed hardcoded text-[#222222] — body color now comes from globals.css */
-      className="relative pt-16 bg-[#F7F7F5] font-sans selection:bg-[#8BA888]/30 overflow-x-hidden"
-    >
-      {/* ── BACKGROUND ─────────────────────────────────────── */}
-      <InfiniteBackground />
-
-      {/* Soft ambient orbs — complement the tunnel, stay subtle */}
-      <div className="fixed inset-0 -z-10 overflow-hidden pointer-events-none">
-        <motion.div
-          style={{ y: bgY }}
-          className="absolute inset-0 bg-gradient-to-b from-[#F7F7F5]/60 via-transparent to-[#F7F7F5]/60"
-        />
-        <motion.div
-          animate={{ x: [0, 30, 0], y: [0, 50, 0] }}
-          transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-          className="absolute top-[-10%] right-[-5%] w-[70vw] h-[70vw] rounded-full bg-[#8BA888]/4 blur-[140px]"
-        />
-        <motion.div
-          animate={{ x: [0, -40, 0], y: [0, -20, 0] }}
-          transition={{ duration: 25, repeat: Infinity, ease: "linear" }}
-          className="absolute bottom-[10%] left-[-10%] w-[60vw] h-[60vw] rounded-full bg-[#D4A373]/4 blur-[140px]"
-        />
-      </div>
-
-      {/* ── 1. HERO ─────────────────────────────────────────── */}
-      <motion.section
-        style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative h-screen flex flex-col items-center justify-center px-6"
-      >
-        <div className="max-w-5xl w-full text-center">
-          <motion.p
-            custom={0} initial="hidden" animate="visible" variants={fadeUp}
-            className="text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-8"
-          >
-            Founder-Led Technology Lab
-          </motion.p>
-
-          <motion.h1
-            custom={1} initial="hidden" animate="visible" variants={fadeUp}
-            /* ↓ color now #000000 from globals h1 rule — no override needed */
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-medium tracking-tight leading-[0.9] mb-10"
-          >
-            Engineering Calm <br />
-            {/* ↓ was text-[#222222]/40 → now slightly deeper for Obsidian contrast */}
-            <span className="text-[#121212]/35 italic">out of</span> Complexity.
-          </motion.h1>
-
-          <motion.p
-            custom={2} initial="hidden" animate="visible" variants={fadeUp}
-            /* ↓ font-light → font-normal · text-[#222222]/70 → text-[#121212]/60 */
-            className="max-w-2xl mx-auto text-lg md:text-xl font-normal leading-relaxed text-[#121212]/60 mb-12"
-          >
-            We are an elite, product-driven technology lab. We architect our own operational platforms
-            and engineer bespoke, high-performance software for a select group of global partners.
-          </motion.p>
-
-          <motion.div
-            custom={3} initial="hidden" animate="visible" variants={fadeUp}
-            className="flex flex-col sm:flex-row items-center justify-center gap-6"
-          >
-            <Link
-              href="/technology"
-              className="px-10 py-4 bg-[#8BA888] text-white rounded-full hover:bg-[#7A9777] transition-all duration-500 shadow-sm hover:shadow-[0_20px_50px_rgba(0,0,0,0.10)] hover:-translate-y-1"
-            >
-              Explore Our Products
-            </Link>
-            <Link
-              href="/contact"
-              /* ↓ border now slightly darker to match Obsidian contrast */
-              className="px-10 py-4 border border-[#121212]/15 rounded-full hover:bg-white/80 transition-all duration-500 group"
-            >
-              <span className="text-[#121212] group-hover:text-[#D4A373] transition-colors font-normal">
-                Propose a Partnership
-              </span>
-            </Link>
-          </motion.div>
-        </div>
-
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          {/* ↓ was [#222222]/20 → now [#121212]/25 — just slightly more visible */}
-          <div className="w-[1px] h-12 bg-gradient-to-b from-[#121212]/25 to-transparent" />
-        </motion.div>
-      </motion.section>
-
-      {/* ── 2. PRINCIPLES ───────────────────────────────────── */}
-      <section className="relative py-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...revealProps} className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-4">Core Philosophy</p>
-            {/* ↓ h2 color is now #000000 from globals — no class needed */}
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight">Built on Principles</h2>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {principles.map((p, i) => (
-              <motion.div
-                key={p.num}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: i * 0.13, ease: [0.215, 0.61, 0.355, 1] }}
-                /* ↓ shadow upgraded to match Obsidian system */
-                className="group relative bg-white/40 backdrop-blur-md border border-white/50 p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_28px_70px_rgba(0,0,0,0.13)] transition-all duration-700"
-              >
-                <div className="absolute top-0 right-0 p-8 opacity-10 group-hover:opacity-30 transition-opacity">
-                  {/* ↓ was font-light → font-normal */}
-                  <span className="text-4xl font-normal text-[#121212]">{p.num}</span>
-                </div>
-                <h3 className={`text-sm uppercase tracking-widest font-bold mb-6 ${p.color}`}>{p.num}</h3>
-                {/* ↓ h2 inherits #000000 from globals */}
-                <h2 className="text-2xl font-medium mb-6">{p.title}</h2>
-                {/* ↓ was text-[#222222]/60 font-light → text-[#121212]/55 font-normal */}
-                <p className="text-[#121212]/55 font-normal leading-relaxed">{p.copy}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── 3. PARTNERSHIPS ─────────────────────────────────── */}
-      <section id="partnerships" className="relative py-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...revealProps} className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-4">Custom Engineering</p>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight">Venture-Grade Solutions. Zero Bloat.</h2>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-2 mb-8">
-            {workCols.map((col, i) => (
-              <motion.div
-                key={col.title}
-                initial={{ opacity: 0, y: 25 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: i * 0.15, ease: [0.215, 0.61, 0.355, 1] }}
-                className="bg-white/40 backdrop-blur-md border border-white/50 p-12 rounded-[2.5rem] shadow-[0_20px_50px_rgba(0,0,0,0.08)] hover:shadow-[0_28px_70px_rgba(0,0,0,0.13)] transition-all duration-700"
-              >
-                <h3 className={`text-sm uppercase tracking-widest font-bold mb-6 ${col.color}`}>{col.title}</h3>
-                <ul className="space-y-3">
-                  {col.items.map(item => (
-                    <li key={item} className="flex items-start gap-3">
-                      {/* ↓ dot: was [#222222]/20 → [#121212]/25 */}
-                      <span className="mt-2 w-1 h-1 rounded-full bg-[#121212]/25 flex-shrink-0" />
-                      {/* ↓ was text-[#222222]/60 font-light → text-[#121212]/55 font-normal */}
-                      <span className="text-sm text-[#121212]/55 font-normal">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Dark CTA Banner */}
-          <motion.div
-            {...revealProps}
-            className="relative rounded-[2.5rem] overflow-hidden p-14 text-center"
-            style={{ background: "linear-gradient(135deg, #1a1e2a 0%, #141722 100%)" }}
-          >
-            <div
-              className="absolute top-0 left-1/4 w-80 h-80 rounded-full blur-[100px] opacity-25 pointer-events-none"
-              style={{ background: "radial-gradient(circle, #8BA888 0%, transparent 70%)" }}
-            />
-            <div
-              className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full blur-[90px] opacity-20 pointer-events-none"
-              style={{ background: "radial-gradient(circle, #D4A373 0%, transparent 70%)" }}
-            />
-            <div className="relative z-10">
-              <p className="text-[10px] uppercase tracking-[0.45em] font-bold text-[#8BA888] mb-4">
-                Ready to build something serious?
-              </p>
-              <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-white mb-4">
-                Let's talk about your project.
-              </h3>
-              {/* ↓ font-light → font-normal inside dark banner */}
-              <p className="text-sm text-white/50 max-w-lg mx-auto mb-10 leading-relaxed font-normal">
-                We respond to every serious inquiry within 48 hours. Send us your project scope, timeline,
-                and what success looks like — we'll tell you plainly if we're the right fit.
-              </p>
-              <a
-                href="mailto:forgestacklabs@forgestacklabs.com"
-                className="inline-block px-10 py-4 bg-white/10 text-white border border-white/20 rounded-full hover:bg-white/20 transition-all duration-500 backdrop-blur-md text-sm"
-              >
-                forgestacklabs@forgestacklabs.com →
-              </a>
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* ── 4. TYPOGRAPHIC PRE-FOOTER ───────────────────────── */}
-      <section className="relative py-60 overflow-hidden">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="flex justify-center items-center"
-        >
-          {/* ↓ was [#222222]/5 — same ratio but against deeper base = more visible */}
-          <h2 className="text-[7vw] font-medium tracking-tighter text-[#121212]/5 whitespace-nowrap select-none">
-            When Vision Meets Precision.
-          </h2>
-        </motion.div>
-      </section>
+    <div ref={ref}>
+      <motion.div style={{ opacity, scale, y, transformOrigin: "center top" }}>
+        {children}
+      </motion.div>
     </div>
   );
 }
+
+const offerings = [
+  {
+    label: "Card 01",
+    accent: "#8BA888",
+    accentClass: "text-[#8BA888]",
+    title: "The Forgestack Ecosystem",
+    copy: "Discover our suite of ready-to-deploy software. From our flagship offline-first fuel station management platform to next-generation tools in stealth, we build tech that eliminates industry bottlenecks.",
+    href: "/products",
+    cta: "View Platforms",
+  },
+  {
+    label: "Card 02",
+    accent: "#D4A373",
+    accentClass: "text-[#D4A373]",
+    title: "Enterprise Web Architecture",
+    copy: "We partner with select clients to build highly secure, custom digital solutions. From resilient server architectures to fluid frontend execution, we enforce our proprietary standards on your vision.",
+    href: "/contact?mode=custom#contact-inquiry",
+    cta: "Discuss Your Project",
+  },
+];
+
+const standards = [
+  {
+    num: "01",
+    color: "text-[#8BA888]",
+    title: "Architectural Precision",
+    copy: "Strict branching models, mandatory peer reviews, and automated CI/CD pipelines ensure a secure, highly maintainable codebase.",
+  },
+  {
+    num: "02",
+    color: "text-[#D4A373]",
+    title: "High-Availability Scaling",
+    copy: "Containerized server deployments and rigorous backend load-testing guarantee flawless performance during massive traffic surges.",
+  },
+  {
+    num: "03",
+    color: "text-[#121212]/50",
+    title: "Design-First Execution",
+    copy: "Heavy-duty backend engineering seamlessly merged with fluid, minimalist, glassmorphic user interfaces.",
+  },
+];
+
+const stats = [
+  { value: "98%", label: "Client Retention" },
+  { value: "5s",  label: "Billing Target" },
+  { value: "3m",  label: "Shift Audit" },
+  { value: "0",   label: "Offline Downtime" },
+];
+
+function StatPill({ value, label }: { value: string; label: string }) {
+  return (
+    <motion.div
+      whileHover={{ y: -8, scale: 1.06, boxShadow: "0 28px 60px rgba(0,0,0,0.14)", transition: pillSpring }}
+      style={{ boxShadow: "0 18px 60px rgba(0,0,0,0.06)" }}
+      className="rounded-[1.75rem] border border-white/60 bg-white/40 px-7 py-6 backdrop-blur-2xl cursor-default"
+    >
+      <p className="text-3xl font-medium tracking-tight">{value}</p>
+      <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/35">{label}</p>
+    </motion.div>
+  );
+}
+
+export default function HomePage() {
+  return (
+    <div className="relative overflow-hidden bg-[#F7F7F5] font-sans text-[#121212] selection:bg-[#8BA888]/30">
+
+      <motion.div variants={fadeIn} initial="hidden" animate="visible">
+        <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(247,247,245,0.5)_100%)]" />
+        <div className="pointer-events-none fixed inset-0 -z-10">
+          <div className="absolute right-[-8%] top-[-12%] h-[44rem] w-[44rem] rounded-full bg-[#8BA888]/10 blur-[120px]" />
+          <div className="absolute bottom-[10%] left-[-12%] h-[38rem] w-[38rem] rounded-full bg-[#D4A373]/10 blur-[120px]" />
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(18,18,18,0.07)_1px,transparent_1px)] [background-size:46px_46px] opacity-20" />
+        </div>
+      </motion.div>
+
+      {/* ── Hero ── */}
+      <FadeOutSection>
+        <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pb-20 pt-20 text-center md:pt-24">
+          <div className="w-full max-w-6xl">
+            <motion.div variants={heroWrap} initial="hidden" animate="visible" className="flex flex-col items-center">
+
+              <motion.p variants={heroItem} className="relative top-4 mb-8 inline-flex items-center justify-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888] md:text-xs">
+                <span className="relative flex h-2 w-2 shrink-0">
+                  <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-60" />
+                  <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]" />
+                </span>
+                <span className="font-bold">When Vision Meets Precision</span>
+              </motion.p>
+
+              <motion.h1 variants={heroItem} className="mb-10 text-5xl font-medium leading-[0.93] tracking-tight text-[#121212] md:text-7xl lg:text-[6.5rem]">
+                Engineer the Solution.
+                <br />
+                <span className="italic text-[#121212]/30">Scale</span> the Impact.
+              </motion.h1>
+
+              <motion.p variants={heroItem} className="mx-auto mb-12 max-w-3xl text-lg font-normal leading-relaxed text-[#121212]/55 md:text-xl">
+                ForgeStack Labs is a DPIIT-recognized software firm. We architect proprietary B2B SaaS
+                ecosystems and engineer corporate-grade custom web applications built for scale.
+              </motion.p>
+
+              <motion.div variants={heroItem} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                <motion.div whileHover={{ y: -5, scale: 1.04, transition: btnSpring }}>
+                  <Link
+                    href="/products"
+                    className="block rounded-full bg-[#8BA888] px-10 py-4 text-sm font-medium text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
+                  >
+                    Explore Our Ecosystem
+                  </Link>
+                </motion.div>
+                <motion.div whileHover={{ y: -5, scale: 1.03, transition: btnSpring }}>
+                  <Link
+                    href="/contact?mode=custom#contact-inquiry"
+                    className="group block rounded-full border border-[#121212]/12 bg-white/50 px-10 py-4 text-sm backdrop-blur-md transition-colors duration-300 hover:border-[#121212]/30 hover:bg-white hover:shadow-[0_24px_60px_rgba(18,18,18,0.18)]"
+                  >
+                    <span className="font-normal text-[#121212] transition-colors group-hover:text-[#8BA888]">
+                      Commission a Project
+                    </span>
+                  </Link>
+                </motion.div>
+              </motion.div>
+
+              {/* Stats */}
+              <motion.div
+                className="mt-14 flex flex-wrap justify-center gap-3"
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09, delayChildren: 0.6 } } }}
+                initial="hidden"
+                animate="visible"
+              >
+                {stats.map((stat) => (
+                  <motion.div key={stat.label} variants={statItem}>
+                    <StatPill {...stat} />
+                  </motion.div>
+                ))}
+              </motion.div>
+
+            </motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── Trust Badges ── */}
+      <FadeOutSection>
+        <section className="px-6 py-24">
+          <div className="mx-auto w-full max-w-5xl text-center">
+
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-12">
+              <motion.p variants={labelReveal} className="mb-3 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">
+                Validated Engineering Standards
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-3xl font-medium tracking-tight md:text-4xl">
+                Recognised. Trusted. Verified.
+              </motion.h2>
+            </motion.div>
+
+            <motion.div
+              className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2"
+              variants={staggerWrap}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+            >
+              <motion.div
+                variants={badgeReveal}
+                className="flex min-h-[96px] items-center justify-center rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl"
+              >
+                <Image src="/gov-login-img.png" alt="DPIIT Recognized" width={260} height={80} className="h-10 w-auto object-contain" />
+              </motion.div>
+
+              <motion.a
+                variants={badgeReveal}
+                whileHover={{ y: -8, scale: 1.03, boxShadow: "0 30px 70px rgba(18,18,18,0.18)", transition: { type: "spring", stiffness: 260, damping: 18 } }}
+                href="https://www.goodfirms.co/company/forgestack-labs-llp"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex min-h-[96px] items-center justify-center gap-4 rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+              >
+                <Image src="/partner_badge.png" alt="GoodFirms partner badge" width={180} height={180} className="h-14 w-auto object-contain" />
+                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#121212]/55">GoodFirms</span>
+              </motion.a>
+            </motion.div>
+
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── Offerings ── */}
+      <FadeOutSection>
+        <section className="px-6 py-24">
+          <div className="mx-auto w-full max-w-7xl">
+
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-16">
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
+                The Dual-Engine Offerings
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
+                Built to Solve. Engineered to Scale.
+              </motion.h2>
+            </motion.div>
+
+            <motion.div
+              className="grid gap-8 md:grid-cols-2"
+              variants={staggerWrap}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+            >
+              {offerings.map((item, index) => (
+                <motion.div
+                  key={item.title}
+                  variants={cardReveal}
+                  whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
+                  className="group relative flex min-h-[340px] flex-col rounded-[2.5rem] border border-white/50 bg-white/40 p-10 shadow-[0_20px_50px_rgba(0,0,0,0.08)] backdrop-blur-md transition-colors duration-500 hover:border-[#121212]/18 hover:bg-white/80 md:p-12"
+                >
+                  <div className="absolute right-0 top-0 p-8 opacity-[0.08] transition-opacity group-hover:opacity-25">
+                    <span className="text-5xl font-medium text-[#121212]">0{index + 1}</span>
+                  </div>
+                  <p className={`mb-6 text-sm font-bold uppercase tracking-widest ${item.accentClass}`}>{item.label}</p>
+                  <h3 className="mb-6 text-3xl font-medium tracking-tight text-[#121212]">{item.title}</h3>
+                  <div className="mb-6 h-px w-10" style={{ background: item.accent + "30" }} />
+                  <p className="mb-10 text-sm leading-relaxed text-[#121212]/55 md:text-base">{item.copy}</p>
+                  <motion.div
+                    whileHover={{ y: -3, scale: 1.03, x: 2, transition: linkSpring }}
+                    className="mt-auto w-fit"
+                  >
+                    <Link
+                      href={item.href}
+                      className="inline-flex items-center gap-3 rounded-full border border-[#121212]/10 bg-white/40 px-6 py-3 text-sm font-medium text-[#121212] transition-colors duration-300 hover:border-[#8BA888]/80 hover:bg-[#8BA888] hover:text-white hover:shadow-[0_18px_38px_rgba(18,18,18,0.18)]"
+                    >
+                      {item.cta} <span aria-hidden>→</span>
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              ))}
+            </motion.div>
+
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── Standards ── */}
+      <FadeOutSection>
+        <section className="px-6 py-24">
+          <div className="mx-auto w-full max-w-7xl">
+
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-16 max-w-4xl">
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
+                The Engineering Standard
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="mb-6 text-4xl font-medium tracking-tight md:text-5xl">
+                Corporate-Grade Discipline.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="max-w-2xl text-base leading-relaxed text-[#121212]/55 md:text-lg">
+                We do not just write code. We enforce strict development protocols to guarantee zero-friction performance.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              className="grid gap-8 md:grid-cols-3"
+              variants={staggerWrap}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+            >
+              {standards.map((item) => (
+                <motion.div
+                  key={item.num}
+                  variants={cardReveal}
+                  whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
+                  className="group relative rounded-[2.5rem] border border-white/50 bg-white/40 p-12 shadow-[0_20px_50px_rgba(0,0,0,0.08)] backdrop-blur-md transition-colors duration-500 hover:border-[#121212]/18 hover:bg-white/80"
+                >
+                  <div className="absolute right-0 top-0 p-8 opacity-[0.08] transition-opacity group-hover:opacity-30">
+                    <span className="text-4xl font-medium text-[#121212]">{item.num}</span>
+                  </div>
+                  <h3 className={`mb-6 text-sm font-bold uppercase tracking-widest ${item.color}`}>Pillar {item.num}</h3>
+                  <h4 className="mb-6 text-2xl font-medium tracking-tight">{item.title}</h4>
+                  <div className="mb-6 h-px w-8 bg-[#121212]/10" />
+                  <p className="text-sm leading-relaxed text-[#121212]/55">{item.copy}</p>
+                </motion.div>
+              ))}
+            </motion.div>
+
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── CTA ── */}
+      <FadeOutSection>
+        <section className="px-6 pb-20 pt-36 md:pt-44">
+          <div className="mx-auto w-full max-w-7xl">
+            <motion.div
+              variants={panelReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+              className="relative overflow-hidden rounded-[2.5rem] p-14 text-center md:p-20"
+              style={{ background: "linear-gradient(135deg, #1a1e2a 0%, #141722 100%)" }}
+            >
+              <div className="pointer-events-none absolute left-1/4 top-0 h-80 w-80 rounded-full opacity-20 blur-[100px]" style={{ background: "radial-gradient(circle, #8BA888 0%, transparent 70%)" }} />
+              <div className="pointer-events-none absolute bottom-0 right-1/4 h-64 w-64 rounded-full opacity-15 blur-[90px]" style={{ background: "radial-gradient(circle, #D4A373 0%, transparent 70%)" }} />
+              <div className="pointer-events-none absolute inset-0 opacity-[0.04]" style={{ backgroundImage: "linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)", backgroundSize: "60px 60px" }} />
+
+              <motion.div
+                className="relative z-10"
+                variants={staggerWrap}
+                initial="hidden"
+                whileInView="visible"
+                viewport={VP}
+              >
+                <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">
+                  Ready to deploy
+                </motion.p>
+                <motion.h2 variants={fadeUp} className="mb-8 text-3xl font-medium tracking-tight text-white md:text-5xl">
+                  Ready to architect something that scales?
+                </motion.h2>
+                <motion.div variants={staggerItem} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
+                  <motion.div whileHover={{ y: -5, scale: 1.04, transition: btnSpring }}>
+                    <Link
+                      href="/contact?mode=custom#contact-inquiry"
+                      className="block rounded-full bg-[#8BA888] px-10 py-4 text-sm font-medium text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:border-white/70 hover:bg-white/15 hover:text-white hover:shadow-[0_22px_55px_rgba(255,255,255,0.12)]"
+                    >
+                      Contact Our Engineers
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ y: -5, scale: 1.04, transition: btnSpring }}>
+                    <Link
+                      href="/products"
+                      className="block rounded-full border border-white/15 px-10 py-4 text-sm text-white/70 transition-colors duration-300 hover:border-white/70 hover:bg-white/15 hover:text-white hover:shadow-[0_22px_55px_rgba(255,255,255,0.12)]"
+                    >
+                      See Our Products
+                    </Link>
+                  </motion.div>
+                </motion.div>
+                <motion.p variants={fadeUp} className="mt-8 text-sm text-white/25">
+                  hello@forgestacklabs.com · Engineered in Mangaluru, deploying globally.
+                </motion.p>
+              </motion.div>
+
+            </motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
+    </div>
+  );
+}
+

@@ -1,432 +1,389 @@
-"use client";
+﻿"use client";
 
-/**
- * FORGESTACK LABS — ABOUT PAGE
- * FounderCard update: Static Command logic
- * - Decrypt on hover (System Logic + The Roast)
- * - 3D cursor-tracking tilt
- * - Triad dimming: hovering Sriharsha dims the other two
- * - No pulse / status dots / "Vibe" language
- */
-
-import { motion, useScroll, useTransform, useSpring } from "framer-motion";
 import Link from "next/link";
-import { useRef, useEffect, useState } from "react";
+import { useRef } from "react";
+import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import SoftwareBlueprint3D from "@/components/SoftwareBlueprint3D";
-import FounderCard, { type Founder } from "@/components/FounderCard";
 
-const EASE_OUT = [0.215, 0.61, 0.355, 1] as const;
+const EASE = [0.215, 0.61, 0.355, 1] as const;
 
-/* ── FOUNDER DATA ─────────────────────────────────────────── */
-const FOUNDERS: Founder[] = [
+// ─── Variants ─────────────────────────────────────────────────────────────────
+
+const fadeUp: Variants = {
+  hidden: { opacity: 0, y: 36 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+};
+
+const fadeIn: Variants = {
+  hidden: { opacity: 0 },
+  visible: { opacity: 1, transition: { duration: 0.9, ease: EASE } },
+};
+
+const staggerWrap: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.11, delayChildren: 0.05 } },
+};
+
+const staggerItem: Variants = {
+  hidden: { opacity: 0, y: 32 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
+};
+
+const cardReveal: Variants = {
+  hidden: { opacity: 0, y: 44, scale: 0.97 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.72, ease: EASE },
+  },
+};
+
+const heroWrap: Variants = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.12 } },
+};
+
+const heroItem: Variants = {
+  hidden: { opacity: 0, y: 28 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
+};
+
+const statItem: Variants = {
+  hidden: { opacity: 0, scale: 0.88, y: 16 },
+  visible: {
+    opacity: 1,
+    scale: 1,
+    y: 0,
+    transition: { type: "spring", stiffness: 260, damping: 22 },
+  },
+};
+
+const labelReveal: Variants = {
+  hidden: { opacity: 0, x: -18 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: EASE } },
+};
+
+const panelReveal: Variants = {
+  hidden: { opacity: 0, y: 56, scale: 0.98 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { duration: 0.85, ease: EASE },
+  },
+};
+
+// ─── Hover spring configs (same as home & products) ───────────────────────────
+const cardSpring = { type: "spring", stiffness: 220, damping: 18 } as const;
+const btnSpring  = { type: "spring", stiffness: 320, damping: 20 } as const;
+
+const VP = { once: false, margin: "-240px" } as const;
+
+// ─── FadeOutSection ───────────────────────────────────────────────────────────
+function FadeOutSection({ children }: { children: React.ReactNode }) {
+  const ref = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: ref,
+    offset: ["start start", "end start"],
+  });
+  const opacity = useTransform(scrollYProgress, [0.45, 0.9], [1, 0]);
+  const scale   = useTransform(scrollYProgress, [0.45, 0.9], [1, 0.94]);
+  const y       = useTransform(scrollYProgress, [0.45, 0.9], ["0px", "-40px"]);
+
+  return (
+    <div ref={ref}>
+      <motion.div style={{ opacity, scale, y, transformOrigin: "center top" }}>
+        {children}
+      </motion.div>
+    </div>
+  );
+}
+
+// ─── Data ─────────────────────────────────────────────────────────────────────
+const culture = [
   {
-    initial:   "S",
-    name:      "Sriharsha",
-    title:     "CEO · Systems Architect",
-    function_: "Logic & Strategy",
-    logic:
-      "Sriharsha maps the industrial blueprints. He authors the venture-vision and the system architecture in the same breath — strategy and schema, inseparably linked.",
-    roast:
-      "Holds twelve opinions about database normalisation before breakfast. Will rewrite the roadmap if the whiteboard marker runs out.",
-    footer:    "// git blame leads here. always.",
-    color:     "text-[#8BA888]",
-    accentHex: "#8BA888",
+    num: "01",
+    color: "text-[#8BA888]",
+    title: "In-House Excellence",
+    kicker: "Zero Outsourcing",
+    copy: "We completely reject the vibe-coder and outsourcing mentalities. Every line of code, every database schema, and every user interface is crafted entirely in-house by an elite, IIT-rooted leadership team and dedicated technical specialists.",
   },
   {
-    initial:   "H",
-    name:      "Hardhik",
-    title:     "CTO · Infrastructure Lead",
-    function_: "Operations & Data",
-    logic:
-      "Hardhik builds the indestructible foundations. PostgreSQL integrity, Dockerised environments, and uptime requirements are not aspirations — they are constraints he designs around.",
-    roast:
-      "Treats a 99.8% uptime report as a personal failure. His staging environment is more stable than most production deployments.",
-    footer:    "// if it's not in the schema, it doesn't exist.",
-    color:     "text-[#D4A373]",
-    accentHex: "#D4A373",
+    num: "02",
+    color: "text-[#D4A373]",
+    title: "Uncompromising Professionalism",
+    kicker: "Strict Delivery Discipline",
+    copy: "Elite output requires strict discipline. From senior architects to incoming interns, we enforce absolute professional accountability. Mandatory office presence, structured deliverable timelines, and rigorous peer code reviews ensure technical debt never compromises our products.",
   },
   {
-    initial:   "P",
-    name:      "Pulavarason",
-    title:     "COO · Interface Lead",
-    function_: "Interaction & UI Systems",
-    logic:
-      "Pulavarason engineers the layer between complex data and human intuition. Every pixel in the interface has a reason; every interaction has a contract.",
-    roast:
-      "Will spend forty minutes debating whether 0.5px or 1px border is correct, then be right. Considers 'it looks fine' a critical severity bug.",
-    footer:    "// border-radius is not a personality, yet here we are.",
-    color:     "text-[#121212]/50",
-    accentHex: "#121212",
+    num: "03",
+    color: "text-[#121212]/50",
+    title: "Design-First Execution",
+    kicker: "Premium Software Experience",
+    copy: "We believe enterprise software should not look like a 90s ERP system. We merge heavy-duty backend data processing with premium, high-contrast aesthetics. Our spatial glassmorphism brings a fluid, desktop-grade experience to everything we touch.",
   },
 ];
 
+const facts = [
+  { val: "2026", lab: "Incorporated" },
+  { val: "DPIIT", lab: "Recognized" },
+  { val: "0", lab: "Outsourcing" },
+  { val: "100%", lab: "In-House" },
+];
+
+// ─── Page ─────────────────────────────────────────────────────────────────────
 export default function AboutPage() {
-  const containerRef = useRef<HTMLDivElement>(null);
-  const [isMounted, setIsMounted] = useState(false);
-  const [hoveredFounder, setHoveredFounder] = useState<number | null>(null);
-
-  const { scrollYProgress } = useScroll({
-    target:  containerRef,
-    offset:  ["start start", "end end"],
-  });
-  const smooth = useSpring(scrollYProgress, { stiffness: 100, damping: 30, restDelta: 0.001 });
-
-  const heroOpacity = useTransform(smooth, [0, 0.10], [1, 0]);
-  const heroScale   = useTransform(smooth, [0, 0.10], [1, 0.97]);
-
-  useEffect(() => { setIsMounted(true); }, []);
-
-  const fadeUp = {
-    hidden:  { opacity: 0, y: 25 },
-    visible: (i: number) => ({
-      opacity: 1, y: 0,
-      transition: { delay: 0.1 * i, duration: 0.8, ease: EASE_OUT },
-    }),
-  };
-
-  const revealProps = {
-    initial:     { opacity: 0, y: 25 },
-    whileInView: { opacity: 1, y: 0 },
-    viewport:    { once: true, margin: "-80px" },
-    transition:  { duration: 0.8, ease: EASE_OUT },
-  };
-
-  const GLASS = `
-    relative overflow-hidden rounded-[2.5rem]
-    bg-white/40 backdrop-blur-3xl
-    border border-[0.5px] border-white/60
-    shadow-[0_20px_60px_rgba(0,0,0,0.09)]
-    hover:shadow-[0_32px_80px_rgba(0,0,0,0.13)]
-    transition-all duration-700
-  `;
-
-  const values = [
-    { num: "01", color: "text-[#8BA888]",    title: "We write what we mean.",        copy: "Every contract is typed. Every schema is versioned. Every decision is documented before it becomes code. Ambiguity is not a design choice — it is a defect." },
-    { num: "02", color: "text-[#D4A373]",    title: "Small is a strategy.",           copy: "We will never scale the team beyond the point where every engineer can own a critical path. Tight scope, full ownership, zero diffusion of accountability." },
-    { num: "03", color: "text-[#121212]/45", title: "Boring tech at the foundation.", copy: "We choose PostgreSQL over the database of the month. The data layer is not the place for experimentation. Reliability is earned through deliberate conservatism." },
-    { num: "04", color: "text-[#8BA888]",    title: "The client reads the spec.",     copy: "We don't hide complexity behind decks. Every partner receives a living technical document they can understand, challenge, and hold us accountable to." },
-    { num: "05", color: "text-[#D4A373]",    title: "Ship when it's correct.",        copy: "We negotiate scope before we negotiate deadlines. A system that ships wrong is more expensive than one that ships late. We say this plainly, upfront, always." },
-    { num: "06", color: "text-[#121212]/45", title: "Mangalore, operating globally.", copy: "Founded in Mangalore, India. Our timezone is an advantage — problems raised at close of business in San Francisco are resolved before your morning coffee." },
-  ];
-
-  const facts = [
-    { val: "2026", lab: "Year Founded"       },
-    { val: "3",    lab: "Founding Engineers" },
-    { val: "100%", lab: "Founder-Led"        },
-    { val: "0",    lab: "Subcontractors"     },
-    { val: "∞",    lab: "Uptime Obsession"   },
-    { val: "48hr", lab: "Response Guarantee" },
-  ];
-
-  if (!isMounted) return <div className="min-h-screen bg-[#F7F7F5]" />;
-
-  /* ── TRIAD LOGIC ──────────────────────────────────────────
-     Rule: hovering Sriharsha (index 0) dims BOTH others.
-     Hovering any other card dims the others as before.
-  ──────────────────────────────────────────────────────── */
-  const getIsTriad = (cardIndex: number): boolean => {
-    if (hoveredFounder === null) return false;
-    return hoveredFounder !== cardIndex;
-  };
+  const glass =
+    "relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-white/40 shadow-[0_20px_60px_rgba(0,0,0,0.09)] backdrop-blur-3xl";
 
   return (
-    <div
-      ref={containerRef}
-      className="relative pt-16 bg-[#F7F7F5] font-sans selection:bg-[#8BA888]/30 overflow-x-hidden"
-    >
-      {/* ── BACKGROUND ─────────────────────────────────────── */}
-      <SoftwareBlueprint3D />
+    <main className="relative min-h-screen bg-[#F7F7F5] pt-12 font-sans text-[#121212] selection:bg-[#8BA888]/30">
 
-      {/* Frost overlay */}
-      <div className="fixed inset-0 pointer-events-none z-0 backdrop-blur-[100px] bg-[#F7F7F5]/80" />
-
-      {/* ── HERO ────────────────────────────────────────────── */}
-      <motion.section
-        style={{ opacity: heroOpacity, scale: heroScale }}
-        className="relative h-screen flex flex-col items-center justify-center px-6 text-center z-10"
+      {/* Background — fade in on load */}
+      <motion.div
+        className="pointer-events-none fixed inset-0 -z-10"
+        variants={fadeIn}
+        initial="hidden"
+        animate="visible"
       >
-        <div className="max-w-5xl w-full">
-          <motion.p
-            custom={0} initial="hidden" animate="visible" variants={fadeUp}
-            className="text-[10px] md:text-xs uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-8"
-          >
-            About Forgestack Labs
-          </motion.p>
+        <SoftwareBlueprint3D />
+        <div className="absolute inset-0 bg-[#F7F7F5]/80 backdrop-blur-[100px]" />
+      </motion.div>
 
-          <motion.h1
-            custom={1} initial="hidden" animate="visible" variants={fadeUp}
-            className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-medium tracking-tight leading-[0.9] mb-10"
-          >
-            Built by
-            <br />
-            <span className="text-[#121212]/30 italic">Engineers,</span>
-            <br />
-            for&nbsp;Builders.
-          </motion.h1>
+      {/* ── Hero ── */}
+      <FadeOutSection>
+        <section className="mx-auto flex min-h-screen max-w-7xl flex-col items-center justify-center px-6 py-14 text-center">
+          <motion.div variants={heroWrap} initial="hidden" animate="visible" className="flex flex-col items-center">
 
-          <motion.p
-            custom={2} initial="hidden" animate="visible" variants={fadeUp}
-            className="max-w-2xl mx-auto text-lg md:text-xl font-normal leading-relaxed text-[#121212]/60 mb-12"
-          >
-            A founder-led technology studio based in Mangalore, India. We design and build
-            software systems that handle real operational complexity.
-          </motion.p>
+            <motion.p variants={heroItem} className="mb-8 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888] md:text-xs inline-flex items-center justify-center gap-3">
+              <span className="relative flex h-2 w-2 shrink-0">
+                <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-60" />
+                <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]" />
+              </span>
+              <span className="font-bold">Architects of Scale</span>
+            </motion.p>
 
-          <motion.div custom={3} initial="hidden" animate="visible" variants={fadeUp} className="flex justify-center">
-            <div className={`inline-flex flex-wrap justify-center divide-x divide-[#121212]/8 ${GLASS} overflow-hidden rounded-[2rem]`}>
-              {[
-                { val: "3",    lab: "Founding Engineers" },
-                { val: "2026", lab: "Established"        },
-                { val: "0",    lab: "Subcontractors"     },
-                { val: "100%", lab: "Founder-Led"        },
-              ].map(({ val, lab }) => (
-                <div key={lab} className="flex flex-col items-center px-7 py-5 gap-1">
-                  <span className="text-2xl md:text-3xl font-medium text-[#000000] tracking-tight leading-none">{val}</span>
-                  <span className="text-[9px] uppercase tracking-[0.35em] font-bold text-[#121212]/35 whitespace-nowrap">{lab}</span>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
+            <motion.h1 variants={heroItem} className="mb-10 text-5xl font-medium leading-[0.93] tracking-tight md:text-7xl lg:text-8xl">
+              We are builders.
+              <br />
+              <span className="text-[#121212]/30 italic">Not</span> middlemen.
+            </motion.h1>
 
-        <motion.div
-          initial={{ opacity: 0 }} animate={{ opacity: 1 }}
-          transition={{ delay: 2, duration: 1 }}
-          className="absolute bottom-10 left-1/2 -translate-x-1/2"
-        >
-          <div className="w-[1px] h-12 bg-gradient-to-b from-[#121212]/25 to-transparent" />
-        </motion.div>
-      </motion.section>
+            <motion.p variants={heroItem} className="mx-auto mb-12 max-w-3xl text-lg font-normal leading-relaxed text-[#121212]/60 md:text-xl">
+              Incorporated in 2026 and rooted in Mangaluru, Karnataka, Forgestack Labs was founded on a
+              singular premise: complex business bottlenecks require dedicated, in-house, corporate-grade engineering.
+            </motion.p>
 
-      <div className="relative z-10 w-full h-[0.5px] bg-gradient-to-r from-transparent via-[#121212]/10 to-transparent" />
-
-      {/* ── FOUNDER UNIT ────────────────────────────────────── */}
-      <section className="relative py-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-
-          <motion.div {...revealProps} className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-4">The Unit</p>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight">
-              Three nodes.<br />
-              <span className="text-[#121212]/25 italic">One system.</span>
-            </h2>
-          </motion.div>
-
-          {/* FounderCards — Static Command */}
-          <div className="flex flex-col md:flex-row justify-center gap-8 flex-wrap items-start">
-            {FOUNDERS.map((founder, i) => (
-              <motion.div
-                key={founder.name}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: i * 0.14, ease: EASE_OUT }}
-                className="flex-1 min-w-[280px] max-w-[340px]"
-              >
-                <FounderCard
-                  founder={founder}
-                  index={i}
-                  isTriad={getIsTriad(i)}
-                  onHover={(active) => setHoveredFounder(active ? i : null)}
-                />
-              </motion.div>
-            ))}
-          </div>
-
-          {/* Unit manifesto */}
-          <motion.div {...revealProps} className={`mt-10 ${GLASS} p-10 md:p-14`}>
-            <div className="grid md:grid-cols-3 gap-10 md:divide-x divide-[#121212]/5">
-              {[
-                { label: "No Middlemen",         copy: "Every project is handled by a founding engineer. You always know exactly who is writing your code and why." },
-                { label: "Mangalore-Based",       copy: "Founded in Mangalore, India. Operating globally. Startup-level ethic, product-lab discipline on every engagement." },
-                { label: "Quality Over Velocity", copy: "We'd rather miss a deadline than ship something we're not proud of. Every line written with the next engineer in mind." },
-              ].map((item, i) => (
-                <div key={item.label} className={i > 0 ? "md:pl-10" : ""}>
-                  <p className="text-[9px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-3">{item.label}</p>
-                  <div className="w-6 h-[0.5px] bg-[#121212]/10 mb-4" />
-                  <p className="text-sm font-normal leading-relaxed text-[#121212]/55">{item.copy}</p>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
-
-      <div className="relative z-10 w-full h-[0.5px] bg-gradient-to-r from-transparent via-[#121212]/10 to-transparent" />
-
-      {/* ── ORIGIN STORY ────────────────────────────────────── */}
-      <section className="relative py-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...revealProps} className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-4">Our Origin</p>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight">Why we exist.</h2>
-          </motion.div>
-
-          <div className="grid md:grid-cols-2 gap-8">
+            {/* Fact pills — hover float on the whole pill strip */}
             <motion.div
-              initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, ease: EASE_OUT }}
-              className={`${GLASS} p-12 flex flex-col`}
+              variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.09, delayChildren: 0.55 } } }}
+              initial="hidden"
+              animate="visible"
+              className="flex justify-center"
             >
-              <span className="text-6xl font-medium text-[#8BA888]/20 leading-none mb-6 select-none">"</span>
-              <p className="text-2xl md:text-3xl font-medium text-[#000000] tracking-tight leading-[1.2] flex-1">
-                We didn't start a company to build generic software faster. We started one to
-                build the right software, once, correctly.
-              </p>
-              <div className="mt-10 pt-6 border-t border-[#121212]/5">
-                <p className="text-[9px] uppercase tracking-[0.45em] font-bold text-[#121212]/30"
-                   style={{ fontFamily: "'Courier New', monospace" }}>
-                  Forgestack Labs · Est. 2026 · Mangalore, India
+              <motion.div
+                variants={statItem}
+                whileHover={{ y: -8, scale: 1.03, boxShadow: "0 28px 60px rgba(0,0,0,0.14)", transition: { type: "spring", stiffness: 300, damping: 18 } }}
+                style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.09)" }}
+                className={`${glass} inline-grid grid-cols-2 overflow-hidden rounded-[2rem] md:grid-cols-4`}
+              >
+                {facts.map(({ val, lab }) => (
+                  <div key={lab} className="flex flex-col items-center gap-1 border-[#121212]/5 px-7 py-5 md:border-r last:border-r-0">
+                    <span className="text-2xl font-medium leading-none tracking-tight text-[#000000] md:text-3xl">{val}</span>
+                    <span className="whitespace-nowrap text-[9px] font-bold uppercase tracking-[0.35em] text-[#121212]/35">{lab}</span>
+                  </div>
+                ))}
+              </motion.div>
+            </motion.div>
+
+          </motion.div>
+
+          <div className="absolute bottom-10 left-1/2 -translate-x-1/2">
+            <div className="h-12 w-px bg-gradient-to-b from-[#121212]/25 to-transparent" />
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── Our Identity ── */}
+      <FadeOutSection>
+        <section className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-16 max-w-4xl">
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
+                Our Identity
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="mb-6 text-4xl font-medium tracking-tight md:text-5xl">
+                A Pure Software Product Company
+              </motion.h2>
+              <motion.p variants={fadeUp} className="max-w-3xl text-base leading-relaxed text-[#121212]/60 md:text-lg">
+                We are not a digital agency. We are a deeply technical software engineering product company.
+                Our core focus is architecting and scaling our own proprietary B2B SaaS ecosystem, tools that
+                eliminate black-box operational failures in traditional industries.
+              </motion.p>
+            </motion.div>
+
+            <motion.div
+              className="grid gap-8 md:grid-cols-[1.05fr_0.95fr]"
+              variants={staggerWrap}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+            >
+              {/* Identity card 1 */}
+              <motion.div
+                variants={cardReveal}
+                whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
+                style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.09)" }}
+                className={`${glass} p-10 md:p-12`}
+              >
+                <motion.p variants={labelReveal} className="mb-6 text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4A373]">
+                  The Anti-Agency
+                </motion.p>
+                <h3 className="mb-6 text-3xl font-medium tracking-tight text-[#121212] md:text-4xl">
+                  Because we build for ourselves, we know exactly what it takes to build for you.
+                </h3>
+                <div className="mb-6 h-px w-12 bg-[#121212]/10" />
+                <p className="text-sm leading-relaxed text-[#121212]/60 md:text-base">
+                  When we partner with select enterprises for custom engineering, we apply the exact same
+                  uncompromising standards, architectural rigor, and DPIIT-recognized methodologies that power
+                  our own flagship products.
                 </p>
-              </div>
+              </motion.div>
+
+              {/* Identity card 2 */}
+              <motion.div
+                variants={cardReveal}
+                whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
+                style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.09)" }}
+                className={`${glass} p-10 md:p-12`}
+              >
+                <motion.p variants={labelReveal} className="mb-6 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">
+                  What This Means
+                </motion.p>
+                <div className="space-y-5">
+                  {[
+                    "No account-manager translation layer.",
+                    "No outsourced engineering hidden behind polished decks.",
+                    "No demo-only architecture that collapses under real operations.",
+                    "No compromise between technical integrity and interface quality.",
+                  ].map((item) => (
+                    <div key={item} className="flex items-start gap-3">
+                      <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-[#8BA888]/70" />
+                      <p className="text-sm leading-relaxed text-[#121212]/60">{item}</p>
+                    </div>
+                  ))}
+                </div>
+              </motion.div>
+            </motion.div>
+
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── Culture ── */}
+      <FadeOutSection>
+        <section className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-16 text-center">
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
+                The Forgestack Culture
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
+                How We Work
+              </motion.h2>
             </motion.div>
 
             <motion.div
-              initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true, margin: "-80px" }}
-              transition={{ duration: 0.8, delay: 0.15, ease: EASE_OUT }}
-              className={`${GLASS} p-12 flex flex-col gap-6`}
+              className="grid gap-8 md:grid-cols-3"
+              variants={staggerWrap}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
             >
-              {[
-                "We built Forgestack Labs after noticing the same pattern across industries: companies were paying agencies for software that looked done but wasn't built to last. Schemas without integrity constraints. APIs without typed contracts. Workable in demo. Catastrophic at scale.",
-                "Our answer was to stay small on purpose. Three founding engineers, each owning a full layer of the stack. No account managers translating your requirements into someone else's approximation.",
-                "Our flagship product — an intelligent fuel station and inventory management SaaS — is proof of the model. Built entirely in-house. Zero tolerance for data inconsistency. Deployed across multi-station networks with 99.9% uptime as the baseline requirement.",
-              ].map((para, i) => (
-                <div key={i}>
-                  <p className="text-sm font-normal leading-relaxed text-[#121212]/55">{para}</p>
-                  {i < 2 && <div className="w-8 h-[0.5px] bg-[#121212]/10 mt-6" />}
-                </div>
-              ))}
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      <div className="relative z-10 w-full h-[0.5px] bg-gradient-to-r from-transparent via-[#121212]/10 to-transparent" />
-
-      {/* ── VALUES ──────────────────────────────────────────── */}
-      <section className="relative py-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...revealProps} className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-4">What We Stand For</p>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight">
-              Six things we won't<br />
-              <span className="text-[#121212]/25 italic">negotiate on.</span>
-            </h2>
-          </motion.div>
-
-          <div className="grid gap-8 md:grid-cols-3">
-            {values.map((v, i) => (
-              <motion.div
-                key={v.num}
-                initial={{ opacity: 0, y: 25 }} whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true, margin: "-80px" }}
-                transition={{ duration: 0.8, delay: i * 0.1, ease: EASE_OUT }}
-                whileHover={{ y: -5, transition: { type: "spring", stiffness: 200, damping: 22 } }}
-                className={`${GLASS} p-12`}
-              >
-                <div className="absolute top-0 right-0 p-8 opacity-[0.07] select-none pointer-events-none">
-                  <span className="text-4xl font-normal text-[#121212]">{v.num}</span>
-                </div>
-                <h3 className={`text-sm uppercase tracking-widest font-bold mb-6 ${v.color}`}>{v.num}</h3>
-                <h4 className="text-xl font-medium mb-5 tracking-tight">{v.title}</h4>
-                <div className="w-6 h-[0.5px] bg-[#121212]/10 mb-5" />
-                <p className="text-sm font-normal leading-relaxed text-[#121212]/55">{v.copy}</p>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      <div className="relative z-10 w-full h-[0.5px] bg-gradient-to-r from-transparent via-[#121212]/10 to-transparent" />
-
-      {/* ── STUDIO FACTS ────────────────────────────────────── */}
-      <section className="relative py-32 px-6 z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div {...revealProps} className="mb-16">
-            <p className="text-[10px] uppercase tracking-[0.5em] font-bold text-[#8BA888] mb-4">Studio Facts</p>
-            <h2 className="text-4xl md:text-5xl font-medium tracking-tight">The numbers speak plainly.</h2>
-          </motion.div>
-          <motion.div {...revealProps} className={`${GLASS} overflow-hidden`}>
-            <div className="grid grid-cols-2 md:grid-cols-3 divide-x divide-y divide-[#121212]/5">
-              {facts.map(({ val, lab }) => (
+              {culture.map((item) => (
                 <motion.div
-                  key={lab}
-                  whileHover={{ backgroundColor: "rgba(139,168,136,0.04)", transition: { duration: 0.3 } }}
-                  className="flex flex-col items-center justify-center py-12 px-6 text-center gap-2 cursor-default"
+                  key={item.num}
+                  variants={cardReveal}
+                  whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
+                  style={{ boxShadow: "0 20px 60px rgba(0,0,0,0.09)" }}
+                  className={`${glass} group p-10 md:p-12`}
                 >
-                  <span className="text-3xl md:text-4xl font-medium text-[#000000] tracking-tight leading-none">{val}</span>
-                  <span className="text-[9px] uppercase tracking-[0.4em] font-bold text-[#121212]/30 leading-tight">{lab}</span>
+                  <div className="absolute right-0 top-0 p-8 opacity-10 transition-opacity group-hover:opacity-30">
+                    <span className="text-4xl font-normal text-[#121212]">{item.num}</span>
+                  </div>
+                  <p className={`mb-5 text-sm font-bold uppercase tracking-widest ${item.color}`}>{item.num}</p>
+                  <h3 className="mb-3 text-2xl font-medium tracking-tight text-[#121212]">{item.title}</h3>
+                  <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.35em] text-[#121212]/35">{item.kicker}</p>
+                  <div className="mb-6 h-px w-8 bg-[#121212]/10" />
+                  <p className="text-sm leading-relaxed text-[#121212]/60">{item.copy}</p>
                 </motion.div>
               ))}
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            </motion.div>
 
-      {/* ── DARK CTA ────────────────────────────────────────── */}
-      <section className="relative py-8 px-6 pb-16 z-10">
-        <div className="max-w-7xl mx-auto">
-          <motion.div
-            {...revealProps}
-            className="relative rounded-[2.5rem] overflow-hidden p-14 text-center"
-            style={{ background: "linear-gradient(135deg, #1a1e2a 0%, #141722 100%)" }}
-          >
-            <div className="absolute top-0 left-1/4 w-80 h-80 rounded-full blur-[100px] opacity-25 pointer-events-none"
-              style={{ background: "radial-gradient(circle, #8BA888 0%, transparent 70%)" }} />
-            <div className="absolute bottom-0 right-1/4 w-64 h-64 rounded-full blur-[90px] opacity-20 pointer-events-none"
-              style={{ background: "radial-gradient(circle, #D4A373 0%, transparent 70%)" }} />
-            <svg className="absolute inset-0 w-full h-full opacity-[0.025]">
-              <defs>
-                <pattern id="footer-grid" width="48" height="48" patternUnits="userSpaceOnUse">
-                  <path d="M 48 0 L 0 0 0 48" fill="none" stroke="white" strokeWidth="0.5" />
-                </pattern>
-              </defs>
-              <rect width="100%" height="100%" fill="url(#footer-grid)" />
-            </svg>
-            <div className="relative z-10">
-              <p className="text-[10px] uppercase tracking-[0.45em] font-bold text-[#8BA888] mb-4">Work with us</p>
-              <h3 className="text-3xl md:text-5xl font-medium tracking-tight text-white mb-5">
-                Serious problems deserve<br />serious engineers.
-              </h3>
-              <p className="text-sm text-white/50 max-w-lg mx-auto mb-10 leading-relaxed font-normal">
-                We respond to every serious inquiry within 48 hours. Send us your project scope,
-                timeline, and what success looks like.
-              </p>
-              <div className="flex flex-col sm:flex-row items-center justify-center gap-5">
-                <Link
-                  href="/partnerships"
-                  className="px-10 py-4 bg-[#8BA888] text-white rounded-full hover:bg-[#7A9777] transition-all duration-500 shadow-sm hover:shadow-lg hover:-translate-y-1 font-medium text-sm"
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── CTA ── */}
+      <FadeOutSection>
+        <section className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+            <motion.div
+              variants={panelReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+            >
+              <div
+                className="relative overflow-hidden rounded-[2.5rem] p-14 text-center md:p-20"
+                style={{ background: "linear-gradient(135deg, #1a1e2a 0%, #141722 100%)" }}
+              >
+                <div
+                  className="pointer-events-none absolute left-1/4 top-0 h-80 w-80 rounded-full blur-[100px] opacity-25"
+                  style={{ background: "radial-gradient(circle, #8BA888 0%, transparent 70%)" }}
+                />
+                <div
+                  className="pointer-events-none absolute bottom-0 right-1/4 h-64 w-64 rounded-full blur-[90px] opacity-20"
+                  style={{ background: "radial-gradient(circle, #D4A373 0%, transparent 70%)" }}
+                />
+                <motion.div
+                  className="relative z-10"
+                  variants={staggerWrap}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={VP}
                 >
-                  Propose a Partnership
-                </Link>
-                <a
-                  href="mailto:forgestacklabs@forgestacklabs.com"
-                  className="px-10 py-4 bg-white/10 text-white border border-white/20 rounded-full hover:bg-white/20 transition-all duration-500 text-sm font-normal"
-                >
-                  forgestacklabs@forgestacklabs.com →
-                </a>
+                  <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">
+                    Footer &amp; Conversion
+                  </motion.p>
+                  <motion.h2 variants={fadeUp} className="mb-8 text-3xl font-medium tracking-tight text-white md:text-5xl">
+                    Looking for a team that shares your obsession with scale?
+                  </motion.h2>
+                  <motion.div variants={staggerItem}>
+                    <motion.div
+                      whileHover={{ y: -5, scale: 1.04, transition: btnSpring }}
+                      className="inline-block"
+                    >
+                      <Link
+                        href="/contact?mode=custom#contact-inquiry"
+                        className="inline-flex rounded-full bg-[#8BA888]  px-10 py-4 text-sm text-white backdrop-blur-md transition-colors duration-300 hover:bg-white/20"
+                      >
+                        Commission Forgestack Labs
+                      </Link>
+                    </motion.div>
+                  </motion.div>
+                </motion.div>
               </div>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+            </motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
 
-      {/* Typographic sign-off */}
-      <section className="relative py-40 overflow-hidden z-10">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          viewport={{ once: true }}
-          transition={{ duration: 1.5, ease: "easeOut" }}
-          className="flex justify-center items-center"
-        >
-          <h2 className="text-[7vw] font-medium tracking-tighter text-[#121212]/5 whitespace-nowrap select-none">
-            Built by Engineers, for Builders.
-          </h2>
-        </motion.div>
-      </section>
-    </div>
+     
+
+    </main>
   );
 }

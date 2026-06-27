@@ -1,15 +1,17 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 
 const links = [
   { href: "/",              label: "Home" },
-  { href: "/technology",   label: "Products" },
-  { href: "/principles",   label: "Approach" },
-  { href: "/about",        label: "Studio" },
+  { href: "/products",   label: "Products" },
+  { href: "/about",        label: "The Lab" },
+  { href: "/careers",      label: "Career" },
+  { href: "/resources",   label: "Resources" },
 ];
 
 export default function Navbar() {
@@ -18,14 +20,14 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
-  // ── Scroll detection ────────────────────────────────────────────────────────
+  // â”€â”€ Scroll detection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // ── Lock body scroll when mobile menu is open ───────────────────────────────
+  // â”€â”€ Lock body scroll when mobile menu is open â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -49,13 +51,12 @@ export default function Navbar() {
           className="pointer-events-auto w-full transition-all duration-700 ease-in-out px-4 sm:px-6"
           style={{
             paddingTop: scrolled ? "12px" : "16px",
-            maxWidth: scrolled ? "860px" : "100%",
+            maxWidth: scrolled ? "960px" : "100%",
           }}
         >
           <motion.div
-            layout
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="flex items-center justify-between px-5 md:px-7 py-3.5 transition-all duration-700 ease-in-out"
+            className="relative flex items-center justify-between px-5 md:px-7 py-3.5 transition-all duration-700 ease-in-out"
             style={{
               background: scrolled
                 ? "rgba(255,255,255,0.55)"
@@ -68,6 +69,8 @@ export default function Navbar() {
                 : "0.5px solid rgba(255,255,255,0.35)",
               borderTop: "0.5px solid rgba(255,255,255,0.80)",
               borderLeft: "0.5px solid rgba(255,255,255,0.80)",
+              marginLeft: scrolled ? "70px" : "0px",
+              transitionProperty: "background, backdrop-filter, border-radius, border-color, box-shadow",
               boxShadow: scrolled
                 ? "0 8px 32px rgba(0,0,0,0.04), 0 1px 0 rgba(255,255,255,0.8) inset"
                 : "0 4px 16px rgba(0,0,0,0.02)",
@@ -77,34 +80,31 @@ export default function Navbar() {
               scale: 1.005,
             }}
           >
-            {/* ── BRAND ──────────────────────────────────────────────────── */}
+            {/* â”€â”€ BRAND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <Link
               href="/"
-              className="flex items-center gap-2.5 group"
-              aria-label="Forgestack Labs home"
+              className="flex items-center gap-1.5 group transition-all duration-700"
+              aria-label="ForgeStack Labs home"
             >
-              {/* Geometric mark */}
-              <span className="inline-flex h-7 w-7 items-center justify-center rounded-lg bg-[#222222] shrink-0 transition-transform duration-300 group-hover:rotate-3">
-                <svg viewBox="0 0 20 20" fill="none" className="h-[12px] w-[12px]">
-                  <rect x="3"  y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
-                  <rect x="11" y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
-                  <rect x="3"  y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
-                  <rect x="11" y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
-                </svg>
-              </span>
-
-              {/* Wordmark */}
-              <span
-                className="text-[13px] font-bold text-[#222222] tracking-[-0.01em] transition-all duration-500 group-hover:tracking-[0.04em]"
-                style={{ fontFamily: "'Georgia', serif" }}
-              >
-                FORGESTACK LABS
-              </span>
+              <Image
+                src="/logo.png"
+                alt="ForgeStack Labs"
+                width={1536}
+                height={1024}
+                priority
+                className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
+              />
+              {!scrolled && (
+                <span className="hidden text-sm font-semibold tracking-tight text-[#222222] transition-colors duration-300 group-hover:text-[#8BA888] sm:inline">
+                  ForgeStack Labs
+                </span>
+              )}
             </Link>
 
-            {/* ── DESKTOP NAV ────────────────────────────────────────────── */}
+            {/* â”€â”€ DESKTOP NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <nav
-              className="hidden md:flex items-center gap-1"
+              className="absolute left-1/2 hidden -translate-x-1/2 md:flex items-center gap-0"
+              style={{ left: scrolled ? "calc(50% - 35px)" : "50%" }}
               onMouseLeave={() => setHoveredLink(null)}
             >
               {links.map((link) => (
@@ -112,7 +112,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onMouseEnter={() => setHoveredLink(link.href)}
-                  className="relative px-4 py-2 text-[12px] font-medium tracking-wide transition-colors duration-200 z-10"
+                  className="relative px-3.5 py-2 text-[12px] font-medium tracking-wide transition-colors duration-200 z-10"
                   style={{
                     color: isActive(link.href)
                       ? "#222222"
@@ -148,9 +148,9 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* ── CTA + HAMBURGER ────────────────────────────────────────── */}
+            {/* â”€â”€ CTA + HAMBURGER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <div className="flex items-center gap-3">
-              {/* CTA — desktop only */}
+              {/* CTA â€” desktop only */}
               <motion.div className="hidden md:block" whileTap={{ scale: 0.97 }}>
                 <Link
                   href="/contact"
@@ -174,11 +174,11 @@ export default function Navbar() {
                       "translateY(0)";
                   }}
                 >
-                  Propose a Partnership
+                  Contact & Support
                 </Link>
               </motion.div>
 
-              {/* Hamburger — mobile only */}
+              {/* Hamburger â€” mobile only */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] rounded-full bg-black/[0.05] hover:bg-black/10 transition-colors"
@@ -205,7 +205,7 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* ── MOBILE SIDEBAR ───────────────────────────────────────────────────── */}
+      {/* â”€â”€ MOBILE SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
       <AnimatePresence>
         {isMenuOpen && (
           <div className="fixed inset-0 z-40 md:hidden">
@@ -241,17 +241,14 @@ export default function Navbar() {
                   onClick={() => setIsMenuOpen(false)}
                   className="flex items-center gap-2"
                 >
-                  <span className="inline-flex h-6 w-6 items-center justify-center rounded-md bg-[#222222]">
-                    <svg viewBox="0 0 20 20" fill="none" className="h-[10px] w-[10px]">
-                      <rect x="3"  y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
-                      <rect x="11" y="3"  width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
-                      <rect x="3"  y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.45" />
-                      <rect x="11" y="11" width="6" height="6" rx="1" fill="white" fillOpacity="0.9" />
-                    </svg>
-                  </span>
-                  <span className="text-[12px] font-bold tracking-[-0.01em] text-[#222222]">
-                    FORGESTACK LABS
-                  </span>
+                  <Image
+                    src="/logo.png"
+                    alt="ForgeStack Labs"
+                    width={1536}
+                    height={1024}
+                    priority
+                    className="h-8 w-auto object-contain"
+                  />
                 </Link>
 
                 <button
@@ -267,7 +264,7 @@ export default function Navbar() {
 
               {/* Nav links */}
               <nav className="flex flex-col px-4 py-6 gap-1 flex-1">
-                {[...links, { href: "/partnerships", label: "Partnerships" }].map((link, i) => (
+                {links.map((link, i) => (
                   <motion.div
                     key={link.href}
                     initial={{ opacity: 0, x: 16 }}
@@ -305,12 +302,12 @@ export default function Navbar() {
               {/* Sidebar CTA */}
               <div className="px-5 pb-5">
                 <Link
-                  href="/partnerships"
+                  href="/contact"
                   onClick={() => setIsMenuOpen(false)}
                   className="block w-full text-center text-[10px] uppercase tracking-[0.35em] font-medium text-white py-3.5 rounded-full transition-all duration-200 active:scale-[0.98]"
                   style={{ background: "#222222" }}
                 >
-                  Propose a Partnership
+                  Contact & Support
                 </Link>
               </div>
 
@@ -320,13 +317,13 @@ export default function Navbar() {
                   Get in Touch
                 </p>
                 <a
-                  href="mailto:forgestacklabs@forgestacklabs.com"
+                  href="mailto:hello@forgestacklabs.com"
                   className="block text-[11px] font-light text-[#222222]/45 hover:text-[#222222] transition-colors tracking-wide break-all"
                 >
-                  forgestacklabs@forgestacklabs.com
+                  hello@forgestacklabs.com
                 </a>
                 <p className="text-[10px] uppercase tracking-[0.25em] text-[#222222]/25 font-light">
-                  Mangalore · Global
+                  Mangaluru · Global
                 </p>
               </div>
             </motion.div>
@@ -336,3 +333,21 @@ export default function Navbar() {
     </>
   );
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

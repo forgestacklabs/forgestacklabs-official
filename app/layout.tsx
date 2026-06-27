@@ -122,7 +122,7 @@ export default function RootLayout({
     name: "ForgeStack Labs",
     alternateName: ["ForgeStack", "Forge Stack"],
     url: "https://forgestacklabs.com",
-    logo: "https://forgestacklabs.com/favicon.png",
+    logo: "https://forgestacklabs.com/logo.png",
 
     slogan: "When Vision Meets Precision",
     description:

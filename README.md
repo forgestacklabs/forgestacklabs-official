@@ -1,4 +1,4 @@
-# FORGESTACK LABS - Website
+﻿# FORGESTACK LABS - Website
 
 A sophisticated, founder-led technology studio website built with Next.js 14+, featuring glassmorphic design, advanced animations, and Notion integration for contact management.
 
@@ -9,21 +9,21 @@ A sophisticated, founder-led technology studio website built with Next.js 14+, f
 
 ---
 
-## 🌟 Features
+## ðŸŒŸ Features
 
-- ✨ **Stunning Intro Animation** - 5.5s particle-based animation with letter-by-letter reveal
-- 🎨 **Glassmorphic Design** - Frosted glass cards with backdrop blur effects
-- 🌊 **Animated Backgrounds** - Floating particles, gradient orbs, and mesh gradients
-- 📱 **Fully Responsive** - Mobile-first design that works on all devices
-- 🎭 **Framer Motion Animations** - Smooth scroll-triggered and hover animations
-- 📝 **Notion Integration** - Contact form submissions sent directly to Notion database
-- 🎯 **Active Navigation States** - Highlights current page with gradient underline
-- ♿ **Accessibility Ready** - Semantic HTML and ARIA-friendly structure
-- ⚡ **Performance Optimized** - Server components and optimized font loading
+- âœ¨ **Stunning Intro Animation** - 5.5s particle-based animation with letter-by-letter reveal
+- ðŸŽ¨ **Glassmorphic Design** - Frosted glass cards with backdrop blur effects
+- ðŸŒŠ **Animated Backgrounds** - Floating particles, gradient orbs, and mesh gradients
+- ðŸ“± **Fully Responsive** - Mobile-first design that works on all devices
+- ðŸŽ­ **Framer Motion Animations** - Smooth scroll-triggered and hover animations
+- ðŸ“ **Notion Integration** - Contact form submissions sent directly to Notion database
+- ðŸŽ¯ **Active Navigation States** - Highlights current page with gradient underline
+- â™¿ **Accessibility Ready** - Semantic HTML and ARIA-friendly structure
+- âš¡ **Performance Optimized** - Server components and optimized font loading
 
 ---
 
-## 🚀 Quick Start
+## ðŸš€ Quick Start
 
 ### Prerequisites
 
@@ -63,7 +63,7 @@ A sophisticated, founder-led technology studio website built with Next.js 14+, f
 
 ---
 
-## 🔧 Configuration
+## ðŸ”§ Configuration
 
 ### Notion Setup
 
@@ -73,7 +73,7 @@ A sophisticated, founder-led technology studio website built with Next.js 14+, f
 2. Click **"New integration"**
 3. Give it a name (e.g., "Forgestack Contact Form")
 4. Select your workspace
-5. Copy the **Internal Integration Token** → This is your `NOTION_API_KEY`
+5. Copy the **Internal Integration Token** â†’ This is your `NOTION_API_KEY`
 
 #### 2. Create a Database
 
@@ -117,58 +117,58 @@ NOTION_DATABASE_ID=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 ---
 
-## 📁 Project Structure
+## ðŸ“ Project Structure
 
 ```
 Company-site/
-├── app/                          # Next.js App Router
-│   ├── about/
-│   │   └── page.tsx             # About page
-│   ├── api/
-│   │   └── contact/
-│   │       └── route.ts         # Contact form API endpoint
-│   ├── contact/
-│   │   └── page.tsx             # Contact page
-│   ├── principles/
-│   │   └── page.tsx             # Approach/Principles page
-│   ├── privacy/
-│   │   └── page.tsx             # Privacy Policy page
-│   ├── technology/
-│   │   └── page.tsx             # Technology Stack page
-│   ├── terms/
-│   │   └── page.tsx             # Terms of Service page
-│   ├── layout.tsx               # Root layout with metadata
-│   └── page.tsx                 # Home page
-│
-├── components/                   # Reusable components
-│   ├── BackgroundField.tsx      # Animated background effects
-│   ├── Footer.tsx               # Site footer
-│   ├── Navigation.tsx           # Navigation header
-│   └── ReloadRedirect.tsx       # Redirect on reload utility
-│
-├── lib/                          # Utility libraries
-│   └── notion.ts                # Notion API configuration
-│
-├── styles/                       # Global styles
-│   └── globals.css              # Tailwind directives and global CSS
-│
-├── public/                       # Static assets
-│
-├── .env.local                    # Environment variables (create this)
-├── .eslintrc.json               # ESLint configuration
-├── next-env.d.ts
-├── next.config.js               # Next.js configuration
-├── package-lock.json
-├── package.json                 # Dependencies and scripts
-├── postcss.config.js
-├── tailwind.config.ts           # Tailwind CSS configuration
-├── tsconfig.json                # TypeScript configuration
-└── README.md                    # This file
+â”œâ”€â”€ app/                          # Next.js App Router
+â”‚   â”œâ”€â”€ about/
+â”‚   â”‚   â””â”€â”€ page.tsx             # About page
+â”‚   â”œâ”€â”€ api/
+â”‚   â”‚   â””â”€â”€ contact/
+â”‚   â”‚       â””â”€â”€ route.ts         # Contact form API endpoint
+â”‚   â”œâ”€â”€ contact/
+â”‚   â”‚   â””â”€â”€ page.tsx             # Contact page
+â”‚   â”œâ”€â”€ principles/
+â”‚   â”‚   â””â”€â”€ page.tsx             # Approach/Principles page
+â”‚   â”œâ”€â”€ privacy/
+â”‚   â”‚   â””â”€â”€ page.tsx             # Privacy Policy page
+â”‚   â”œâ”€â”€ technology/
+â”‚   â”‚   â””â”€â”€ page.tsx             # Technology Stack page
+â”‚   â”œâ”€â”€ terms/
+â”‚   â”‚   â””â”€â”€ page.tsx             # Terms of Service page
+â”‚   â”œâ”€â”€ layout.tsx               # Root layout with metadata
+â”‚   â””â”€â”€ page.tsx                 # Home page
+â”‚
+â”œâ”€â”€ components/                   # Reusable components
+â”‚   â”œâ”€â”€ BackgroundField.tsx      # Animated background effects
+â”‚   â”œâ”€â”€ Footer.tsx               # Site footer
+â”‚   â”œâ”€â”€ Navigation.tsx           # Navigation header
+â”‚   â””â”€â”€ ReloadRedirect.tsx       # Redirect on reload utility
+â”‚
+â”œâ”€â”€ lib/                          # Utility libraries
+â”‚   â””â”€â”€ notion.ts                # Notion API configuration
+â”‚
+â”œâ”€â”€ styles/                       # Global styles
+â”‚   â””â”€â”€ globals.css              # Tailwind directives and global CSS
+â”‚
+â”œâ”€â”€ public/                       # Static assets
+â”‚
+â”œâ”€â”€ .env.local                    # Environment variables (create this)
+â”œâ”€â”€ .eslintrc.json               # ESLint configuration
+â”œâ”€â”€ next-env.d.ts
+â”œâ”€â”€ next.config.js               # Next.js configuration
+â”œâ”€â”€ package-lock.json
+â”œâ”€â”€ package.json                 # Dependencies and scripts
+â”œâ”€â”€ postcss.config.js
+â”œâ”€â”€ tailwind.config.ts           # Tailwind CSS configuration
+â”œâ”€â”€ tsconfig.json                # TypeScript configuration
+â””â”€â”€ README.md                    # This file
 ```
 
 ---
 
-## 🎨 Design System
+## ðŸŽ¨ Design System
 
 ### Colors
 
@@ -240,7 +240,7 @@ const cardStyle = {
 
 ---
 
-## 🛠️ Built With
+## ðŸ› ï¸ Built With
 
 ### Core Technologies
 
@@ -263,7 +263,7 @@ const cardStyle = {
 
 ---
 
-## 📜 Available Scripts
+## ðŸ“œ Available Scripts
 
 ```bash
 # Development
@@ -283,7 +283,7 @@ npm run type-check   # Run TypeScript compiler check
 
 ---
 
-## 🌐 Pages
+## ðŸŒ Pages
 
 ### Public Pages
 
@@ -305,7 +305,7 @@ npm run type-check   # Run TypeScript compiler check
 
 ---
 
-## 🎯 Key Features Explained
+## ðŸŽ¯ Key Features Explained
 
 ### 1. Intro Animation
 
@@ -359,7 +359,7 @@ Form submissions are sent to Notion:
 
 ---
 
-## ⚡ Performance Optimization
+## âš¡ Performance Optimization
 
 ### Current Performance Issues
 
@@ -396,7 +396,7 @@ className="blur-xl"  // Instead of blur-[140px]
 
 ---
 
-## 🐛 Troubleshooting
+## ðŸ› Troubleshooting
 
 ### Common Issues
 
@@ -456,15 +456,15 @@ npm run type-check
 
 ---
 
-## 📝 License
+## ðŸ“ License
 
 This project is private and proprietary to Forgestack Labs LLP.
 
-**Copyright © 2026 Forgestack Labs LLP. All rights reserved.**
+**Copyright Â© 2026 Forgestack Labs LLP. All rights reserved.**
 
 ---
 
-## 👥 Team
+## ðŸ‘¥ Team
 
 **Forgestack Labs LLP** - Founder-led Technology Studio
 
@@ -477,9 +477,9 @@ This project is private and proprietary to Forgestack Labs LLP.
 
 ---
 
-## 📞 Contact
+## ðŸ“ž Contact
 
-**Email:** forgestacklabs@forgestacklabs.com  
+**Email:** hello@forgestacklabs.com  
 **Website:** https://forgestacklabs.com
 
 For questions about this codebase, please use the contact form on the website.
@@ -487,7 +487,7 @@ For questions about this codebase, please use the contact form on the website.
 
 ---
 
-## 🤝 Contributing
+## ðŸ¤ Contributing
 
 This is a private project. If you're a team member:
 
@@ -541,6 +541,7 @@ chore: Maintenance tasks
 
 ---
 
-**Built with ❤️ by Forgestack Labs**
+**Built with â¤ï¸ by Forgestack Labs**
 
 *When Vision Meets Precision*
+
