@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
 import BackgroundField from "@/components/BackgroundField";
@@ -6,93 +6,65 @@ import Footer from "@/components/Footer";
 import Navigation from "@/components/Navigation";
 import ReloadRedirect from "@/components/ReloadRedirect";
 
-/**
- * ✅ GOOD: Using next/font (best practice)
- * 🔴 REQUIRED: display:"swap" for LCP
- * ⚠ variable is fine, but must be applied properly
- */
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-sans",
-  display: "swap", // ✅ REQUIRED for fast text paint
+  display: "swap",
 });
 
+const siteUrl = "https://forgestacklabs.com";
+
 export const metadata: Metadata = {
-  /**
-   * ⚠ VERY LONG TITLE earlier caused snippet instability
-   * ✅ Cleaned but still strong
-   */
+  metadataBase: new URL(siteUrl),
   title: {
-    default: "ForgeStack Labs | When Vision Meets Precision",
-    template: "%s | ForgeStack Labs",
+    default: "Fuel Station Software & Custom Development | Forgestack Labs",
+    template: "%s | Forgestack Labs",
   },
-
-  /**
-   * ✅ GOOD description
-   * ⚠ Don’t change frequently (Google rewrites snippets if you do)
-   */
   description:
-    "We design, engineer, and scale reliable digital products for modern businesses—focused on performance, security, and long-term value.",
-
-  metadataBase: new URL("https://forgestacklabs.com"),
-
-  /**
-   * ⚠ SAFE BUT UNNECESSARY:
-   * Google ignores most keywords today.
-   * Keep brand + a few core terms only.
-   */
+    "Forgestack Labs builds offline-first fuel station management software and custom web applications for businesses in Mangaluru, Karnataka and beyond.",
   keywords: [
-    "ForgeStack Labs",
-    "ForgeStack",
-    "Forge Stack",
-    "software development",
-    "technology studio",
-    "precision engineering",
+    "fuel station management software",
+    "petrol pump management software India",
+    "offline-first fuel station POS",
+    "fuel inventory management software",
+    "custom software development Mangaluru",
+    "custom software development Mangalore",
+    "web application development Mangaluru",
+    "Forgestack Labs",
   ],
-
-  authors: [{ name: "ForgeStack Labs" }],
-  creator: "ForgeStack Labs",
-  publisher: "ForgeStack Labs",
-
-  applicationName: "ForgeStack Labs",
-
-  /**
-   * ✅ GOOD security referrer policy
-   */
+  authors: [{ name: "Forgestack Labs LLP", url: siteUrl }],
+  creator: "Forgestack Labs LLP",
+  publisher: "Forgestack Labs LLP",
+  applicationName: "Forgestack Labs",
+  category: "Technology",
   referrer: "origin-when-cross-origin",
-
-  /**
-   * ✅ GOOD Open Graph
-   * ⚠ Images must exist or OG may be ignored
-   */
+  alternates: {
+    canonical: "/",
+  },
   openGraph: {
-    title: "ForgeStack Labs | When Vision Meets Precision",
+    title: "Fuel Station Software & Custom Development | Forgestack Labs",
     description:
-      "We design, engineer, and scale reliable digital products for modern businesses—focused on performance, security, and long-term value.",
-    url: "https://forgestacklabs.com",
-    siteName: "ForgeStack Labs",
-    locale: "en_US",
+      "Offline-first fuel retail software and custom web application engineering from Mangaluru, Karnataka.",
+    url: "/",
+    siteName: "Forgestack Labs",
+    locale: "en_IN",
     type: "website",
     images: [
       {
         url: "/og-image.png",
         width: 1200,
         height: 630,
-        alt: "ForgeStack Labs – When Vision Meets Precision",
+        alt: "Forgestack Labs software engineering and Fuel OS",
       },
     ],
   },
-
-
   twitter: {
     card: "summary_large_image",
-    title: "ForgeStack Labs | When Vision Meets Precision",
+    title: "Fuel Station Software & Custom Development | Forgestack Labs",
     description:
-      "We design, engineer, and scale reliable digital products for modern businesses—focused on performance, security, and long-term value.",
+      "Offline-first fuel retail software and custom web application engineering from Mangaluru, Karnataka.",
     images: ["/og-image.png"],
   },
-
-
   robots: {
     index: true,
     follow: true,
@@ -104,75 +76,63 @@ export const metadata: Metadata = {
       "max-snippet": -1,
     },
   },
+  icons: {
+    icon: "/favicon.png",
+    apple: "/favicon.png",
+  },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
-  /**
-   * ✅ REQUIRED schema (Organization)
-   * ⚠ Earlier version had GeoCircle + fake coordinates → BAD
-   * This version is clean & trusted
-   */
-  const organizationSchema = {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "ForgeStack Labs",
-    alternateName: ["ForgeStack", "Forge Stack"],
-    url: "https://forgestacklabs.com",
-    logo: "https://forgestacklabs.com/logo.png",
+const structuredData = {
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "Organization",
+      "@id": `${siteUrl}/#organization`,
+      name: "Forgestack Labs LLP",
+      alternateName: ["Forgestack Labs", "ForgeStack Labs"],
+      url: siteUrl,
+      logo: `${siteUrl}/logo.png`,
+      email: "hello@forgestacklabs.com",
+      slogan: "When Vision Meets Precision",
+      description:
+        "Software engineering company building offline-first fuel station management software and custom web applications.",
+      address: {
+        "@type": "PostalAddress",
+        addressLocality: "Mangaluru",
+        addressRegion: "Karnataka",
+        addressCountry: "IN",
+      },
+      areaServed: [
+        { "@type": "City", name: "Mangaluru" },
+        { "@type": "State", name: "Karnataka" },
+        { "@type": "Country", name: "India" },
+      ],
+      sameAs: ["https://www.goodfirms.co/company/forgestack-labs-llp"],
+    },
+    {
+      "@type": "WebSite",
+      "@id": `${siteUrl}/#website`,
+      url: siteUrl,
+      name: "Forgestack Labs",
+      publisher: { "@id": `${siteUrl}/#organization` },
+      inLanguage: "en-IN",
+    },
+  ],
+};
 
-    slogan: "When Vision Meets Precision",
-    description:
-      "ForgeStack Labs builds precision-engineered software systems and digital products with long-term intent.",
-  };
-
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={inter.variable}>
+    <html lang="en-IN" className={inter.variable}>
       <head>
-        {/* ✅ REQUIRED canonical */}
-        <link rel="canonical" href="https://forgestacklabs.com" />
-
-        {/* ⚠ SAFE BUT OPTIONAL
-            Preconnect is fine, but unnecessary if using next/font only */}
-        {/* <link rel="preconnect" href="https://fonts.googleapis.com" /> */}
-        {/* <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" /> */}
-
-        {/* ❌ REMOVED ON PURPOSE
-            Loading Google Fonts via <link> conflicts with next/font
-            Causes LCP delay + CSP issues */}
-        {/* 
-        <link 
-          href="https://fonts.googleapis.com/css2?family=Playwrite+NZ+Basic:wght@100..400&display=swap" 
-          rel="stylesheet" 
-        /> 
-        */}
-
-        {/* ✅ Favicons */}
-      {/* ✅ Favicons */}
-<link rel="icon" href="/favicon.png" type="image/png" sizes="32x32" />
-<link rel="icon" href="/favicon.png" type="image/png" sizes="192x192" />
-<link rel="apple-touch-icon" href="/favicon.png" />
-
-
-        {/* ✅ REQUIRED schema injection */}
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(organizationSchema),
-          }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
       </head>
-
-      {/* 🔴 IMPORTANT
-          Apply font here, NOT inline on <h1> */}
-      <body className="bg-ink text-white font-sans">
+      <body className="bg-ink font-sans text-white">
         <ReloadRedirect />
         <BackgroundField />
-
-        <div className="relative z-10 min-h-screen flex flex-col">
+        <div className="relative z-10 flex min-h-screen flex-col">
           <Navigation />
           <main className="flex-1">{children}</main>
           <Footer />

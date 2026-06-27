@@ -1,14 +1,7 @@
-# Allow all search engines to crawl the site
-User-agent: *
+﻿User-agent: *
 Allow: /
+Disallow: /admin
+Disallow: /api/
+Disallow: /verify/
 
-# Sitemap location
 Sitemap: https://forgestacklabs.com/sitemap.xml
-
-# Crawl-delay (optional, can help with server load)
-# Crawl-delay: 1
-
-# Block specific paths if needed (examples)
-# Disallow: /admin/
-# Disallow: /api/
-# Disallow: /private/
