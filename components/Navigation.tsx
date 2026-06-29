@@ -17,6 +17,7 @@ const links = [
 export default function Navbar() {
   const pathname      = usePathname();
   const [scrolled, setScrolled]   = useState(false);
+  const [isDesktop, setIsDesktop] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
@@ -25,6 +26,16 @@ export default function Navbar() {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia("(min-width: 768px)");
+    const onChange = () => setIsDesktop(media.matches);
+
+    onChange();
+    media.addEventListener("change", onChange);
+
+    return () => media.removeEventListener("change", onChange);
   }, []);
 
   // â”€â”€ Lock body scroll when mobile menu is open â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
@@ -39,6 +50,8 @@ export default function Navbar() {
     return false;
   };
 
+  const compact = scrolled && isDesktop;
+
   return (
     <>
       <motion.header
@@ -50,28 +63,28 @@ export default function Navbar() {
         <div
           className="pointer-events-auto w-full transition-all duration-700 ease-in-out px-4 sm:px-6"
           style={{
-            paddingTop: scrolled ? "12px" : "16px",
-            maxWidth: scrolled ? "960px" : "100%",
+            paddingTop: compact ? "12px" : "16px",
+            maxWidth: compact ? "960px" : "100%",
           }}
         >
           <motion.div
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
             className="relative flex items-center justify-between px-5 md:px-7 py-3.5 transition-all duration-700 ease-in-out"
             style={{
-              background: scrolled
+              background: compact
                 ? "rgba(255,255,255,0.55)"
                 : "rgba(255,255,255,0.30)",
-              backdropFilter: scrolled ? "blur(20px)" : "blur(8px)",
-              WebkitBackdropFilter: scrolled ? "blur(20px)" : "blur(8px)",
-              borderRadius: scrolled ? "9999px" : "1.5rem",
-              border: scrolled
+              backdropFilter: compact ? "blur(20px)" : "blur(8px)",
+              WebkitBackdropFilter: compact ? "blur(20px)" : "blur(8px)",
+              borderRadius: compact ? "9999px" : "1.5rem",
+              border: compact
                 ? "0.5px solid rgba(255,255,255,0.60)"
                 : "0.5px solid rgba(255,255,255,0.35)",
               borderTop: "0.5px solid rgba(255,255,255,0.80)",
               borderLeft: "0.5px solid rgba(255,255,255,0.80)",
-              marginLeft: scrolled ? "70px" : "0px",
+              marginLeft: compact ? "70px" : "0px",
               transitionProperty: "background, backdrop-filter, border-radius, border-color, box-shadow",
-              boxShadow: scrolled
+              boxShadow: compact
                 ? "0 8px 32px rgba(0,0,0,0.04), 0 1px 0 rgba(255,255,255,0.8) inset"
                 : "0 4px 16px rgba(0,0,0,0.02)",
             }}
@@ -94,7 +107,7 @@ export default function Navbar() {
                 priority
                 className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
               />
-              {!scrolled && (
+              {!compact && (
                 <span className="hidden text-sm font-semibold tracking-tight text-[#222222] transition-colors duration-300 group-hover:text-[#8BA888] sm:inline">
                   ForgeStack Labs
                 </span>
@@ -104,7 +117,7 @@ export default function Navbar() {
             {/* â”€â”€ DESKTOP NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
             <nav
               className="absolute left-1/2 hidden -translate-x-1/2 md:flex items-center gap-0"
-              style={{ left: scrolled ? "calc(50% - 35px)" : "50%" }}
+              style={{ left: compact ? "calc(50% - 35px)" : "50%" }}
               onMouseLeave={() => setHoveredLink(null)}
             >
               {links.map((link) => (

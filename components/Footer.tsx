@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -114,8 +114,7 @@ export default function GlassFooter() {
 
             <div className="flex items-center gap-4">
               <a
-                href="mailto:hello@forgestacklabs.com"
-                className="relative text-[10px] font-medium uppercase tracking-widest text-[#121212] transition-colors duration-300 hover:text-[#8BA888]"
+                className="relative text-[10px] font-medium uppercase tracking-widest text-[#121212]"
               >
                 hello@forgestacklabs.com
               </a>
