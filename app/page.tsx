@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -187,7 +187,7 @@ export default function HomePage() {
 
       {/* ── Hero ── */}
       <FadeOutSection>
-        <section className="relative flex min-h-screen flex-col items-center justify-center px-6 pb-20 pt-20 text-center md:pt-24">
+        <section className="relative flex flex-col items-center justify-start px-6 pb-16 pt-32 text-center md:min-h-screen md:justify-center md:pb-20 md:pt-24">
           <div className="w-full max-w-6xl">
             <motion.div variants={heroWrap} initial="hidden" animate="visible" className="flex flex-col items-center">
 

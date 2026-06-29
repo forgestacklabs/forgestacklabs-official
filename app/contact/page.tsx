@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
@@ -185,7 +185,7 @@ export default function ContactPage() {
 
       {/* ── Hero ── */}
       <FadeOutSection>
-        <section className="relative z-10 mx-auto flex min-h-[66vh] max-w-7xl flex-col justify-center px-6 py-14 text-center">
+        <section className="relative z-10 mx-auto flex max-w-7xl flex-col justify-start px-6 pb-16 pt-32 text-center md:min-h-[66vh] md:justify-center md:py-14">
           <motion.div variants={heroWrap} initial="hidden" animate="visible" className="flex flex-col items-center">
             <motion.p variants={heroItem} className="mb-8 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888] md:text-xs inline-flex items-center justify-center gap-3">
               <span className="relative flex h-2 w-2 shrink-0">

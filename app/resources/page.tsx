@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -338,7 +338,7 @@ export default function ResourcesPage() {
 
       {/* ── Carousel ── */}
       <FadeOutSection>
-        <section className="flex min-h-[calc(82vh-4rem)] flex-col items-center justify-center px-4 pb-20 pt-8">
+        <section className="flex flex-col items-center justify-start px-4 pb-16 pt-8 md:min-h-[calc(82vh-4rem)] md:justify-center md:pb-20">
 
           {/* Carousel header */}
           <motion.div
