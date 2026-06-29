@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { FormEvent, useMemo, useState } from "react";
 
@@ -40,7 +40,7 @@ const initialForm: FormState = {
 const inputClass =
   "w-full rounded-2xl border border-[#121212]/10 bg-white/65 px-5 py-4 text-sm text-[#121212] outline-none transition focus:border-[#8BA888]/70 focus:bg-white";
 const labelClass = "mb-2 block text-[10px] font-bold uppercase tracking-[0.32em] text-[#121212]/45";
-const publicSiteUrl = (process.env.NEXT_PUBLIC_SITE_URL || "https://forgestacklabs.com").replace(/\/$/, "");
+const publicSiteUrl = "https://forgestacklabs.com";
 
 function qrImageUrl(url: string) {
   return `https://api.qrserver.com/v1/create-qr-code/?size=260x260&data=${encodeURIComponent(url)}`;

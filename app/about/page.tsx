@@ -4,6 +4,8 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import SoftwareBlueprint3D from "@/components/SoftwareBlueprint3D";
+import AnswerFAQ from "@/components/AnswerFAQ";
+import { customSoftwareAnswers } from "@/lib/aeo-content";
 
 const EASE = [0.215, 0.61, 0.355, 1] as const;
 
@@ -205,6 +207,42 @@ export default function AboutPage() {
         </section>
       </FadeOutSection>
 
+      <section id="company-facts" className="px-6 py-28" aria-labelledby="company-facts-heading">
+        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+          <div>
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">Company Facts</p>
+            <h2 id="company-facts-heading" className="text-4xl font-medium tracking-tight md:text-5xl">
+              What is Forgestack Labs?
+            </h2>
+          </div>
+          <div>
+            <p className="text-base leading-relaxed text-[#121212]/65 md:text-lg">
+              Forgestack Labs LLP is a DPIIT-recognized software engineering company incorporated in 2026 and based in Mangaluru, Karnataka, India.
+            </p>
+            <p className="mt-5 text-base leading-relaxed text-[#121212]/65 md:text-lg">
+              We build proprietary B2B SaaS products, including Forgestack Fuel OS, and engineer select custom web applications, backend systems, operational dashboards, and workflow platforms entirely in-house.
+            </p>
+            <dl className="mt-10 grid gap-x-8 gap-y-6 border-y border-[#121212]/10 py-8 sm:grid-cols-2">
+              <div>
+                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Legal Name</dt>
+                <dd className="mt-2 text-base font-medium">Forgestack Labs LLP</dd>
+              </div>
+              <div>
+                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Engineering Hub</dt>
+                <dd className="mt-2 text-base font-medium">Mangaluru, Karnataka</dd>
+              </div>
+              <div>
+                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Core Product</dt>
+                <dd className="mt-2 text-base font-medium">Forgestack Fuel OS</dd>
+              </div>
+              <div>
+                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Contact</dt>
+                <dd className="mt-2 text-base font-medium">hello@forgestacklabs.com</dd>
+              </div>
+            </dl>
+          </div>
+        </div>
+      </section>
       {/* ── Our Identity ── */}
       <FadeOutSection>
         <section className="px-6 py-28">
@@ -327,6 +365,13 @@ export default function AboutPage() {
         </section>
       </FadeOutSection>
 
+      <AnswerFAQ
+        id="about-answers"
+        eyebrow="Direct Answers"
+        title="What should businesses know about Forgestack Labs?"
+        introduction="Clear answers about our company, Mangaluru engineering hub, product work, custom software capabilities, and project enquiry process."
+        items={customSoftwareAnswers}
+      />
       {/* ── CTA ── */}
       <FadeOutSection>
         <section className="px-6 py-28">
@@ -387,3 +432,4 @@ export default function AboutPage() {
     </main>
   );
 }
+

@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Analytics } from "@vercel/analytics/next";
 import "@/styles/globals.css";
 import BackgroundField from "@/components/BackgroundField";
 import Footer from "@/components/Footer";
@@ -96,6 +97,14 @@ const structuredData = {
       slogan: "When Vision Meets Precision",
       description:
         "Software engineering company building offline-first fuel station management software and custom web applications.",
+      knowsAbout: [
+        "Fuel station management software",
+        "Offline-first software",
+        "Custom web application development",
+        "SaaS product engineering",
+        "Backend API development",
+        "Operational dashboards",
+      ],
       address: {
         "@type": "PostalAddress",
         addressLocality: "Mangaluru",
@@ -137,7 +146,12 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main className="flex-1">{children}</main>
           <Footer />
         </div>
+              <Analytics />
       </body>
     </html>
   );
 }
+
+
+
+

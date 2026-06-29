@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -52,8 +52,9 @@ export default function GlassFooter() {
                 A founder-led engineering lab. We build precise, durable software systems for partners who demand correctness over speed.
               </p>
 
-              <a
-                href="https://www.goodfirms.co/company/forgestack-labs-llp"
+              <div className="flex flex-wrap items-center gap-3">
+                <a
+                  href="https://www.goodfirms.co/company/forgestack-labs-llp"
                 target="_blank"
                 rel="noreferrer"
                 aria-label="Forgestack Labs GoodFirms profile"
@@ -68,6 +69,8 @@ export default function GlassFooter() {
                 />
                 <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#121212] transition-colors duration-300 group-hover:text-[#8BA888]">GoodFirms</span>
               </a>
+
+              </div>
 
               <div className="flex items-center gap-2">
                 <div className="h-1.5 w-1.5 rounded-full bg-[#10B981]" />
@@ -108,12 +111,31 @@ export default function GlassFooter() {
               © 2026 Forgestack Labs LLP · All Rights Reserved
             </p>
 
-            <a
-              
-              className="relative text-[10px] font-medium uppercase tracking-widest text-[#121212] transition-all duration-300"
-            >
-              hello@forgestacklabs.com
-            </a>
+
+            <div className="flex items-center gap-4">
+              <a
+                href="mailto:hello@forgestacklabs.com"
+                className="relative text-[10px] font-medium uppercase tracking-widest text-[#121212] transition-colors duration-300 hover:text-[#8BA888]"
+              >
+                hello@forgestacklabs.com
+              </a>
+              <a
+                href="https://www.linkedin.com/company/forgestack-labs-llp/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Forgestack Labs on LinkedIn"
+                title="LinkedIn"
+                className="inline-flex h-9 w-9 items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <Image
+                  src="/linked_in.png"
+                  alt="LinkedIn"
+                  width={256}
+                  height={256}
+                  className="h-8 w-8 object-contain mix-blend-multiply"
+                />
+              </a>
+            </div>
 
             <p
               className="text-[9px] uppercase font-bold tracking-[0.5em] text-[#121212]"
@@ -127,6 +149,8 @@ export default function GlassFooter() {
     </footer>
   );
 }
+
+
 
 
 

@@ -367,7 +367,7 @@ export default function ContactPage() {
         </section>
       </FadeOutSection>
 
-      {/* ── Support Portal ── */}
+{/* ── Support Portal ── */}
       <FadeOutSection>
         <section className="relative z-10 px-6 pb-44 pt-8">
           <motion.div
@@ -434,4 +434,6 @@ export default function ContactPage() {
     </main>
   );
 }
+
+
 

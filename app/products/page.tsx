@@ -1,6 +1,8 @@
 ﻿"use client";
 
 import Link from "next/link";
+import AnswerFAQ from "@/components/AnswerFAQ";
+import { fuelOsAnswers } from "@/lib/aeo-content";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 
@@ -315,6 +317,13 @@ export default function ProductsPage() {
         </section>
       </FadeOutSection>
 
+      <AnswerFAQ
+        id="fuel-os-answers"
+        eyebrow="Fuel OS Answers"
+        title="What should operators know about fuel station management software?"
+        introduction="Direct answers about Forgestack Fuel OS, offline operations, inventory control, and the teams the platform is designed to support."
+        items={fuelOsAnswers}
+      />
       {/* ── CTA ── */}
       <FadeOutSection>
         <section className="px-6 py-28">
@@ -359,4 +368,5 @@ export default function ProductsPage() {
     </main>
   );
 }
+
 

@@ -13,6 +13,40 @@ export const metadata: Metadata = {
   },
 };
 
+const resourcesSchema = {
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "@id": "https://forgestacklabs.com/resources#page",
+  url: "https://forgestacklabs.com/resources",
+  name: "Forgestack Labs Engineering Resources",
+  description: "Videos, architecture presentations, and engineering notes about Forgestack Labs and its offline-first fuel retail systems.",
+  about: [
+    "Offline-first software architecture",
+    "Fuel station management software",
+    "Fuel retail operations",
+    "Software engineering standards",
+  ],
+  hasPart: [
+    {
+      "@type": "VideoObject",
+      name: "Forgestack Labs Architecture Overview",
+      description: "An overview of how Forgestack approaches offline-first architecture for fuel retail operations.",
+      contentUrl: "https://forgestacklabs.com/gallery/demo_vedio.mp4",
+    },
+    {
+      "@type": "CreativeWork",
+      name: "Forgestack Labs Corporate and Architecture Overview",
+      description: "A visual architecture deck covering Forgestack Labs, Fuel OS, and the engineering model behind the platform.",
+      url: "https://forgestacklabs.com/resources#architecture-deck",
+    },
+  ],
+};
+
 export default function ResourcesLayout({ children }: { children: React.ReactNode }) {
-  return children;
+  return (
+    <>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(resourcesSchema) }} />
+      {children}
+    </>
+  );
 }

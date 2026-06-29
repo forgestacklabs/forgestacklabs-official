@@ -1,4 +1,4 @@
-﻿# Forgestack Labs Website
+# Forgestack Labs Website
 
 Official website for Forgestack Labs LLP, built with Next.js 14, TypeScript, Tailwind CSS, Framer Motion, and Notion.
 
@@ -52,7 +52,6 @@ npm run dev
 | `NOTION_DATABASE_ID` | Database ID for contact and project enquiries. |
 | `CERT_NOTION_DATABASE_ID` | Database ID for certificate records. |
 | `ADMIN_CERT_USERS` | Comma-separated admin credentials in `email|password` format. |
-| `NEXT_PUBLIC_SITE_URL` | Public website origin used in certificate verification QR codes. |
 
 Example:
 
@@ -61,7 +60,6 @@ NOTION_API_KEY=
 NOTION_DATABASE_ID=
 CERT_NOTION_DATABASE_ID=
 ADMIN_CERT_USERS=admin@example.com|replace-with-a-strong-password
-NEXT_PUBLIC_SITE_URL=https://forgestacklabs.com
 ```
 
 For multiple administrators:

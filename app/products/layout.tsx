@@ -1,4 +1,5 @@
 ﻿import type { Metadata } from "next";
+import { fuelOsAnswers } from "@/lib/aeo-content";
 
 export const metadata: Metadata = {
   title: "Fuel Station Management Software India",
@@ -55,12 +56,27 @@ const productSchema = {
   ],
 };
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  mainEntity: fuelOsAnswers.map((item) => ({
+    "@type": "Question",
+    name: item.question,
+    acceptedAnswer: {
+      "@type": "Answer",
+      text: item.answer,
+    },
+  })),
+};
 export default function ProductsLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }} />
       {children}
     </>
   );
 }
+
+
 
