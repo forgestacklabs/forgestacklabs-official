@@ -206,8 +206,8 @@ export default function HomePage() {
               </motion.h1>
 
               <motion.p variants={heroItem} className="mx-auto mb-12 max-w-3xl text-lg font-normal leading-relaxed text-[#121212]/55 md:text-xl">
-                ForgeStack Labs is a DPIIT-recognized software firm. We architect proprietary B2B SaaS
-                ecosystems and engineer corporate-grade custom web applications built for scale.
+                Forgestack Labs builds offline-first fuel station management software and custom web
+                applications for businesses in Mangaluru, Karnataka and beyond.
               </motion.p>
 
               <motion.div variants={heroItem} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
