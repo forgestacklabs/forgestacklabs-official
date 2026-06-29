@@ -296,7 +296,7 @@ export default function PrivacyPage() {
             <Clause id="c1" number="1.0" title="Introduction">
               <Subclause>
                 <motion.p variants={textBlock}>
-                  <strong className="font-semibold text-[#222222]/80">Forgestack Labs LLP</strong> ("Company", "we", "us", or "our") is a product-first technology company incorporated in India. We are committed to protecting the privacy, confidentiality, and security of personal and business data entrusted to us.
+                  <strong className="font-semibold text-[#222222]/80">Forgestack Labs LLP</strong> (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;) is a product-first technology company incorporated in India. We are committed to protecting the privacy, confidentiality, and security of personal and business data entrusted to us.
                 </motion.p>
                 <motion.p variants={textBlock} className="mt-3">
                   This Privacy Protocol governs the collection, use, storage, and disclosure of information in connection with:
@@ -432,4 +432,5 @@ export default function PrivacyPage() {
     </div>
   );
 }
+
 

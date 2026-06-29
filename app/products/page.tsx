@@ -161,7 +161,7 @@ export default function ProductsPage() {
             </motion.p>
 
             <motion.h1 variants={heroItem} className="mx-auto max-w-6xl text-5xl font-medium leading-[0.93] tracking-tight md:text-7xl lg:text-8xl">
-              The station's central nervous system.
+              The station&apos;s central nervous system.
             </motion.h1>
 
             <motion.p variants={heroItem} className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-[#121212]/60 md:text-xl">
@@ -330,7 +330,7 @@ export default function ProductsPage() {
                 Request Access
               </motion.p>
               <motion.h2 variants={fadeUp} className="mx-auto mb-6 max-w-4xl text-4xl font-medium tracking-tight md:text-5xl">
-                Ready to secure your station's operations?
+                Ready to secure your station&apos;s operations?
               </motion.h2>
               <motion.p variants={fadeUp} className="mx-auto mb-10 max-w-2xl text-sm leading-relaxed text-[#121212]/60 md:text-base">
                 Talk to Forgestack Labs about deploying an offline-first operating system for fuel retail operations.
@@ -359,3 +359,4 @@ export default function ProductsPage() {
     </main>
   );
 }
+

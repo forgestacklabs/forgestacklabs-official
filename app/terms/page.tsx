@@ -325,11 +325,11 @@ export default function TermsPage() {
 
               <Section id="s1" number="1.0" title="Introduction">
                 <Subsection>
-                  <motion.p variants={textBlock}>Welcome to <strong className="font-semibold text-[#222222]/80">Forgestack Labs LLP</strong> ("Company", "we", "us", or "our"). These Terms of Service ("Terms") govern your access to and use of:</motion.p>
+                  <motion.p variants={textBlock}>Welcome to <strong className="font-semibold text-[#222222]/80">Forgestack Labs LLP</strong> (&quot;Company&quot;, &quot;we&quot;, &quot;us&quot;, or &quot;our&quot;). These Terms of Service (&quot;Terms&quot;) govern your access to and use of:</motion.p>
                   <Bullet items={[
                     "Our website",
-                    <><strong className="font-medium text-[#222222]/75">"Products"</strong> or <strong className="font-medium text-[#222222]/75">"SaaS Products"</strong> — our software products and platforms</>,
-                    <><strong className="font-medium text-[#222222]/75">"Services"</strong> — our engineering, consulting, and development services</>,
+                    <><strong className="font-medium text-[#222222]/75">&quot;Products&quot;</strong> or <strong className="font-medium text-[#222222]/75">&quot;SaaS Products&quot;</strong> — our software products and platforms</>,
+                    <><strong className="font-medium text-[#222222]/75">&quot;Services&quot;</strong> — our engineering, consulting, and development services</>,
                   ]} />
                   <motion.p variants={textBlock} className="mt-3">By accessing or using our website, Products, or Services, you agree to be bound by these Terms and our Privacy Policy.</motion.p>
                   <motion.p variants={textBlock} className="mt-3 font-medium text-[#222222]/75">If you do not agree, you must immediately discontinue use of our website, Products, and Services.</motion.p>
@@ -338,7 +338,7 @@ export default function TermsPage() {
 
               <Section id="s2" number="2.0" title="Relationship with Other Agreements">
                 <Subsection>
-                  <motion.p variants={textBlock}>If you have executed a <strong className="font-medium text-[#222222]/75">Master Service Agreement ("MSA")</strong>, <strong className="font-medium text-[#222222]/75">Statement of Work ("SOW")</strong>, Subscription Order, or <strong className="font-medium text-[#222222]/75">Data Processing Addendum ("DPA")</strong> with Forgestack Labs LLP:</motion.p>
+                  <motion.p variants={textBlock}>If you have executed a <strong className="font-medium text-[#222222]/75">Master Service Agreement (&quot;MSA&quot;)</strong>, <strong className="font-medium text-[#222222]/75">Statement of Work (&quot;SOW&quot;)</strong>, Subscription Order, or <strong className="font-medium text-[#222222]/75">Data Processing Addendum (&quot;DPA&quot;)</strong> with Forgestack Labs LLP:</motion.p>
                   <Bullet items={[
                     "Those documents shall govern your relationship with us.",
                     <><strong className="font-medium text-[#222222]/75">Order of precedence:</strong> MSA → DPA → SOW / Subscription Order → These Terms.</>,
@@ -401,7 +401,7 @@ export default function TermsPage() {
                   <motion.p variants={textBlock}>We grant you a limited, non-exclusive, non-transferable, revocable license to use the SaaS Products solely for <strong className="font-medium text-[#222222]/75">internal business purposes</strong>.</motion.p>
                 </Subsection>
                 <Subsection title="6.2 Data Ownership & Processing">
-                  <motion.p variants={textBlock}>You retain ownership of all data you upload or generate within the SaaS Products (<strong className="font-medium text-[#222222]/75">"Customer Data"</strong>).</motion.p>
+                  <motion.p variants={textBlock}>You retain ownership of all data you upload or generate within the SaaS Products (<strong className="font-medium text-[#222222]/75">&quot;Customer Data&quot;</strong>).</motion.p>
                   <motion.p variants={textBlock} className="mt-2">You grant Forgestack Labs LLP the right to process Customer Data solely to provide and maintain the Services.</motion.p>
                   <motion.p variants={textBlock} className="mt-2">Data processing obligations are governed by our DPA and Privacy Policy.</motion.p>
                 </Subsection>
@@ -424,7 +424,7 @@ export default function TermsPage() {
               <Section id="s9" number="9.0" title="Warranties & Disclaimers">
                 <Subsection>
                   <Bullet items={[
-                    <><strong className="font-medium text-[#222222]/75">"AS IS"</strong> and <strong className="font-medium text-[#222222]/75">"AS AVAILABLE"</strong> — SaaS Products are provided without guarantee of fitness for a particular purpose.</>,
+                    <><strong className="font-medium text-[#222222]/75">&quot;AS IS&quot;</strong> and <strong className="font-medium text-[#222222]/75">&quot;AS AVAILABLE&quot;</strong> — SaaS Products are provided without guarantee of fitness for a particular purpose.</>,
                     "We do not warrant uninterrupted or error-free operation.",
                     "No warranties are provided except as expressly stated in writing.",
                   ]} />
@@ -489,4 +489,5 @@ export default function TermsPage() {
     </div>
   );
 }
+
 
