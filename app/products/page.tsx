@@ -151,7 +151,7 @@ export default function ProductsPage() {
 
       {/* ── Hero ── */}
       <FadeOutSection>
-        <section className="relative mx-auto flex max-w-7xl flex-col justify-start px-6 pb-16 pt-32 text-center md:min-h-screen md:justify-center md:py-14">
+        <section className="relative mx-auto flex max-w-7xl flex-col justify-start px-6 pb-16 pt-24 text-center md:min-h-screen md:justify-center md:py-14">
           <motion.div variants={heroWrap} initial="hidden" animate="visible" className="flex flex-col items-center">
 
             <motion.p variants={heroItem} className="mb-8 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888] md:text-xs inline-flex items-center justify-center gap-3">
