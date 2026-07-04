@@ -1,4 +1,4 @@
-﻿import { Client } from "@notionhq/client";
+import { Client } from "@notionhq/client";
 import { randomBytes } from "crypto";
 import { mkdir, readFile, writeFile } from "fs/promises";
 import path from "path";
@@ -166,24 +166,4 @@ export async function findCertificate(serial: string) {
 
   const records = await readCertificatesFromFile();
   return records.find((record) => record.serial.toUpperCase() === normalized) || null;
-}
-
-export function hasAdminUsers() {
-  return Boolean(process.env.ADMIN_CERT_USERS?.trim());
-}
-
-export function isAdminCredential(email: string | null | undefined, password: string | null | undefined) {
-  const users = process.env.ADMIN_CERT_USERS;
-  if (!users || !email || !password) return false;
-
-  const normalizedEmail = email.trim().toLowerCase();
-  return users
-    .split(",")
-    .map((entry) => entry.trim())
-    .filter(Boolean)
-    .some((entry) => {
-      const [storedEmail, ...passwordParts] = entry.split("|");
-      const storedPassword = passwordParts.join("|");
-      return storedEmail.trim().toLowerCase() === normalizedEmail && storedPassword === password;
-    });
 }

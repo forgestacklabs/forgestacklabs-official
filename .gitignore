@@ -1,6 +1,33 @@
-﻿node_modules/
+# Dependencies
+node_modules/
+
+# Next.js and TypeScript build output
 .next/
 out/
-.env
-.env.local
+*.tsbuildinfo
+next-env.d.ts
+
+# Environment files (keep the documented template)
+.env*
+!.env.example
+
+# Local development and package-manager logs
 .dev-server*.log
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Tests and deployments
+coverage/
+.vercel/
+
+# Editors and operating systems
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Internal planning documents
+docs/forgeos-v1.md

@@ -1,26 +1,29 @@
 "use client";
 
-import { useEffect ,useRef} from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useEffect, useRef } from "react";
+import { usePathname, useRouter } from "next/navigation";
+
+const refreshSafePrefixes = ["/admin", "/forgeos", "/verify"];
 
 export default function ReloadRedirect() {
   const router = useRouter();
   const pathname = usePathname();
-  const hasRun=useRef(false);
+  const hasRun = useRef(false);
+
   useEffect(() => {
-  if(hasRun.current){
-    return;
-  }
-  hasRun.current=true;
+    if (hasRun.current) return;
+    hasRun.current = true;
 
-    const navigation = performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming;
-    const isReload = navigation?.type === 'reload';
+    const isRefreshSafeRoute = refreshSafePrefixes.some((prefix) => pathname === prefix || pathname.startsWith(`${prefix}/`));
+    if (isRefreshSafeRoute) return;
 
-    // If it's a reload and not already on home page, redirect to home
-    if (isReload && pathname !== '/') {
-      router.replace('/');
+    const navigation = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+    const isReload = navigation?.type === "reload";
+
+    if (isReload && pathname !== "/") {
+      router.replace("/");
     }
-  }, [pathname,router]);
+  }, [pathname, router]);
 
   return null;
 }

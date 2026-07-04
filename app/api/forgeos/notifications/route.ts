@@ -1,0 +1,6 @@
+import { NextResponse } from "next/server";
+import { getAdminSession, hasAdminAuthConfig, missingAdminAuthConfigMessage } from "@/lib/adminAuth";
+import { markForgeNotificationsRead, readForgeNotifications } from "@/lib/forgeosNotifications";
+const unauthorized = () => NextResponse.json({ error: "Please login from ForgeOS first." }, { status: 401 });
+export async function GET(request: Request) { if (!hasAdminAuthConfig()) return NextResponse.json({ error: missingAdminAuthConfigMessage() }, { status: 500 }); const session = getAdminSession(request); if (!session) return unauthorized(); try { return NextResponse.json({ notifications: await readForgeNotifications(session.role, session.email) }); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to load notifications." }, { status: 500 }); } }
+export async function PATCH(request: Request) { if (!hasAdminAuthConfig()) return NextResponse.json({ error: missingAdminAuthConfigMessage() }, { status: 500 }); const session = getAdminSession(request); if (!session) return unauthorized(); try { await markForgeNotificationsRead(session.role, session.email); return NextResponse.json({ success: true }); } catch (error) { return NextResponse.json({ error: error instanceof Error ? error.message : "Unable to update notifications." }, { status: 500 }); } }

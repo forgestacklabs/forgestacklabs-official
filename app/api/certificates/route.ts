@@ -1,46 +1,32 @@
 ﻿import { NextResponse } from "next/server";
-import {
-  createCertificate,
-  hasAdminUsers,
-  isAdminCredential,
-  readCertificates,
-  type CertificateInput,
-} from "@/lib/certificates";
+import { getAdminSession, hasAdminAuthConfig, missingAdminAuthConfigMessage } from "@/lib/adminAuth";
+import { createCertificate, readCertificates, type CertificateInput } from "@/lib/certificates";
 
 type RequestBody = Partial<CertificateInput> & {
-  adminEmail?: string;
-  password?: string;
-  intent?: "login" | "create";
+  intent?: "create";
 };
 
-function missingAdminUsersResponse() {
-  return NextResponse.json({ error: "ADMIN_CERT_USERS is not configured." }, { status: 500 });
+function missingAdminAuthResponse() {
+  return NextResponse.json({ error: missingAdminAuthConfigMessage() }, { status: 500 });
 }
 
 function unauthorizedResponse() {
-  return NextResponse.json({ error: "Invalid admin email or password." }, { status: 401 });
+  return NextResponse.json({ error: "Please login from the admin page first." }, { status: 401 });
 }
 
 export async function GET(request: Request) {
-  if (!hasAdminUsers()) return missingAdminUsersResponse();
-
-  const adminEmail = request.headers.get("x-admin-email");
-  const password = request.headers.get("x-admin-password");
-  if (!isAdminCredential(adminEmail, password)) return unauthorizedResponse();
+  if (!hasAdminAuthConfig()) return missingAdminAuthResponse();
+  if (!getAdminSession(request)) return unauthorizedResponse();
 
   const records = await readCertificates();
   return NextResponse.json({ records });
 }
 
 export async function POST(request: Request) {
-  if (!hasAdminUsers()) return missingAdminUsersResponse();
+  if (!hasAdminAuthConfig()) return missingAdminAuthResponse();
+  if (!getAdminSession(request)) return unauthorizedResponse();
 
   const body = (await request.json()) as RequestBody;
-  if (!isAdminCredential(body.adminEmail, body.password)) return unauthorizedResponse();
-
-  if (body.intent === "login") {
-    return NextResponse.json({ ok: true });
-  }
 
   if (!body.name || !body.email || !body.certificateType || !body.role || !body.issuedOn) {
     return NextResponse.json({ error: "Missing required certificate details." }, { status: 400 });

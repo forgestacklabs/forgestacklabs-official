@@ -1,7 +1,8 @@
-﻿"use client";
+"use client";
 
 import Image from "next/image";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NAV_COLS = [
   {
@@ -28,6 +29,10 @@ const NAV_COLS = [
 ];
 
 export default function GlassFooter() {
+  const pathname = usePathname();
+
+  if (pathname.startsWith("/forgeos")) return null;
+
   return (
     <footer className="relative z-10 bg-[#F7F7F5] px-6 pb-6 pt-0">
       <div className="relative overflow-hidden rounded-[2.5rem] border border-white/60 bg-white/62 p-12 shadow-[0_20px_60px_rgba(0,0,0,0.09)] backdrop-blur-3xl md:p-16">
