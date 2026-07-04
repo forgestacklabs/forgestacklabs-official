@@ -1,6 +1,6 @@
 ﻿import { NextResponse } from "next/server";
 
-const baseUrl = "https://forgestacklabs.com";
+const baseUrl = "https://www.forgestacklabs.com";
 
 const pages = [
   { path: "", changefreq: "weekly", priority: "1.0" },

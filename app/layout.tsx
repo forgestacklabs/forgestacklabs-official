@@ -13,7 +13,7 @@ const inter = Inter({
   display: "swap",
 });
 
-const siteUrl = "https://forgestacklabs.com";
+const siteUrl = "https://www.forgestacklabs.com";
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

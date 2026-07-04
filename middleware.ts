@@ -7,9 +7,9 @@ const wwwHost = `www.${apexHost}`;
 export function middleware(request: NextRequest) {
   const host = request.headers.get("host") || "";
 
-  if (host === wwwHost) {
+  if (host === apexHost) {
     const url = request.nextUrl.clone();
-    url.host = apexHost;
+    url.host = wwwHost;
     return NextResponse.redirect(url, 301);
   }
 
