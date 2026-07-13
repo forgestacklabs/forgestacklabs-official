@@ -339,7 +339,7 @@ export default function ResourcesPage() {
 
       {/* ── Carousel ── */}
       <FadeOutSection>
-        <section className="flex flex-col items-center justify-start px-4 pb-16 pt-8 md:min-h-[calc(82vh-4rem)] md:justify-center md:pb-20">
+        <section className="flex flex-col items-center justify-start px-4 pb-16 pt-12 md:min-h-[calc(82vh-4rem)] md:justify-center md:pb-20">
 
           {/* Carousel header */}
           <motion.div
@@ -347,7 +347,7 @@ export default function ResourcesPage() {
             initial="hidden"
             whileInView="visible"
             viewport={VP}
-            className="mb-6 text-center"
+            className="mb-12 text-center md:mb-16"
           >
             <motion.p variants={labelReveal} className="mb-3 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
               Presentation Deck
