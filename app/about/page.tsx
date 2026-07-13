@@ -1,8 +1,8 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
-import { useRef } from "react";
-import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import { motion, useScroll, useSpring, useTransform,useMotionValueEvent, Variants } from "framer-motion";
+import { useRef, useState } from "react";
 import SoftwareBlueprint3D from "@/components/SoftwareBlueprint3D";
 import AnswerFAQ from "@/components/AnswerFAQ";
 import { customSoftwareAnswers } from "@/lib/aeo-content";
@@ -133,7 +133,144 @@ const facts = [
   { val: "0", lab: "Outsourcing" },
   { val: "100%", lab: "In-House" },
 ];
+const timeline = [
+  ["2026", "Incorporated in Mangaluru", "Forgestack Labs LLP was established as an in-house software engineering company in Karnataka."],
+  ["2026", "DPIIT recognition", "The company received startup recognition from the Government of India."],
+  ["2026", "Fuel operations platform", "Product engineering focused on an offline-first operating system for fuel retail workflows."],
+  ["Now", "Products and select partnerships", "We continue building proprietary software while accepting custom engagements where the operational fit is strong."],
+];
+const productPrinciples = [
+  ["Solve the operation", "Start with users, constraints, exceptions, and business invariants—not a feature checklist."],
+  ["Own the lifecycle", "Architecture, interface, deployment, observability, support, and iteration are one product responsibility."],
+  ["Measure usefulness", "A release matters only when it improves reliability, speed, control, or decision quality in real work."],
+];
+const leadershipPrinciples = [
+  ["Engineering standards", "Leaders define review gates, architectural boundaries, security expectations, and the definition of done."],
+  ["Direct ownership", "Decisions have named owners who remain accountable from discovery through operation and maintenance."],
+  ["Quality without theatre", "Quality is demonstrated through working software, test evidence, operational visibility, and honest risk communication."],
+];
 
+function CompanyTimeline() {
+  const timelineRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: timelineRef,
+    offset: ["start end", "end start"],
+  });
+  const progress = useSpring(scrollYProgress, { stiffness: 90, damping: 24, mass: 0.35 });
+
+  const [activeIndex, setActiveIndex] = useState(0);
+  useMotionValueEvent(progress, "change", (v) => {
+    const idx = Math.min(timeline.length - 1, Math.max(0, Math.floor(v * timeline.length)));
+    setActiveIndex(idx);
+  });
+
+  return (
+    <FadeOutSection>
+      <section id="company-timeline" className="px-6 py-28">
+        <div className="mx-auto max-w-6xl">
+
+          <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-20 max-w-2xl text-center mx-auto">
+            <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">Company timeline</motion.p>
+            <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">Built deliberately from day one.</motion.h2>
+            <motion.p variants={fadeUp} className="mt-6 leading-relaxed text-[#121212]/55">Follow the line through the decisions that established our product and engineering direction.</motion.p>
+          </motion.div>
+
+          <div ref={timelineRef} className="relative">
+            {/* center line — track + fill */}
+            <span aria-hidden className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-[#121212]/10 lg:block" />
+            <motion.span
+              aria-hidden
+              style={{ scaleY: progress, transformOrigin: "top" }}
+              className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-[#8BA888] lg:block"
+            />
+            {/* mobile line */}
+            <span aria-hidden className="absolute left-3 top-0 h-full w-px bg-[#121212]/10 lg:hidden" />
+            <motion.span
+              aria-hidden
+              style={{ scaleY: progress, transformOrigin: "top" }}
+              className="absolute left-3 top-0 h-full w-px bg-[#8BA888] lg:hidden"
+            />
+
+            <div className="space-y-6 lg:space-y-2">
+              {timeline.map(([year, title, copy], i) => {
+                const isActive = i === activeIndex;
+                const isPast = i < activeIndex;
+                const isRight = i % 2 === 1;
+
+                return (
+                  <motion.div
+                    key={`${year}-${title}`}
+                    initial={{ opacity: 0, y: 40 }}
+                    whileInView={{ opacity: 1, y: 0, transition: { duration: 0.7, ease: EASE } }}
+                    viewport={VP}
+                    className={`relative grid items-center gap-6 pl-12 lg:grid-cols-2 lg:gap-16 lg:pl-0 ${
+                      isRight ? "" : ""
+                    }`}
+                  >
+                    {/* node on the line */}
+                    <motion.span
+                      aria-hidden
+                      animate={{
+                        backgroundColor: isActive ? "#8BA888" : isPast ? "#8BA888" : "#F7F7F5",
+                        scale: isActive ? 1.4 : 1,
+                        boxShadow: isActive ? "0 0 0 8px rgba(139,168,136,0.18)" : "0 0 0 0px rgba(139,168,136,0)",
+                      }}
+                      transition={{ duration: 0.4, ease: EASE }}
+                      className="absolute left-3 top-1/2 z-10 h-3 w-3 -translate-x-1/2 -translate-y-1/2 rounded-full border-2 border-[#121212]/15 lg:left-1/2"
+                    />
+
+                    {/* ghost year number — placed opposite the card on desktop */}
+                    <div
+                      className={`pointer-events-none hidden select-none lg:block ${
+                        isRight ? "order-1 text-right pr-10" : "order-2 pl-10"
+                      }`}
+                    >
+                      <motion.span
+                        animate={{
+                          opacity: isActive ? 0.14 : 0.05,
+                          scale: isActive ? 1 : 0.94,
+                        }}
+                        transition={{ duration: 0.5, ease: EASE }}
+                        className="block text-[7rem] font-medium leading-none tracking-tight text-[#121212]"
+                      >
+                        {year}
+                      </motion.span>
+                    </div>
+
+                    {/* card */}
+                    <motion.div
+                      animate={{
+                        opacity: isActive ? 1 : 0.55,
+                        scale: isActive ? 1 : 0.96,
+                      }}
+                      transition={{ duration: 0.4, ease: EASE }}
+                      whileHover={{ scale: isActive ? 1.02 : 0.98, transition: cardSpring }}
+                      className={`rounded-[2rem] border p-7 backdrop-blur-2xl md:p-8 ${
+                        isRight ? "order-2 lg:order-2" : "order-1 lg:order-1"
+                      }`}
+                      style={{
+                        borderColor: isActive ? "rgba(139,168,136,0.4)" : "rgba(255,255,255,0.7)",
+                        backgroundColor: isActive ? "rgba(255,255,255,0.75)" : "rgba(255,255,255,0.45)",
+                        boxShadow: isActive ? "0 24px 70px rgba(139,168,136,0.16)" : "0 18px 60px rgba(0,0,0,.06)",
+                      }}
+                    >
+                      <div className="mb-6 flex items-center justify-between">
+                        <span className="text-sm font-bold tracking-[0.2em] text-[#8BA888]">{year}</span>
+                        <span className="text-xs text-[#121212]/25">0{i + 1}</span>
+                      </div>
+                      <h3 className="mb-3 text-2xl font-medium tracking-tight">{title}</h3>
+                      <p className="text-sm leading-relaxed text-[#121212]/55">{copy}</p>
+                    </motion.div>
+                  </motion.div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </section>
+    </FadeOutSection>
+  );
+}
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function AboutPage() {
   const glass =
@@ -207,43 +344,76 @@ export default function AboutPage() {
         </section>
       </FadeOutSection>
 
-      <section id="company-facts" className="px-6 py-28" aria-labelledby="company-facts-heading">
-        <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
-          <div>
-            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">Company Facts</p>
-            <h2 id="company-facts-heading" className="text-4xl font-medium tracking-tight md:text-5xl">
-              What is Forgestack Labs?
-            </h2>
+      {/* ── Company Facts ── */}
+      <FadeOutSection>
+        <section id="company-facts" className="px-6 py-28" aria-labelledby="company-facts-heading">
+          <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[0.9fr_1.1fr]">
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              <motion.p variants={labelReveal} className="mb-5 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">
+                Company Facts
+              </motion.p>
+              <motion.h2 variants={fadeUp} id="company-facts-heading" className="text-4xl font-medium tracking-tight md:text-5xl">
+                What is Forgestack Labs?
+              </motion.h2>
+            </motion.div>
+
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              <motion.p variants={fadeUp} className="text-base leading-relaxed text-[#121212]/65 md:text-lg">
+                Forgestack Labs LLP is a DPIIT-recognized software engineering company incorporated in 2026 and based in Mangaluru, Karnataka, India.
+              </motion.p>
+              <motion.p variants={fadeUp} className="mt-5 text-base leading-relaxed text-[#121212]/65 md:text-lg">
+                We build proprietary B2B SaaS products, including Forgestack Fuel OS, and engineer select custom web applications, backend systems, operational dashboards, and workflow platforms entirely in-house.
+              </motion.p>
+              <motion.dl
+                variants={{ hidden: {}, visible: { transition: { staggerChildren: 0.08 } } }}
+                className="mt-10 grid gap-x-8 gap-y-6 border-y border-[#121212]/10 py-8 sm:grid-cols-2"
+              >
+                <motion.div variants={staggerItem}>
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Legal Name</dt>
+                  <dd className="mt-2 text-base font-medium">Forgestack Labs LLP</dd>
+                </motion.div>
+                <motion.div variants={staggerItem}>
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Engineering Hub</dt>
+                  <dd className="mt-2 text-base font-medium">Mangaluru, Karnataka</dd>
+                </motion.div>
+                <motion.div variants={staggerItem}>
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Core Product</dt>
+                  <dd className="mt-2 text-base font-medium">Forgestack Fuel OS</dd>
+                </motion.div>
+                <motion.div variants={staggerItem}>
+                  <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Contact</dt>
+                  <dd className="mt-2 text-base font-medium">hello@forgestacklabs.com</dd>
+                </motion.div>
+              </motion.dl>
+            </motion.div>
           </div>
-          <div>
-            <p className="text-base leading-relaxed text-[#121212]/65 md:text-lg">
-              Forgestack Labs LLP is a DPIIT-recognized software engineering company incorporated in 2026 and based in Mangaluru, Karnataka, India.
-            </p>
-            <p className="mt-5 text-base leading-relaxed text-[#121212]/65 md:text-lg">
-              We build proprietary B2B SaaS products, including Forgestack Fuel OS, and engineer select custom web applications, backend systems, operational dashboards, and workflow platforms entirely in-house.
-            </p>
-            <dl className="mt-10 grid gap-x-8 gap-y-6 border-y border-[#121212]/10 py-8 sm:grid-cols-2">
-              <div>
-                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Legal Name</dt>
-                <dd className="mt-2 text-base font-medium">Forgestack Labs LLP</dd>
-              </div>
-              <div>
-                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Engineering Hub</dt>
-                <dd className="mt-2 text-base font-medium">Mangaluru, Karnataka</dd>
-              </div>
-              <div>
-                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Core Product</dt>
-                <dd className="mt-2 text-base font-medium">Forgestack Fuel OS</dd>
-              </div>
-              <div>
-                <dt className="text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/40">Contact</dt>
-                <dd className="mt-2 text-base font-medium">hello@forgestacklabs.com</dd>
-              </div>
-            </dl>
-          </div>
-        </div>
-      </section>
+        </section>
+      </FadeOutSection>
+
       {/* ── Our Identity ── */}
+      <CompanyTimeline />
+
+      <FadeOutSection>
+        <section id="product-first" className="px-6 py-28">
+          <div className="mx-auto max-w-7xl rounded-[2.5rem] bg-[#151715] p-8 md:p-14">
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-12 grid gap-8 md:grid-cols-2 md:items-end">
+              <div><motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] !text-[#9DB59A]">Product-first philosophy</motion.p><motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight !text-white md:text-5xl">Build the product, not just the project.</motion.h2></div>
+              <motion.p variants={fadeUp} className="max-w-xl leading-relaxed !text-white/55 md:justify-self-end">We treat software as an operating capability that must remain coherent, supportable, and valuable after the initial release.</motion.p>
+            </motion.div>
+            <motion.div className="grid gap-4 md:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>{productPrinciples.map(([title, copy], i) => <motion.article key={title} variants={cardReveal} className="rounded-[1.75rem] border border-white/10 bg-white/[.06] p-7"><span className="text-[10px] font-bold tracking-[.3em] !text-[#9DB59A]">0{i + 1}</span><h3 className="mb-3 mt-8 text-xl font-medium !text-white">{title}</h3><p className="text-sm leading-relaxed !text-white/50">{copy}</p></motion.article>)}</motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
+      <FadeOutSection>
+        <section id="leadership-philosophy" className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-14 max-w-4xl"><motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#D4A373]">Leadership philosophy</motion.p><motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">Standards are set through ownership.</motion.h2></motion.div>
+            <motion.div className="grid gap-6 md:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>{leadershipPrinciples.map(([title, copy], i) => <motion.article key={title} variants={cardReveal} whileHover={{ y: -12, boxShadow: "0 36px 90px rgba(18,18,18,0.18)", transition: cardSpring }} className={`${glass} p-8`}><p className="mb-8 text-[10px] font-bold tracking-[.3em] text-[#D4A373]">PRINCIPLE 0{i + 1}</p><h3 className="mb-4 text-2xl font-medium tracking-tight">{title}</h3><p className="text-sm leading-relaxed text-[#121212]/55">{copy}</p></motion.article>)}</motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
       <FadeOutSection>
         <section className="px-6 py-28">
           <div className="mx-auto max-w-7xl">
@@ -427,9 +597,6 @@ export default function AboutPage() {
         </section>
       </FadeOutSection>
 
-     
-
     </main>
   );
 }
-

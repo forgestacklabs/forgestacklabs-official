@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import ResourceLibrary from "@/components/ResourceLibrary";
 
 const EASE_OUT = [0.215, 0.61, 0.355, 1] as const;
 
@@ -502,6 +503,8 @@ export default function ResourcesPage() {
       </FadeOutSection>
 
       {/* ── CTA ── */}
+      <ResourceLibrary />
+
       <FadeOutSection>
         <section className="px-6 pb-36 pt-12">
           <div className="mx-auto max-w-7xl">

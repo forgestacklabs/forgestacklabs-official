@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
+import HomePrioritySections, { EnterpriseFAQSection } from "@/components/HomePrioritySections";
 
 const EASE = [0.215, 0.61, 0.355, 1] as const;
 
@@ -124,8 +125,8 @@ const offerings = [
     label: "Card 02",
     accent: "#D4A373",
     accentClass: "text-[#D4A373]",
-    title: "Enterprise Web Architecture",
-    copy: "We partner with select clients to build highly secure, custom digital solutions. From resilient server architectures to fluid frontend execution, we enforce our proprietary standards on your vision.",
+    title: "Enterprise Product Engineering",
+    copy: "We partner with organizations to architect mission-critical software, internal operational platforms, AI workflows, and modern SaaS systems engineered for long-term scalability.",
     href: "/contact?mode=custom#contact-inquiry",
     cta: "Discuss Your Project",
   },
@@ -191,7 +192,7 @@ export default function HomePage() {
           <div className="w-full max-w-6xl">
             <motion.div variants={heroWrap} initial="hidden" animate="visible" className="flex flex-col items-center">
 
-              <motion.p variants={heroItem} className="relative top-4 mb-8 inline-flex items-center justify-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888] md:text-xs">
+              <motion.p variants={heroItem} className="mb-7 inline-flex items-center justify-center gap-2.5 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888] md:text-xs">
                 <span className="relative flex h-2 w-2 shrink-0">
                   <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-60" />
                   <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]" />
@@ -199,15 +200,19 @@ export default function HomePage() {
                 <span className="font-bold">When Vision Meets Precision</span>
               </motion.p>
 
-              <motion.h1 variants={heroItem} className="mb-10 text-5xl font-medium leading-[0.93] tracking-tight text-[#121212] md:text-7xl lg:text-[6.5rem]">
+              <motion.h1 variants={heroItem} className="mb-8 max-w-5xl text-5xl font-medium leading-[0.93] tracking-tight text-[#121212] md:text-7xl lg:text-[6.5rem]">
                 Engineer the Solution.
                 <br />
                 <span className="italic text-[#121212]/30">Scale</span> the Impact.
               </motion.h1>
 
-              <motion.p variants={heroItem} className="mx-auto mb-12 max-w-3xl text-lg font-normal leading-relaxed text-[#121212]/55 md:text-xl">
-                Forgestack Labs builds offline-first fuel station management software and custom web
-                applications for businesses in Mangaluru, Karnataka and beyond.
+              <motion.p variants={heroItem} className="mx-auto mb-12 max-w-4xl text-base font-normal leading-8 text-[#121212]/58 md:text-xl md:leading-9">
+                <span className="block">
+                  ForgeStack Labs engineers operational software and enterprise platforms for businesses with complex, real-world operations.
+                </span>
+                <span className="mt-3 block">
+                  Our flagship product, Fuel OS, is an offline-first operating system purpose-built for fuel retailers, while our engineering team partners with organizations to design secure, scalable software tailored to their operations.
+                </span>
               </motion.p>
 
               <motion.div variants={heroItem} className="flex flex-col items-center justify-center gap-4 sm:flex-row">
@@ -251,6 +256,8 @@ export default function HomePage() {
       </FadeOutSection>
 
       {/* ── Trust Badges ── */}
+      <HomePrioritySections />
+
       <FadeOutSection>
         <section className="px-6 py-24">
           <div className="mx-auto w-full max-w-5xl text-center">
@@ -273,6 +280,7 @@ export default function HomePage() {
             >
               <motion.div
                 variants={badgeReveal}
+                whileHover={{ y: -8, scale: 1.03, boxShadow: "0 30px 70px rgba(18,18,18,0.18)", transition: { type: "spring", stiffness: 260, damping: 18 } }}
                 className="flex min-h-[96px] items-center justify-center rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl"
               >
                 <Image src="/gov-login-img.png" alt="DPIIT Recognized" width={260} height={80} className="h-10 w-auto object-contain" />
@@ -289,6 +297,46 @@ export default function HomePage() {
                 <Image src="/partner_badge.png" alt="GoodFirms partner badge" width={180} height={180} className="h-14 w-auto object-contain" />
                 <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#121212]/55">GoodFirms</span>
               </motion.a>
+
+            </motion.div>
+
+            <motion.div
+              variants={badgeReveal}
+              initial="hidden"
+              whileInView="visible"
+              viewport={VP}
+              whileHover={{ y: -6, scale: 1.02, boxShadow: "0 28px 65px rgba(18,18,18,0.16)", transition: { type: "spring", stiffness: 240, damping: 18 } }}
+              className="mx-auto mt-6 flex w-full max-w-4xl flex-col items-center justify-between gap-6 rounded-[2rem] border border-white/70 bg-white/55 px-8 py-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white md:flex-row md:text-left"
+            >
+              <div>
+                <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">Profile Listing</p>
+                <h3 className="text-2xl font-medium tracking-tight text-[#121212] md:text-3xl">Listed for external discovery.</h3>
+                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#121212]/60">
+                  Company profiles and ecosystem listings for external discovery, reference, and business visibility.
+                </p>
+              </div>
+
+              <div className="flex shrink-0 flex-wrap items-center justify-center gap-4">
+                <a
+                  href="https://www.crunchbase.com/organization/forgestack-labs-llp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Forgestack Labs Crunchbase profile"
+                  className="flex min-h-[96px] w-[240px] items-center justify-center gap-4 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-7 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                >
+                  <Image src="/crunbase_logo.jpg" alt="Crunchbase" width={220} height={80} className="h-10 w-auto object-contain" />
+                  <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#121212]/55">Crunchbase</span>
+                </a>
+                <a
+                  href="https://techbehemoths.com/company/forgestack-labs-llp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Forgestack Labs Tech Behemoths profile"
+                  className="flex min-h-[96px] w-[240px] items-center justify-center rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-7 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                >
+                  <Image src="/tech_behemonths_logo.svg" alt="Tech Behemoths" width={220} height={80} className="h-10 w-auto object-contain" />
+                </a>
+              </div>
             </motion.div>
 
           </div>
@@ -395,9 +443,11 @@ export default function HomePage() {
         </section>
       </FadeOutSection>
 
+      <EnterpriseFAQSection />
+
       {/* ── CTA ── */}
       <FadeOutSection>
-        <section className="px-6 pb-20 pt-36 md:pt-44">
+        <section className="px-6 pb-20 pt-12 md:pt-16">
           <div className="mx-auto w-full max-w-7xl">
             <motion.div
               variants={panelReveal}
@@ -455,6 +505,3 @@ export default function HomePage() {
     </div>
   );
 }
-
-
-

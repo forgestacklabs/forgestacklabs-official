@@ -63,6 +63,9 @@ type FormState = {
   phone: string;
   scale: string;
   budget: string;
+  industry: string;
+  country: string;
+  timeline: string;
   message: string;
 };
 
@@ -73,6 +76,9 @@ const initialState: FormState = {
   phone: "",
   scale: "",
   budget: "",
+  industry: "",
+  country: "",
+  timeline: "",
   message: "",
 };
 
@@ -150,7 +156,13 @@ export default function ContactPage() {
 
     const detailLines = isDemo
       ? ["Product demo requested."]
-      : [`Estimated Budget Range: ${formData.budget || "Not specified"}`, `Technical Brief: ${formData.message}`];
+      : [
+          `Industry: ${formData.industry || "Not specified"}`,
+          `Country: ${formData.country || "Not specified"}`,
+          `Timeline: ${formData.timeline || "Not specified"}`,
+          `Estimated Budget Range: ${formData.budget || "Not specified"}`,
+          `Technical Brief: ${formData.message}`,
+        ];
 
     try {
       const response = await fetch("/api/contact", {
@@ -201,6 +213,10 @@ export default function ContactPage() {
               Whether you are looking to deploy our offline-first SaaS ecosystems, commission a highly secure custom
               architecture, or access technical support for an active deployment, our engineering team is ready.
             </motion.p>
+            <motion.div variants={heroItem} className="mt-8 flex flex-wrap justify-center gap-3">
+              <span className="rounded-full border border-[#121212]/10 bg-white/55 px-5 py-2.5 text-xs font-medium">Free initial technical consultation</span>
+              <span className="rounded-full border border-[#121212]/10 bg-white/55 px-5 py-2.5 text-xs font-medium">Reply within 24 hours · Proposal within 48 hours</span>
+            </motion.div>
           </motion.div>
         </section>
       </FadeOutSection>
@@ -335,6 +351,14 @@ export default function ContactPage() {
                   </div>
 
                   {!isDemo && (
+                    <div className="grid gap-6 md:grid-cols-3">
+                      <div><label htmlFor="industry" className={labelClass}>Industry</label><input id="industry" name="industry" required value={formData.industry} onChange={handleChange} className={inputClass} /></div>
+                      <div><label htmlFor="country" className={labelClass}>Country</label><input id="country" name="country" required value={formData.country} onChange={handleChange} className={inputClass} /></div>
+                      <div><label htmlFor="timeline" className={labelClass}>Target Timeline</label><input id="timeline" name="timeline" required value={formData.timeline} onChange={handleChange} className={inputClass} /></div>
+                    </div>
+                  )}
+
+                  {!isDemo && (
                     <div>
                       <label htmlFor="budget" className={labelClass}>Estimated Budget Range</label>
                       <input id="budget" name="budget" required value={formData.budget} onChange={handleChange} className={inputClass} />
@@ -431,6 +455,8 @@ export default function ContactPage() {
           </motion.div>
         </section>
       </FadeOutSection>
+
+      <section className="relative z-10 px-6 pb-36"><div className="mx-auto grid max-w-7xl gap-8 rounded-[2.5rem] border border-white/70 bg-white/50 p-8 backdrop-blur-2xl md:grid-cols-3 md:p-12"><div><p className="mb-3 text-[10px] font-bold uppercase tracking-[.35em] text-[#8BA888]">Global engagement</p><h2 className="text-3xl font-medium tracking-tight">Mangaluru based. Globally available.</h2></div><div><p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#121212]/40">Working hours</p><p className="text-sm leading-relaxed text-[#121212]/60">IST core hours with planned overlap for APAC, Middle East, Europe, and North America.</p></div><div><p className="mb-3 text-xs font-bold uppercase tracking-widest text-[#121212]/40">Response standard</p><p className="text-sm leading-relaxed text-[#121212]/60">Initial reply within 24 hours. Qualified briefs receive a proposal or scoped next-step plan within 48 hours.</p></div></div></section>
     </main>
   );
 }

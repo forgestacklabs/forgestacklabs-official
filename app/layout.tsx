@@ -18,12 +18,15 @@ const siteUrl = "https://www.forgestacklabs.com";
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: "Fuel Station Software & Custom Development | Forgestack Labs",
+    default: "Operational Software & Enterprise Engineering | Forgestack Labs",
     template: "%s | Forgestack Labs",
   },
   description:
-    "Forgestack Labs builds offline-first fuel station management software and custom web applications for businesses in Mangaluru, Karnataka and beyond.",
+    "ForgeStack Labs engineers operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems for complex real-world operations.",
   keywords: [
+    "operational software engineering",
+    "enterprise software engineering",
+    "enterprise product engineering",
     "fuel station management software",
     "petrol pump management software India",
     "offline-first fuel station POS",
@@ -43,9 +46,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Fuel Station Software & Custom Development | Forgestack Labs",
+    title: "Operational Software & Enterprise Engineering | Forgestack Labs",
     description:
-      "Offline-first fuel retail software and custom web application engineering from Mangaluru, Karnataka.",
+      "Operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems for complex real-world operations.",
     url: "/",
     siteName: "Forgestack Labs",
     locale: "en_IN",
@@ -61,9 +64,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fuel Station Software & Custom Development | Forgestack Labs",
+    title: "Operational Software & Enterprise Engineering | Forgestack Labs",
     description:
-      "Offline-first fuel retail software and custom web application engineering from Mangaluru, Karnataka.",
+      "Operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems for complex real-world operations.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -96,8 +99,11 @@ const structuredData = {
       email: "hello@forgestacklabs.com",
       slogan: "When Vision Meets Precision",
       description:
-        "Software engineering company building offline-first fuel station management software and custom web applications.",
+        "Software engineering company building operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems.",
       knowsAbout: [
+        "Operational software engineering",
+        "Enterprise software engineering",
+        "Enterprise product engineering",
         "Fuel station management software",
         "Offline-first software",
         "Custom web application development",
@@ -151,7 +157,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
 
 
 
