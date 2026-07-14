@@ -173,8 +173,13 @@ export default function ContactPage() {
           email: formData.email,
           phone: formData.phone,
           organization: formData.organization,
-          message: detailLines.join("\n\n"),
+          message: isDemo ? detailLines.join("\n\n") : formData.message,
           source: isDemo ? "Product Demo Request" : "Custom Architecture Brief",
+          industry: isDemo ? "" : formData.industry,
+          country: isDemo ? "" : formData.country,
+          targetTimeline: isDemo ? "" : formData.timeline,
+          estimatedBudgetRange: isDemo ? "" : formData.budget,
+          technicalBrief: isDemo ? "" : formData.message,
         }),
       });
 

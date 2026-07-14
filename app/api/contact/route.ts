@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { ensureNotionReady, notionClient, notionDatabaseId } from "@/lib/notion";
+import { rateLimit, rejectOversizedRequest, validateSameOrigin } from "@/lib/requestGuards";
 
 type ContactPayload = {
   name?: string;
@@ -8,21 +9,95 @@ type ContactPayload = {
   organization?: string;
   message?: string;
   source?: string;
+  industry?: string;
+  country?: string;
+  targetTimeline?: string;
+  estimatedBudgetRange?: string;
+  technicalBrief?: string;
 };
 
 const isValidEmail = (value: string) => /\S+@\S+\.\S+/.test(value);
+const allowedSources = ["Product Demo Request", "Custom Architecture Brief"] as const;
+const allowedFields = new Set<keyof ContactPayload>([
+  "name",
+  "email",
+  "phone",
+  "organization",
+  "message",
+  "source",
+  "industry",
+  "country",
+  "targetTimeline",
+  "estimatedBudgetRange",
+  "technicalBrief",
+]);
+
+function clean(value: unknown, maxLength: number) {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, maxLength);
+}
+
+function validateContactPayload(payload: unknown) {
+  if (!payload || typeof payload !== "object" || Array.isArray(payload)) {
+    return { error: "Invalid request payload." };
+  }
+
+  const keys = Object.keys(payload);
+  if (keys.some((key) => !allowedFields.has(key as keyof ContactPayload))) {
+    return { error: "Request contains unsupported fields." };
+  }
+
+  const raw = payload as ContactPayload;
+  const data = {
+    name: clean(raw.name, 120),
+    email: clean(raw.email, 180).toLowerCase(),
+    phone: clean(raw.phone, 40),
+    organization: clean(raw.organization, 160),
+    message: clean(raw.message, 3000),
+    source: clean(raw.source, 80),
+    industry: clean(raw.industry, 120),
+    country: clean(raw.country, 120),
+    targetTimeline: clean(raw.targetTimeline, 120),
+    estimatedBudgetRange: clean(raw.estimatedBudgetRange, 120),
+    technicalBrief: clean(raw.technicalBrief, 3000),
+  };
+
+  if (!allowedSources.includes(data.source as (typeof allowedSources)[number])) {
+    return { error: "Invalid inquiry source." };
+  }
+
+  if (!data.name || !data.email || !data.phone || !data.organization || !data.message) {
+    return { error: "Missing required fields." };
+  }
+
+  if (!isValidEmail(data.email) || data.email.length > 180) {
+    return { error: "Invalid email." };
+  }
+
+  if (data.source === "Custom Architecture Brief") {
+    if (!data.industry || !data.country || !data.targetTimeline || !data.estimatedBudgetRange || !data.technicalBrief) {
+      return { error: "Missing required project brief fields." };
+    }
+  }
+
+  return { data };
+}
 
 export async function POST(request: Request) {
   try {
-    const data = (await request.json()) as ContactPayload;
+    const originError = validateSameOrigin(request);
+    if (originError) return originError;
 
-    if (!data.name || !data.email || !data.message) {
-      return NextResponse.json({ error: "Missing required fields." }, { status: 400 });
-    }
+    const sizeError = rejectOversizedRequest(request, 16 * 1024);
+    if (sizeError) return sizeError;
 
-    if (!isValidEmail(data.email)) {
-      return NextResponse.json({ error: "Invalid email." }, { status: 400 });
-    }
+    const rateLimitError = rateLimit(request, "contact", { limit: 5, windowMs: 10 * 60 * 1000 });
+    if (rateLimitError) return rateLimitError;
+
+    const validation = validateContactPayload(await request.json());
+    if ("error" in validation) return NextResponse.json({ error: validation.error }, { status: 400 });
+
+    const data = validation.data;
 
     ensureNotionReady();
 
@@ -43,6 +118,21 @@ export async function POST(request: Request) {
         },
         Message: {
           rich_text: [{ text: { content: data.message } }]
+        },
+        Industry: {
+          rich_text: [{ text: { content: data.industry || "" } }]
+        },
+        Country: {
+          rich_text: [{ text: { content: data.country || "" } }]
+        },
+        "Target Timeline": {
+          rich_text: [{ text: { content: data.targetTimeline || "" } }]
+        },
+        "Estimated Budget Range": {
+          rich_text: [{ text: { content: data.estimatedBudgetRange || "" } }]
+        },
+        "Technical Brief / Project Scope": {
+          rich_text: [{ text: { content: data.technicalBrief || data.message } }]
         },
         Source: {
           select: { name: data.source || "Website" }
