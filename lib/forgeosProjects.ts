@@ -122,3 +122,54 @@ export async function createForgeProject(input: ProjectInput) {
 
   return project;
 }
+
+export async function updateProjectClientMetrics(id: string, amountReceived: number, progress: number) {
+  if (!useNotionProjects || !notion || !projectsNotionDatabaseId) {
+    return { id, amountReceived, progress };
+  }
+
+  const existing = await existingProjectProperties();
+  const amountField = existing.has("Amount Received")
+    ? "Amount Received"
+    : existing.has("Received Amount")
+      ? "Received Amount"
+      : "";
+
+  if (!amountField) {
+    throw new Error("Amount Received property is missing in the projects database.");
+  }
+
+  if (!existing.has("Progress")) {
+    throw new Error("Progress property is missing in the projects database.");
+  }
+
+  await notion.pages.update({
+    page_id: id,
+    properties: {
+      [amountField]: { number: amountReceived },
+      Progress: { number: progress },
+    },
+  });
+
+  return { id, amountReceived, progress };
+}
+
+export async function updateProjectProgress(id: string, progress: number) {
+  if (!useNotionProjects || !notion || !projectsNotionDatabaseId) {
+    return { id, progress };
+  }
+
+  const existing = await existingProjectProperties();
+  if (!existing.has("Progress")) {
+    throw new Error("Progress property is missing in the projects database.");
+  }
+
+  await notion.pages.update({
+    page_id: id,
+    properties: {
+      Progress: { number: progress },
+    },
+  });
+
+  return { id, progress };
+}

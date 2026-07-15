@@ -1,7 +1,7 @@
 "use client";
 import { isDateBlocked } from "@/lib/blockedDates";
 import { FormEvent, useState } from "react";
-import type { Expense } from "@/lib/forgeosData";
+import type { Expense, Project } from "@/lib/forgeosData";
 import { useForgeOS } from "@/components/forgeos/ForgeOSShell";
 import { ModuleListPage } from "@/components/forgeos/ModuleListPage";
 import {
@@ -96,7 +96,7 @@ function ExpensesTable({ expenses }: { expenses: Expense[] }) {
   );
 }
 
-function FinanceOverview({ expenses }: { expenses: Expense[] }) {
+function FinanceOverview({ expenses, projects }: { expenses: Expense[]; projects: Project[] }) {
   return (
     <section className="mb-8">
       <div className="mb-4 flex items-center justify-between">
@@ -109,7 +109,7 @@ function FinanceOverview({ expenses }: { expenses: Expense[] }) {
         <CashPositionWidget  />
         <BurnRateWidget expenses={expenses} />
         <MonthlyExpensesWidget expenses={expenses} />
-        <PendingPaymentsWidget expenses={expenses} />
+        <PendingPaymentsWidget projects={projects} />
       </div>
     </section>
   );
@@ -119,8 +119,9 @@ export default function FinancePage() {
   const { notify, blockedDates } = useForgeOS();
   const [dateError, setDateError] = useState("");
   const { data: expenses, setData, loading } = useApiData<Expense[]>("/api/forgeos/expenses", [], 10000);
+  const { data: projects, loading: projectsLoading } = useApiData<Project[]>("/api/forgeos/projects", []);
 
-  if (loading) {
+  if (loading || projectsLoading) {
     return (
       <>
         <PageHeading title="Finance" description="Company spending, burn rate, and payment visibility." />
@@ -169,7 +170,7 @@ export default function FinancePage() {
   return (
     <>
       <PageHeading title="Finance" description="Company spending, burn rate, and payment visibility." />
-      <FinanceOverview expenses={expenses} />
+      <FinanceOverview expenses={expenses} projects={projects} />
       <ModuleListPage
         title="Expense Tracker"
         description="Submit company expenses and monitor approval status."

@@ -3,9 +3,14 @@ import { isDateBlocked } from "@/lib/blockedDates";
 import { readBlockedDates } from "@/lib/forgeosBlockedDates";
 import { createForgeNotification } from "@/lib/forgeosNotifications";
 import { getAdminSession, hasAdminAuthConfig, missingAdminAuthConfigMessage } from "@/lib/adminAuth";
-import { createForgeProject, readForgeProjects, type ProjectInput } from "@/lib/forgeosProjects";
+import { createForgeProject, readForgeProjects, updateProjectClientMetrics, updateProjectProgress, type ProjectInput } from "@/lib/forgeosProjects";
 
 type RequestBody = Partial<ProjectInput>;
+type PatchBody = {
+  id?: string;
+  amountReceived?: number;
+  progress?: number;
+};
 
 function missingAdminAuthResponse() {
   return NextResponse.json({ error: missingAdminAuthConfigMessage() }, { status: 500 });
@@ -66,6 +71,58 @@ export async function POST(request: Request) {
   } catch (error) {
     return NextResponse.json(
       { error: error instanceof Error ? error.message : "Unable to create project." },
+      { status: 500 },
+    );
+  }
+}
+
+export async function PATCH(request: Request) {
+  if (!hasAdminAuthConfig()) return missingAdminAuthResponse();
+  if (!getAdminSession(request)) return unauthorizedResponse();
+
+  const body = (await request.json()) as PatchBody;
+  if (!body.id || typeof body.progress !== "number") {
+    return NextResponse.json({ error: "Project ID and progress are required." }, { status: 400 });
+  }
+
+  if (body.progress < 0 || body.progress > 100) {
+    return NextResponse.json({ error: "Progress must be between 0 and 100." }, { status: 400 });
+  }
+
+  try {
+    const projects = await readForgeProjects();
+    const project = projects.find((item) => item.id === body.id);
+    if (!project) return NextResponse.json({ error: "Project not found." }, { status: 404 });
+
+    if (project.projectType !== "Client Project") {
+      const updated = await updateProjectProgress(project.id, body.progress);
+      return NextResponse.json({ project: { ...project, ...updated } });
+    }
+
+    if (typeof body.amountReceived !== "number" || body.amountReceived < 0) {
+      return NextResponse.json({ error: "Valid amount received is required for client projects." }, { status: 400 });
+    }
+
+    if (body.amountReceived > project.totalAmount) {
+      return NextResponse.json({ error: "Amount received cannot exceed total amount." }, { status: 400 });
+    }
+
+    const updated = await updateProjectClientMetrics(project.id, body.amountReceived, body.progress);
+
+    await createForgeNotification({
+      title: "Client payment updated",
+      body: `${project.name} received amount and progress were updated.`,
+      type: "Project",
+      recipientRole: "CEO",
+      recipientEmail: "",
+      linkedModule: "projects",
+      linkedRecordId: project.id,
+    }).catch(() => undefined);
+
+    return NextResponse.json({ project: { ...project, ...updated } });
+  } catch (error) {
+    return NextResponse.json(
+      { error: error instanceof Error ? error.message : "Unable to update project payment." },
       { status: 500 },
     );
   }

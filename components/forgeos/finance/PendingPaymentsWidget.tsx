@@ -1,9 +1,17 @@
-import type { Expense } from "@/lib/forgeosData";
+import type { Project } from "@/lib/forgeosData";
 import { money } from "@/components/forgeos/ui";
 import { FinanceWidget } from "./FinanceWidget";
 
-export function PendingPaymentsWidget({ expenses }: { expenses: Expense[] }) {
-  const pending = expenses.filter((expense) => ["Submitted", "In review"].includes(expense.status));
-  const total = pending.reduce((sum, expense) => sum + expense.amount, 0);
-  return <FinanceWidget label="Pending Payments" value={money(total)} detail={`${pending.length} pending ${pending.length === 1 ? "expense" : "expenses"}`} />;
+export function PendingPaymentsWidget({ projects }: { projects: Project[] }) {
+  const clientProjects = projects.filter((project) => project.projectType === "Client Project");
+  const pendingProjects = clientProjects.filter((project) => Math.max(project.totalAmount - project.amountReceived, 0) > 0);
+  const total = pendingProjects.reduce((sum, project) => sum + Math.max(project.totalAmount - project.amountReceived, 0), 0);
+
+  return (
+    <FinanceWidget
+      label="Pending Payments"
+      value={money(total)}
+      detail={`${pendingProjects.length} pending ${pendingProjects.length === 1 ? "client project" : "client projects"}`}
+    />
+  );
 }
