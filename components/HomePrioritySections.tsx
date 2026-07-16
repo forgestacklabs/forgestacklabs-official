@@ -343,8 +343,8 @@ export default function HomePrioritySections() {
             </motion.p>
           </div>
           <motion.div variants={staggerItem} whileHover={{ y: -5, scale: 1.04, transition: btnSpring }} className="w-fit">
-            <a href="/capability-deck/download" className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
-              Download capability deck ↓
+            <a href="/forgestack-capability-deck.html" className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
+              View Forgestack Labs book →
             </a>
           </motion.div>
         </motion.div>
