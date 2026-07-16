@@ -17,6 +17,7 @@ const pages = [
   { path: "/insights", changefreq: "weekly", priority: "0.8" },
   { path: "/privacy", changefreq: "yearly", priority: "0.3" },
   { path: "/terms", changefreq: "yearly", priority: "0.3" },
+  { path: "/forgestack-capability-deck.html", changefreq: "monthly", priority: "0.4" },
   ...industries.map(({ slug }) => ({ path: `/industries/${slug}`, changefreq: "monthly", priority: "0.7" })),
   ...technologies.map(({ slug }) => ({ path: `/technologies/${slug}`, changefreq: "monthly", priority: "0.7" })),
   ...resources.map(({ slug }) => ({ path: `/resources/${slug}`, changefreq: "monthly", priority: "0.6" })),

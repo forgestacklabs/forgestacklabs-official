@@ -30,4 +30,5 @@ coverage/
 Thumbs.db
 
 # Internal planning documents
+AGENTS.md
 docs/forgeos-v1.md

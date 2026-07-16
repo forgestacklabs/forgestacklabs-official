@@ -3,8 +3,10 @@
   "version": "1.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "node scripts/dev-clean.cjs",
+    "build": "node scripts/safe-build.cjs",
+    "build:raw": "next build",
+    "check": "tsc --noEmit",
     "start": "next start",
     "lint": "next lint"
   },

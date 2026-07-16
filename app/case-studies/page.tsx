@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
 import EditorialPage from "@/components/EditorialPage";
-export const metadata: Metadata = { title: "Case Studies", description: "Selected operational software workflows and engineering outcomes from Forgestack Labs." };
+export const metadata: Metadata = {
+  title: "Case Studies",
+  description: "Selected operational software workflows and engineering outcomes from Forgestack Labs.",
+  alternates: { canonical: "/case-studies" },
+  openGraph: {
+    title: "Operational Software Case Studies | Forgestack Labs",
+    description: "Selected operational software workflows and engineering outcomes from Forgestack Labs.",
+    url: "/case-studies",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Operational Software Case Studies | Forgestack Labs",
+    description: "Selected operational software workflows and engineering outcomes from Forgestack Labs.",
+  },
+};
 const items = [
   { eyebrow: "Fuel retail", title: "Offline-first forecourt operations", copy: "A resilient operating workflow connecting billing, shifts, stock, credit, reconciliation, and reports without making connectivity a single point of failure.", points: ["Fast billing workflow", "Shift-level accountability", "Offline continuity"] },
   { eyebrow: "Operations", title: "From fragmented records to one audit trail", copy: "A structured data model replaces disconnected spreadsheets and manual handoffs with traceable events, permissions, and exception handling.", points: ["Role-based access", "Immutable activity history", "Exception-first reporting"] },

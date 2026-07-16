@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import AnswerFAQ from "@/components/AnswerFAQ";
+import { enterpriseFaqAnswers } from "@/lib/aeo-content";
 
 const EASE = [0.215, 0.61, 0.355, 1] as const;
 
@@ -113,13 +114,6 @@ const engagement = [
   ["Deployment", "Release through controlled environments with migration, rollback, and handover plans."],
   ["Maintenance", "Operate against an agreed support model, priorities, updates, and response targets."],
 ];
-const enterpriseFaq = [
-  { question: "Can we sign an NDA before technical discovery?", answer: "Yes. A mutual NDA can be executed before you share confidential business, product, customer, or architecture information." },
-  { question: "Who owns the intellectual property?", answer: "Ownership and licensing are defined in the MSA and SOW. Client-specific deliverables and Forgestack background IP are identified separately so rights are explicit before delivery begins." },
-  { question: "What support is available after launch?", answer: "Support is agreed per engagement and can include monitoring, incident response, defect resolution, maintenance releases, and planned enhancements with documented priorities and response targets." },
-  { question: "Where can the software be deployed?", answer: "Depending on architecture and security requirements, we can support client-controlled cloud accounts, managed cloud environments, or private infrastructure. The deployment model is fixed during technical scoping." },
-  { question: "How do enterprise contracts work?", answer: "Enterprise engagements are normally governed by a Master Service Agreement and a project-specific Statement of Work. A Data Processing Addendum and security schedules can be included when required." },
-];
 const process = ["Discovery", "Architecture", "UX", "Development", "QA", "Deployment", "Support"];
 const comparison = [
   ["Engineering ownership", "Senior, founder-led", "Handoff between teams"],
@@ -136,7 +130,7 @@ export function EnterpriseFAQSection() {
         eyebrow="Enterprise FAQ"
         title="Clear commercial and technical expectations."
         introduction="Answers to the questions enterprise teams commonly resolve before architecture discovery and contracting. Final terms are always recorded in the applicable agreement."
-        items={enterpriseFaq}
+        items={enterpriseFaqAnswers}
       />
     </FadeOutSection>
   );
@@ -349,7 +343,7 @@ export default function HomePrioritySections() {
             </motion.p>
           </div>
           <motion.div variants={staggerItem} whileHover={{ y: -5, scale: 1.04, transition: btnSpring }} className="w-fit">
-            <a href="/forgestack-capability-deck.html" download className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
+            <a href="/capability-deck/download" className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
               Download capability deck ↓
             </a>
           </motion.div>

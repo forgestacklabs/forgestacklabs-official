@@ -35,17 +35,17 @@ export const customSoftwareAnswers: AnswerItem[] = [
   {
     question: "What does Forgestack Labs build?",
     answer:
-      "Forgestack Labs builds proprietary B2B SaaS products and custom software, including secure web applications, operational dashboards, backend systems, and workflow automation platforms.",
+      "Forgestack Labs builds proprietary B2B SaaS products and custom software projects, including secure web applications, operational dashboards, backend systems, integrations, and workflow automation platforms for India and international markets.",
   },
   {
     question: "Does Forgestack Labs build custom software for businesses?",
     answer:
-      "Yes. Forgestack Labs works with select businesses to design and engineer custom applications around their workflows, data, security requirements, and growth plans.",
+      "Yes. Forgestack Labs works with select businesses in India and international markets to design and engineer custom applications around their workflows, data, security requirements, integrations, and growth plans.",
   },
   {
     question: "Where is Forgestack Labs located?",
     answer:
-      "Forgestack Labs LLP is based in Mangaluru, also commonly searched as Mangalore, in Karnataka, India, and supports projects beyond the region.",
+      "Forgestack Labs LLP is based in Mangaluru, also commonly searched as Mangalore, in Karnataka, India, and supports remote projects for clients beyond India.",
   },
   {
     question: "Can Forgestack Labs develop backend APIs and business systems?",
@@ -56,5 +56,33 @@ export const customSoftwareAnswers: AnswerItem[] = [
     question: "How can a business discuss a custom software project?",
     answer:
       "Submit the project brief on the Contact page with your organization, requirements, budget range, and technical scope. A Forgestack engineer will review it and respond with the appropriate next step.",
+  },
+];
+
+export const enterpriseFaqAnswers: AnswerItem[] = [
+  {
+    question: "Can we sign an NDA before technical discovery?",
+    answer:
+      "Yes. A mutual NDA can be executed before you share confidential business, product, customer, or architecture information.",
+  },
+  {
+    question: "Who owns the intellectual property?",
+    answer:
+      "Ownership and licensing are defined in the MSA and SOW. Client-specific deliverables and Forgestack background IP are identified separately so rights are explicit before delivery begins.",
+  },
+  {
+    question: "What support is available after launch?",
+    answer:
+      "Support is agreed per engagement and can include monitoring, incident response, defect resolution, maintenance releases, and planned enhancements with documented priorities and response targets.",
+  },
+  {
+    question: "Where can the software be deployed?",
+    answer:
+      "Depending on architecture and security requirements, we can support client-controlled cloud accounts, managed cloud environments, or private infrastructure. The deployment model is fixed during technical scoping.",
+  },
+  {
+    question: "How do enterprise contracts work?",
+    answer:
+      "Enterprise engagements are normally governed by a Master Service Agreement and a project-specific Statement of Work. A Data Processing Addendum and security schedules can be included when required.",
   },
 ];

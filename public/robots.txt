@@ -16,4 +16,4 @@ Disallow: /admin
 Disallow: /api/
 Disallow: /verify/
 
-Sitemap: https://forgestacklabs.com/sitemap.xml
+Sitemap: https://www.forgestacklabs.com/sitemap.xml

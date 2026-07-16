@@ -1,6 +1,21 @@
 import type { Metadata } from "next";
 import EditorialPage from "@/components/EditorialPage";
-export const metadata: Metadata = { title: "Engineering Insights", description: "Weekly notes on offline-first systems, SaaS architecture, security, and operational software." };
+export const metadata: Metadata = {
+  title: "Engineering Insights",
+  description: "Weekly notes on offline-first systems, SaaS architecture, security, and operational software.",
+  alternates: { canonical: "/insights" },
+  openGraph: {
+    title: "Engineering Insights | Forgestack Labs",
+    description: "Weekly notes on offline-first systems, SaaS architecture, security, and operational software.",
+    url: "/insights",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Engineering Insights | Forgestack Labs",
+    description: "Weekly notes on offline-first systems, SaaS architecture, security, and operational software.",
+  },
+};
 const items = [
   { eyebrow: "Offline-first", title: "Designing for unreliable connectivity", copy: "A practical framework for local writes, conflict handling, sync observability, and recovery without hiding failure states." },
   { eyebrow: "Architecture", title: "Model the operation, not the screen", copy: "Why durable operational products start with events, invariants, permissions, and exceptions before interface components." },

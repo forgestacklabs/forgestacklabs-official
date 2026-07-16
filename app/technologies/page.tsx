@@ -7,6 +7,19 @@ export const metadata: Metadata = {
   description:
     "Forgestack Labs engineering capabilities across Next.js, Node.js, PostgreSQL, offline-first systems, cloud delivery, and applied AI.",
   alternates: { canonical: "/technologies" },
+  openGraph: {
+    title: "Technologies | Forgestack Labs",
+    description:
+      "Forgestack Labs engineering capabilities across Next.js, Node.js, PostgreSQL, offline-first systems, cloud delivery, and applied AI.",
+    url: "/technologies",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Technologies | Forgestack Labs",
+    description:
+      "Forgestack Labs engineering capabilities across Next.js, Node.js, PostgreSQL, offline-first systems, cloud delivery, and applied AI.",
+  },
 };
 
 const items = technologies.map((entry) => ({

@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     template: "%s | Forgestack Labs",
   },
   description:
-    "ForgeStack Labs engineers operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems for complex real-world operations.",
+    "ForgeStack Labs engineers custom software, operational platforms, SaaS products, Fuel OS, AI workflows, and secure scalable systems for companies in India and international markets.",
   keywords: [
     "operational software engineering",
     "enterprise software engineering",
@@ -33,6 +33,10 @@ export const metadata: Metadata = {
     "fuel inventory management software",
     "custom software development Mangaluru",
     "custom software development Mangalore",
+    "custom software development India",
+    "custom software development for international clients",
+    "remote software development company India",
+    "enterprise software development for global businesses",
     "web application development Mangaluru",
     "Forgestack Labs",
   ],
@@ -48,7 +52,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Operational Software & Enterprise Engineering | Forgestack Labs",
     description:
-      "Operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems for complex real-world operations.",
+      "Custom software, operational platforms, SaaS products, Fuel OS, AI workflows, and secure scalable systems for companies in India and international markets.",
     url: "/",
     siteName: "Forgestack Labs",
     locale: "en_IN",
@@ -66,7 +70,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "Operational Software & Enterprise Engineering | Forgestack Labs",
     description:
-      "Operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems for complex real-world operations.",
+      "Custom software, operational platforms, SaaS products, Fuel OS, AI workflows, and secure scalable systems for companies in India and international markets.",
     images: ["/og-image.png"],
   },
   robots: {
@@ -97,9 +101,10 @@ const structuredData = {
       url: siteUrl,
       logo: `${siteUrl}/logo.png`,
       email: "hello@forgestacklabs.com",
+      foundingDate: "2026-01-14",
       slogan: "When Vision Meets Precision",
       description:
-        "Software engineering company building operational software, enterprise platforms, Fuel OS, AI workflows, and secure scalable systems.",
+        "Software engineering company building custom software, operational platforms, SaaS products, Fuel OS, AI workflows, and secure scalable systems for companies in India and international markets.",
       knowsAbout: [
         "Operational software engineering",
         "Enterprise software engineering",
@@ -107,6 +112,8 @@ const structuredData = {
         "Fuel station management software",
         "Offline-first software",
         "Custom web application development",
+        "Custom software development for international clients",
+        "Remote software delivery",
         "SaaS product engineering",
         "Backend API development",
         "Operational dashboards",
@@ -121,8 +128,19 @@ const structuredData = {
         { "@type": "City", name: "Mangaluru" },
         { "@type": "State", name: "Karnataka" },
         { "@type": "Country", name: "India" },
+        { "@type": "Country", name: "United States" },
+        { "@type": "Country", name: "United Kingdom" },
+        { "@type": "Country", name: "United Arab Emirates" },
+        { "@type": "Place", name: "Europe" },
+        { "@type": "Place", name: "Global" },
       ],
-      sameAs: ["https://www.goodfirms.co/company/forgestack-labs-llp"],
+      sameAs: [
+        "https://www.linkedin.com/company/forgestack-labs-llp/",
+        "https://github.com/forgestacklabs",
+        "https://www.goodfirms.co/company/forgestack-labs-llp",
+        "https://www.crunchbase.com/organization/forgestack-labs-llp",
+        "https://techbehemoths.com/company/forgestack-labs-llp",
+      ],
     },
     {
       "@type": "WebSite",
@@ -157,6 +175,4 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     </html>
   );
 }
-
-
 
