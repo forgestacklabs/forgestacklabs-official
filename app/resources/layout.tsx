@@ -31,6 +31,8 @@ const resourcesSchema = {
       "@type": "VideoObject",
       name: "Forgestack Labs Architecture Overview",
       description: "An overview of how Forgestack approaches offline-first architecture for fuel retail operations.",
+      thumbnailUrl: "https://forgestacklabs.com/gallery/slide1.png",
+      uploadDate: "2026-06-23T18:09:45+05:30",
       contentUrl: "https://forgestacklabs.com/gallery/demo_vedio.mp4",
     },
     {

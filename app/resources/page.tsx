@@ -1,6 +1,5 @@
 "use client";
 
-import Image from "next/image";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
@@ -163,6 +162,7 @@ function slideOffset(index: number, activeIndex: number) {
 // ─── Page ─────────────────────────────────────────────────────────────────────
 export default function ResourcesPage() {
   const [activeIndex, setActiveIndex] = useState(0);
+  const [expandedImage, setExpandedImage] = useState<GalleryImage | null>(null);
 
   const visibleSlides = useMemo(
     () =>
@@ -175,12 +175,37 @@ export default function ResourcesPage() {
   const goPrevious = () => setActiveIndex((current) => wrapIndex(current - 1));
   const goNext     = () => setActiveIndex((current) => wrapIndex(current + 1));
 
+  const handleGallerySlideClick = (image: GalleryImage, index: number) => {
+    if (window.matchMedia("(max-width: 767px)").matches) {
+      setExpandedImage(image);
+      return;
+    }
+    setActiveIndex(index);
+  };
+
   useEffect(() => {
     const timer = window.setInterval(() => {
       setActiveIndex((current) => wrapIndex(current + 1));
     }, 5000);
     return () => window.clearInterval(timer);
   }, []);
+
+  useEffect(() => {
+    if (!expandedImage) return;
+
+    const previousOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setExpandedImage(null);
+    };
+
+    window.addEventListener("keydown", handleKeyDown);
+    return () => {
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [expandedImage]);
 
   return (
     <div className="relative min-h-screen overflow-x-hidden bg-[#F7F7F5] pt-12 text-[#222222]">
@@ -358,14 +383,14 @@ export default function ResourcesPage() {
           </motion.div>
 
           {/* Carousel slides — not wrapped in whileInView, interactive */}
-          <div className="relative h-[46vh] min-h-[320px] w-full max-w-7xl overflow-visible md:h-[54vh]">
+          <div className="relative h-[48vw] min-h-[190px] w-full max-w-7xl overflow-visible md:h-[54vh] md:min-h-[320px]">
             {visibleSlides.map(({ image, index, offset }) => {
               const isActive = offset === 0;
               return (
                 <motion.button
                   key={image.src}
                   type="button"
-                  onClick={() => setActiveIndex(index)}
+                  onClick={() => handleGallerySlideClick(image, index)}
                   aria-label={`Show ${image.title}`}
                   animate={{
                     x: `calc(-50% + ${offset * 34}vw)`,
@@ -379,13 +404,12 @@ export default function ResourcesPage() {
                   className="absolute left-1/2 top-1/2 aspect-video w-[min(86vw,42rem)] overflow-hidden rounded-[1.4rem] border bg-white text-left shadow-[0_28px_80px_rgba(0,0,0,0.24)] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#8BA888] md:w-[min(56vw,42rem)]"
                   style={{ borderColor: isActive ? "rgba(139,168,136,0.9)" : "rgba(255,255,255,0.12)" }}
                 >
-                  <Image
+                  <img
                     src={image.src}
                     alt={image.alt}
-                    fill
-                    priority={index === 0}
-                    sizes="(min-width: 768px) 48vw, 78vw"
-                    className="object-contain"
+                    loading={isActive ? "eager" : "lazy"}
+                    decoding="async"
+                    className="absolute inset-0 h-full w-full object-contain"
                   />
                 </motion.button>
               );
@@ -398,7 +422,7 @@ export default function ResourcesPage() {
             initial="hidden"
             whileInView="visible"
             viewport={VP}
-            className="relative z-20 mt-7 flex items-center justify-center gap-2"
+            className="relative z-20 mt-4 flex items-center justify-center gap-2 md:mt-7"
           >
             {galleryImages.map((image, index) => (
               <button
@@ -419,7 +443,7 @@ export default function ResourcesPage() {
             initial="hidden"
             whileInView="visible"
             viewport={VP}
-            className="relative z-20 mt-7 flex items-center justify-center gap-5"
+            className="relative z-20 mt-4 flex items-center justify-center gap-5 md:mt-7"
           >
             <motion.button
               variants={staggerItem}
@@ -449,6 +473,40 @@ export default function ResourcesPage() {
       </FadeOutSection>
 
       {/* ── Engineering Logs ── */}
+      {expandedImage && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${expandedImage.title} preview`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="fixed inset-0 z-[9999] flex items-center justify-center bg-black/80 p-4 backdrop-blur-sm md:hidden"
+          onClick={() => setExpandedImage(null)}
+        >
+          <div
+            className="relative w-full max-w-[94vw] overflow-hidden rounded-2xl border-2 border-white bg-white p-1 shadow-[0_30px_90px_rgba(0,0,0,0.55)]"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              aria-label="Close image preview"
+              onClick={() => setExpandedImage(null)}
+              className="absolute right-3 top-3 z-30 flex h-8 w-8 items-center justify-center rounded-full border border-white/40 bg-black text-white shadow-lg"
+            >
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <path d="M6 6L18 18M18 6L6 18" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" />
+              </svg>
+            </button>
+
+            <img
+              src={expandedImage.src}
+              alt={expandedImage.alt}
+              className="block max-h-[82vh] w-full object-contain"
+            />
+          </div>
+        </motion.div>
+      )}
+
       <FadeOutSection>
         <section className="px-6 py-32">
           <div className="mx-auto max-w-7xl">
