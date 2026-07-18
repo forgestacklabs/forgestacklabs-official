@@ -17,11 +17,11 @@ export const metadata: Metadata = {
   },
 };
 const items = [
-  { eyebrow: "Offline-first", title: "Designing for unreliable connectivity", copy: "A practical framework for local writes, conflict handling, sync observability, and recovery without hiding failure states." },
-  { eyebrow: "Architecture", title: "Model the operation, not the screen", copy: "Why durable operational products start with events, invariants, permissions, and exceptions before interface components." },
-  { eyebrow: "Delivery", title: "Acceptance criteria that reduce rework", copy: "Turning broad requirements into testable outcomes shared by product, engineering, and the operating team." },
-  { eyebrow: "Security", title: "Least privilege for growing SaaS products", copy: "A staged approach to roles, service boundaries, audit evidence, and access reviews as teams and customers scale." },
-  { eyebrow: "Product", title: "When custom software is justified", copy: "A decision framework comparing workflow differentiation, integration cost, control requirements, and long-term ownership." },
-  { eyebrow: "Operations", title: "Exception-first dashboards", copy: "Why operational interfaces should prioritize deviations requiring action instead of presenting every metric equally." },
+  { eyebrow: "Engineering", title: "Designing for unreliable connectivity", copy: "A practical framework for local writes, conflict handling, sync observability, and recovery without hiding failure states." },
+  { eyebrow: "Product", title: "Model the operation, not the screen", copy: "Why durable operational products start with events, invariants, permissions, and exceptions before interface components." },
+  { eyebrow: "AI", title: "Where AI belongs in operational software", copy: "A pragmatic view of automation that improves decisions, reduces repetitive work, and keeps human accountability visible." },
+  { eyebrow: "Startup", title: "Building before certainty exists", copy: "Lessons from the ForgeStack story on commitment, ownership, and turning a familiar operational problem into a product direction." },
+  { eyebrow: "Fuel", title: "Fuel retail as an operating system problem", copy: "How billing, tanks, nozzles, shifts, inventory, credit, and reconciliation become stronger when treated as one connected system." },
+  { eyebrow: "Research", title: "Exception-first dashboards", copy: "Why operational interfaces should prioritize deviations requiring action instead of presenting every metric equally." },
 ];
 export default function Page() { return <EditorialPage eyebrow="Weekly engineering notes" title="Useful thinking, documented." intro="Concise field notes for technical leaders building dependable software and the teams who operate it." items={items} />; }

@@ -125,6 +125,12 @@ const differentiators = [
   { num: "04", title: "Hard-Enforced Credit Locks",            copy: "If a commercial fleet truck attempts to purchase fuel beyond its pre-set limit, the POS API blocks the transaction and refuses to print the bill." },
   { num: "05", title: "In-House Engineering & Premium Design", copy: "Built entirely in-house, Fuel OS abandons clunky ERP aesthetics for a premium, high-contrast glassmorphic UI that feels desktop-grade on the forecourt." },
 ];
+const roadmap = [
+  { phase: "Phase 01", title: "Operational Core", copy: "Billing, shift controls, tank inventory, credit customers, reconciliation, and owner visibility form the first dependable operating layer." },
+  { phase: "Phase 02", title: "Offline-First Field Operations", copy: "Manager mobile workflows continue to work locally when connectivity drops, then synchronize operational records when the network returns." },
+  { phase: "Phase 03", title: "Digital Twin Intelligence", copy: "Tanks, pumps, nozzles, inventory, sales, credit, and events become one connected model for clearer decisions and exception handling." },
+  { phase: "Phase 04", title: "Analytics & Multi-Site Growth", copy: "Reporting, alerts, comparative station views, and higher-level operational intelligence support owners as the business scales." },
+] as const;
 const stats = [
   { value: "<5s",  label: "Billing Target" },
   { value: "3m",   label: "Shift Audit" },
@@ -313,6 +319,41 @@ export default function ProductsPage() {
               ))}
             </motion.div>
 
+          </div>
+        </section>
+      </FadeOutSection>
+
+      {/* ── Fuel OS Roadmap ── */}
+      <FadeOutSection>
+        <section className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+            <motion.div className="mb-14 max-w-4xl" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4A373]">
+                Fuel OS Roadmap
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
+                From daily control to operational intelligence.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mt-6 max-w-3xl text-base leading-relaxed text-[#121212]/60 md:text-lg">
+                Fuel OS is not a single feature set. It is a phased operating system for modern fuel retail, designed to evolve from reliable daily workflows into connected decision intelligence.
+              </motion.p>
+            </motion.div>
+
+            <motion.div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              {roadmap.map((item, i) => (
+                <motion.article
+                  key={item.phase}
+                  variants={cardReveal}
+                  whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
+                  className="relative overflow-hidden rounded-[2rem] border border-white/70 bg-white/50 p-7 shadow-[0_20px_70px_rgba(0,0,0,0.06)] backdrop-blur-3xl"
+                >
+                  <span className="absolute right-6 top-4 text-5xl font-medium text-[#121212]/5">{String(i + 1).padStart(2, "0")}</span>
+                  <p className="mb-8 text-[10px] font-bold uppercase tracking-[0.3em] text-[#8BA888]">{item.phase}</p>
+                  <h3 className="mb-4 text-xl font-medium tracking-tight">{item.title}</h3>
+                  <p className="text-sm leading-relaxed text-[#121212]/58">{item.copy}</p>
+                </motion.article>
+              ))}
+            </motion.div>
           </div>
         </section>
       </FadeOutSection>

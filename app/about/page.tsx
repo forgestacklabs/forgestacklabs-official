@@ -149,6 +149,19 @@ const leadershipPrinciples = [
   ["Direct ownership", "Decisions have named owners who remain accountable from discovery through operation and maintenance."],
   ["Quality without theatre", "Quality is demonstrated through working software, test evidence, operational visibility, and honest risk communication."],
 ];
+const founders = [
+  ["Sriharsha", "Founder & Chief Executive Officer", "Every product begins with understanding the problem—not the technology."],
+  ["Hardhik", "Co-Founder & Chief Technology Officer", "Great architecture should remain invisible while supporting everything around it."],
+  ["Pulavarson", "Co-Founder & Chief Operating Officer", "The best interface is the one users never have to think about."],
+] as const;
+const labValues = [
+  ["Curiosity", "We begin with observation and better questions before writing code."],
+  ["Ownership", "We treat every product and client decision with founder-level responsibility."],
+  ["Transparency", "We explain tradeoffs, risks, architecture, and delivery decisions clearly."],
+  ["Craftsmanship", "We protect quality in the details: data, interface, performance, security, and support."],
+  ["Continuous Learning", "We keep improving the system, the product, and the way we work."],
+  ["Long-Term Thinking", "We build software that can continue creating value after launch."],
+] as const;
 
 function CompanyTimeline() {
   const timelineRef = useRef<HTMLDivElement>(null);
@@ -173,6 +186,11 @@ function CompanyTimeline() {
             <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">Company timeline</motion.p>
             <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">Built deliberately from day one.</motion.h2>
             <motion.p variants={fadeUp} className="mt-6 leading-relaxed text-[#121212]/55">Follow the line through the decisions that established our product and engineering direction.</motion.p>
+            <motion.div variants={fadeUp} whileHover={{ y: -4, scale: 1.03, transition: btnSpring }} className="mt-8 inline-block">
+              <Link href="/timeline" className="rounded-full bg-[#121212] px-6 py-3 text-sm font-medium text-white">
+                Open interactive timeline →
+              </Link>
+            </motion.div>
           </motion.div>
 
           <div ref={timelineRef} className="relative">
@@ -411,6 +429,102 @@ export default function AboutPage() {
             <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-14 max-w-4xl"><motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#D4A373]">Leadership philosophy</motion.p><motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">Standards are set through ownership.</motion.h2></motion.div>
             <motion.div className="grid gap-6 md:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>{leadershipPrinciples.map(([title, copy], i) => <motion.article key={title} variants={cardReveal} whileHover={{ y: -12, boxShadow: "0 36px 90px rgba(18,18,18,0.18)", transition: cardSpring }} className={`${glass} p-8`}><p className="mb-8 text-[10px] font-bold tracking-[.3em] text-[#D4A373]">PRINCIPLE 0{i + 1}</p><h3 className="mb-4 text-2xl font-medium tracking-tight">{title}</h3><p className="text-sm leading-relaxed text-[#121212]/55">{copy}</p></motion.article>)}</motion.div>
           </div>
+        </section>
+      </FadeOutSection>
+
+      <FadeOutSection>
+        <section id="founders" className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-14 max-w-4xl">
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
+                Founders
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
+                The people behind ForgeStack.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mt-6 max-w-3xl text-base leading-relaxed text-[#121212]/60 md:text-lg">
+                ForgeStack Labs was founded by three people who share one belief: businesses deserve technology built with the same care and ownership founders have for their own companies.
+              </motion.p>
+              <motion.div variants={fadeUp} whileHover={{ y: -4, scale: 1.03, transition: btnSpring }} className="mt-8 inline-block">
+                <Link href="/founder-timeline" className="rounded-full bg-[#121212] px-6 py-3 text-sm font-medium text-white">
+                  View founder timeline →
+                </Link>
+              </motion.div>
+            </motion.div>
+            <motion.div className="grid gap-6 md:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              {founders.map(([name, role, quote], i) => (
+                <motion.article
+                  key={name}
+                  variants={cardReveal}
+                  whileHover={{ y: -12, boxShadow: "0 36px 90px rgba(18,18,18,0.18)", transition: cardSpring }}
+                  className={`${glass} p-8`}
+                >
+                  <p className="mb-8 text-[10px] font-bold tracking-[.3em] text-[#D4A373]">FOUNDER 0{i + 1}</p>
+                  <h3 className="mb-2 text-2xl font-medium tracking-tight">{name}</h3>
+                  <p className="mb-6 text-[10px] font-bold uppercase tracking-[0.28em] text-[#121212]/35">{role}</p>
+                  <p className="text-sm leading-relaxed text-[#121212]/60">&ldquo;{quote}&rdquo;</p>
+                </motion.article>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
+      <FadeOutSection>
+        <section id="lab-values" className="px-6 py-28">
+          <div className="mx-auto max-w-7xl rounded-[2.5rem] bg-[#151715] p-8 md:p-14">
+            <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-12 grid gap-8 md:grid-cols-2 md:items-end">
+              <div>
+                <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] !text-[#9DB59A]">
+                  Values
+                </motion.p>
+                <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight !text-white md:text-5xl">
+                  The standards we expect from ourselves.
+                </motion.h2>
+              </div>
+              <motion.p variants={fadeUp} className="max-w-xl leading-relaxed !text-white/55 md:justify-self-end">
+                Curiosity, ownership, transparency, craftsmanship, continuous learning, and long-term thinking define the way we build.
+              </motion.p>
+            </motion.div>
+            <motion.div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              {labValues.map(([title, copy], i) => (
+                <motion.article key={title} variants={cardReveal} className="rounded-[1.75rem] border border-white/10 bg-white/[.06] p-7">
+                  <span className="text-[10px] font-bold tracking-[.3em] !text-[#9DB59A]">0{i + 1}</span>
+                  <h3 className="mb-3 mt-8 text-xl font-medium !text-white">{title}</h3>
+                  <p className="text-sm leading-relaxed !text-white/50">{copy}</p>
+                </motion.article>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
+      <FadeOutSection>
+        <section id="lab-book" className="px-6 py-28">
+          <motion.div
+            variants={panelReveal}
+            initial="hidden"
+            whileInView="visible"
+            viewport={VP}
+            className="mx-auto grid max-w-7xl gap-10 rounded-[2.5rem] border border-white/70 bg-white/55 p-10 shadow-[0_24px_90px_rgba(0,0,0,0.08)] backdrop-blur-3xl md:grid-cols-[1fr_auto] md:items-center md:p-14"
+          >
+            <div>
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.5em] text-[#8BA888]">
+                ForgeStack Book
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
+                The Lab, documented.
+              </motion.h2>
+              <motion.p variants={fadeUp} className="mt-5 max-w-2xl text-[#121212]/55">
+                Read the company story, philosophy, founders, capabilities, Fuel OS thinking, research direction, and partnership standards in one interactive book.
+              </motion.p>
+            </div>
+            <motion.div variants={staggerItem} whileHover={{ y: -5, scale: 1.04, transition: btnSpring }} className="w-fit">
+              <Link href="/book" className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
+                Open ForgeStack Book →
+              </Link>
+            </motion.div>
+          </motion.div>
         </section>
       </FadeOutSection>
 

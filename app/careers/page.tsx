@@ -73,16 +73,16 @@ const VP = { once: false, margin: "-240px" } as const;
 // ─── Data ─────────────────────────────────────────────────────────────────────
 const standards = [
   {
-    title: "Mandatory In-Office Presence",
-    copy: "Elite collaboration happens in the room. We operate directly from our Mangaluru engineering hub.",
+    title: "Curiosity Before Code",
+    copy: "We expect people to understand the problem, the operation, and the user before proposing technology.",
   },
   {
-    title: "Corporate-Grade Protocols",
-    copy: "Engineers work with CI/CD pipelines, containerized deployments, and rigorous backend load-testing.",
+    title: "Ownership In Every Decision",
+    copy: "Every recommendation should be made with the same care we would apply if the business were our own.",
   },
   {
-    title: "Design-First Execution",
-    copy: "Performance never compromises aesthetics. We merge heavy-duty logic with fluid, glassmorphic interfaces.",
+    title: "Craftsmanship With Accountability",
+    copy: "Quality, transparency, continuous learning, and long-term thinking define how we work and how we grow.",
   },
 ];
 
@@ -90,6 +90,8 @@ const futureTracks = [
   "Backend Systems Engineering",
   "Frontend UI/UX Architecture",
   "Product Engineering Internships",
+  "Operational Software Research",
+  "AI Automation Engineering",
 ];
 
 // ─── Page ─────────────────────────────────────────────────────────────────────
@@ -121,15 +123,15 @@ export default function CareersPage() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]" />
               </span>
-              <span className="font-bold">Join The Deployment</span>
+              <span className="font-bold">Build With Us</span>
             </motion.p>
 
             <motion.h1 variants={heroItem} className="mx-auto max-w-5xl text-5xl font-medium leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
-              Code with Discipline. Build for Scale.
+              Build with curiosity. Engineer with ownership.
             </motion.h1>
 
             <motion.p variants={heroItem} className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-[#121212]/60 md:text-xl">
-              Forgestack Labs is not a playground. We are a DPIIT-recognized product company engineering mission-critical software. We are looking for disciplined architects, engineers, and interns who respect the craft.
+              ForgeStack Labs is built by people who care deeply about the problems they solve. We look for curiosity, ownership, transparency, craftsmanship, continuous learning, and long-term thinking.
             </motion.p>
 
           </motion.div>
@@ -157,11 +159,11 @@ export default function CareersPage() {
                 viewport={VP}
                 className="mb-5 text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4A373]"
               >
-                Who We Hire
+                Culture
               </motion.p>
-              <h2 className="mb-6 text-4xl font-medium tracking-tight md:text-5xl">The Anti-Agency Reality</h2>
+              <h2 className="mb-6 text-4xl font-medium tracking-tight md:text-5xl">Companies build software. People build companies.</h2>
               <p className="text-sm leading-relaxed text-[#121212]/60 md:text-base">
-                We completely reject the vibe coder mentality. We do not outsource, and we do not compromise on technical debt. Working at Forgestack Labs means strict branching models, mandatory peer code reviews, and absolute professional accountability under our IIT-rooted leadership team.
+                Products are shaped by people and trust is earned through people. Build With Us is our culture page for future teammates who want to work on thoughtful software, operational systems, and products that last.
               </p>
             </motion.div>
 

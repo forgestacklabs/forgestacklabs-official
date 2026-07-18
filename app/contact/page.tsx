@@ -209,17 +209,17 @@ export default function ContactPage() {
                 <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-[#10B981] opacity-60" />
                 <span className="relative inline-flex h-2 w-2 rounded-full bg-[#10B981]" />
               </span>
-              <span className="font-bold">Initiate A Deployment Or Get Support</span>
+              <span className="font-bold">Let&apos;s Build Together</span>
             </motion.p>
             <motion.h1 variants={heroItem} className="mx-auto max-w-5xl text-5xl font-medium leading-[0.95] tracking-tight md:text-7xl lg:text-8xl">
-              Let&apos;s Architect Your Next Scale.
+              Let&apos;s Build Together.
             </motion.h1>
             <motion.p variants={heroItem} className="mx-auto mt-8 max-w-3xl text-base leading-relaxed text-[#121212]/60 md:text-xl">
-              Whether you are looking to deploy our offline-first SaaS ecosystems, commission a highly secure custom
-              architecture, or access technical support for an active deployment, our engineering team is ready.
+              If you choose to build with ForgeStack Labs, we will treat your vision with the same care, responsibility,
+              and dedication as if it were our own.
             </motion.p>
             <motion.div variants={heroItem} className="mt-8 flex flex-wrap justify-center gap-3">
-              <span className="rounded-full border border-[#121212]/10 bg-white/55 px-5 py-2.5 text-xs font-medium">Free initial technical consultation</span>
+              <span className="rounded-full border border-[#121212]/10 bg-white/55 px-5 py-2.5 text-xs font-medium">Partnership-first technical conversation</span>
               <span className="rounded-full border border-[#121212]/10 bg-white/55 px-5 py-2.5 text-xs font-medium">Reply within 24 hours · Proposal within 48 hours</span>
             </motion.div>
           </motion.div>

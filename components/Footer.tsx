@@ -31,8 +31,12 @@ const NAV_COLS = [
     links: [
       { label: "Case Studies", href: "/case-studies" },
       { label: "Industries", href: "/industries" },
+      { label: "Engineering", href: "/engineering" },
+      { label: "Manifesto", href: "/manifesto" },
+      { label: "Research", href: "/research" },
       { label: "Technologies", href: "/technologies" },
       { label: "Insights", href: "/insights" },
+      { label: "Book", href: "/book" },
     ],
   },
 ];

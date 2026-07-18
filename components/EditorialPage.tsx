@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 
@@ -85,6 +86,8 @@ type Item = { eyebrow?: string; title: string; copy: string; points?: readonly s
 type Props = { eyebrow: string; title: string; intro: string; items: readonly Item[]; note?: string };
 
 export default function EditorialPage({ eyebrow, title, intro, items, note }: Props) {
+  const router = useRouter();
+
   return (
     <main className="min-h-screen bg-[#F7F7F5] px-6 pb-28 pt-40 text-[#121212]">
       <div className="mx-auto max-w-7xl">
@@ -135,7 +138,17 @@ export default function EditorialPage({ eyebrow, title, intro, items, note }: Pr
                 key={item.title}
                 variants={cardReveal}
                 whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.22)", transition: cardSpring }}
-                className="rounded-[2rem] border border-white/70 bg-white/50 p-7 shadow-[0_18px_60px_rgba(0,0,0,.06)] backdrop-blur-2xl md:p-8"
+                onClick={() => item.href && router.push(item.href)}
+                onKeyDown={(event) => {
+                  if (!item.href) return;
+                  if (event.key === "Enter" || event.key === " ") {
+                    event.preventDefault();
+                    router.push(item.href);
+                  }
+                }}
+                role={item.href ? "link" : undefined}
+                tabIndex={item.href ? 0 : undefined}
+                className={`rounded-[2rem] border border-white/70 bg-white/50 p-7 shadow-[0_18px_60px_rgba(0,0,0,.06)] backdrop-blur-2xl md:p-8 ${item.href ? "cursor-pointer" : ""}`}
               >
                 <div className="mb-10 flex items-center justify-between">
                   <span className="text-[10px] font-bold tracking-[.3em] text-[#8BA888]">

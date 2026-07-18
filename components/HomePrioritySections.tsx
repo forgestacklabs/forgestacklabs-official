@@ -121,6 +121,16 @@ const comparison = [
   ["Quality assurance", "Continuous and documented", "End-of-cycle testing"],
   ["Post-launch", "Measured support model", "Ad-hoc maintenance"],
 ];
+const promiseCards = [
+  ["Think like owners", "Every recommendation is made as if the business, risk, and long-term system were our own."],
+  ["Simplify complexity", "We do not add software for the sake of technology. We remove operational friction."],
+  ["Engineer trust", "Every workflow, permission, deployment, and support decision is treated as a promise to the people who depend on it."],
+] as const;
+const featuredInsights = [
+  ["Engineering", "Designing for unreliable connectivity", "A practical framework for local writes, conflict handling, sync observability, and recovery."],
+  ["Product", "Model the operation, not the screen", "Why durable operational products start with events, invariants, permissions, and exceptions."],
+  ["Research", "Exception-first dashboards", "Why operational interfaces should prioritize deviations requiring action instead of presenting every metric equally."],
+] as const;
 
 export function EnterpriseFAQSection() {
   return (
@@ -324,6 +334,85 @@ export default function HomePrioritySections() {
 
     <FadeOutSection>
       <section className="px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-12 grid gap-6 md:grid-cols-2 md:items-end">
+            <div>
+              <motion.p variants={labelReveal} className="mb-5 text-[10px] font-bold uppercase tracking-[.45em] text-[#8BA888]">
+                ForgeStack Promise
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-6xl">
+                We treat your business as if it were our own.
+              </motion.h2>
+            </div>
+            <motion.p variants={fadeUp} className="max-w-xl leading-relaxed text-[#121212]/55 md:justify-self-end">
+              That promise influences every conversation, design review, architecture decision, line of code, and product we build.
+            </motion.p>
+          </motion.div>
+
+          <motion.div className="grid gap-4 md:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+            {promiseCards.map(([title, copy], i) => (
+              <motion.article
+                key={title}
+                variants={cardReveal}
+                whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.18)", transition: cardSpring }}
+                className="rounded-[2rem] border border-white/70 bg-white/50 p-7 shadow-[0_18px_60px_rgba(0,0,0,.06)] backdrop-blur-2xl"
+              >
+                <p className="mb-8 text-[10px] font-bold tracking-[.3em] text-[#D4A373]">{String(i + 1).padStart(2, "0")}</p>
+                <h3 className="mb-3 text-xl font-medium">{title}</h3>
+                <p className="text-sm leading-relaxed text-[#121212]/55">{copy}</p>
+              </motion.article>
+            ))}
+          </motion.div>
+        </div>
+      </section>
+    </FadeOutSection>
+
+    <FadeOutSection>
+      <section className="px-6 py-24">
+        <div className="mx-auto max-w-7xl">
+          <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mb-12 grid gap-6 md:grid-cols-2 md:items-end">
+            <div>
+              <motion.p variants={labelReveal} className="mb-5 text-[10px] font-bold uppercase tracking-[.45em] text-[#D4A373]">
+                Featured Insights
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-6xl">
+                Useful thinking, documented.
+              </motion.h2>
+            </div>
+            <motion.p variants={fadeUp} className="max-w-xl leading-relaxed text-[#121212]/55 md:justify-self-end">
+              Field notes across engineering, product, research, AI, startups, and fuel operations.
+            </motion.p>
+          </motion.div>
+
+          <motion.div className="grid gap-4 md:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+            {featuredInsights.map(([eyebrow, title, copy], i) => (
+              <motion.article
+                key={title}
+                variants={cardReveal}
+                whileHover={{ y: -14, scale: 1.018, boxShadow: "0 40px 100px rgba(18,18,18,0.18)", transition: cardSpring }}
+                className="rounded-[2rem] border border-white/70 bg-white/50 p-7 shadow-[0_18px_60px_rgba(0,0,0,.06)] backdrop-blur-2xl"
+              >
+                <div className="mb-8 flex items-center justify-between">
+                  <span className="text-[10px] font-bold tracking-[.3em] text-[#8BA888]">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[9px] uppercase tracking-[.25em] text-[#121212]/35">{eyebrow}</span>
+                </div>
+                <h3 className="mb-3 text-xl font-medium">{title}</h3>
+                <p className="text-sm leading-relaxed text-[#121212]/55">{copy}</p>
+              </motion.article>
+            ))}
+          </motion.div>
+
+          <motion.div variants={staggerItem} initial="hidden" whileInView="visible" viewport={VP} whileHover={{ x: 4, transition: linkSpring }} className="mt-8 w-fit">
+            <Link href="/insights" className="inline-flex items-center gap-3 text-sm font-medium transition-colors hover:text-[#8BA888]">
+              Explore all insights <span aria-hidden>→</span>
+            </Link>
+          </motion.div>
+        </div>
+      </section>
+    </FadeOutSection>
+
+    <FadeOutSection>
+      <section className="px-6 py-24">
         <motion.div
           className="mx-auto grid max-w-7xl gap-10 md:grid-cols-[1fr_auto] md:items-center"
           variants={staggerWrap}
@@ -333,19 +422,19 @@ export default function HomePrioritySections() {
         >
           <div>
             <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[.45em] text-[#8BA888]">
-              Capability deck
+              Featured ForgeStack Book
             </motion.p>
             <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
-              Take the technical overview with you.
+              Read the company book, not a brochure.
             </motion.h2>
             <motion.p variants={fadeUp} className="mt-5 max-w-2xl text-[#121212]/55">
-              Services, delivery model, platform capabilities, and engagement options in one concise document.
+              Our philosophy, story, products, engineering principles, research, founders, and partnership standards in one interactive reader.
             </motion.p>
           </div>
           <motion.div variants={staggerItem} whileHover={{ y: -5, scale: 1.04, transition: btnSpring }} className="w-fit">
-            <a href="/forgestack-capability-deck.html" className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
-              View Forgestack Labs book →
-            </a>
+            <Link href="/book" className="block rounded-full bg-[#121212] px-7 py-4 text-sm font-medium text-white">
+              Open ForgeStack Book →
+            </Link>
           </motion.div>
         </motion.div>
       </section>
