@@ -44,7 +44,9 @@ const heroWrap: Variants = {
 };
 
 const heroItem: Variants = {
-  hidden: { opacity: 0, y: 28 },
+  // Keep critical hero content readable before hydration while preserving
+  // the entrance motion once Framer Motion starts on the client.
+  hidden: { opacity: 0.72, y: 28 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.8, ease: EASE } },
 };
 
@@ -179,8 +181,8 @@ export default function HomePageClient() {
       <motion.div variants={fadeIn} initial="hidden" animate="visible">
         <div className="pointer-events-none fixed inset-0 -z-10 bg-[radial-gradient(ellipse_at_center,transparent_50%,rgba(247,247,245,0.5)_100%)]" />
         <div className="pointer-events-none fixed inset-0 -z-10">
-          <div className="absolute right-[-8%] top-[-12%] h-[44rem] w-[44rem] rounded-full bg-[#8BA888]/10 blur-[120px]" />
-          <div className="absolute bottom-[10%] left-[-12%] h-[38rem] w-[38rem] rounded-full bg-[#D4A373]/10 blur-[120px]" />
+          <div className="absolute right-[-8%] top-[-12%] h-80 w-80 rounded-full bg-[#8BA888]/10 blur-[72px] md:h-[44rem] md:w-[44rem] md:blur-[120px]" />
+          <div className="absolute bottom-[10%] left-[-12%] h-72 w-72 rounded-full bg-[#D4A373]/10 blur-[72px] md:h-[38rem] md:w-[38rem] md:blur-[120px]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(18,18,18,0.07)_1px,transparent_1px)] [background-size:46px_46px] opacity-20" />
         </div>
       </motion.div>
@@ -218,6 +220,7 @@ export default function HomePageClient() {
                 <motion.div whileHover={{ y: -5, scale: 1.04, transition: btnSpring }}>
                   <Link
                     href="/products"
+                    prefetch={false}
                     className="block rounded-full bg-[#8BA888] px-10 py-4 text-sm font-medium text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
                   >
                     Explore Our Ecosystem
@@ -226,6 +229,7 @@ export default function HomePageClient() {
                 <motion.div whileHover={{ y: -5, scale: 1.03, transition: btnSpring }}>
                   <Link
                     href="/contact?mode=custom#contact-inquiry"
+                    prefetch={false}
                     className="group block rounded-full border border-[#121212]/12 bg-white/50 px-10 py-4 text-sm backdrop-blur-md transition-colors duration-300 hover:border-[#121212]/30 hover:bg-white hover:shadow-[0_24px_60px_rgba(18,18,18,0.18)]"
                   >
                     <span className="font-normal text-[#121212] transition-colors group-hover:text-[#8BA888]">

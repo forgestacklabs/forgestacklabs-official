@@ -107,6 +107,7 @@ export default function Navbar() {
                 alt="ForgeStack Labs"
                 width={1536}
                 height={1024}
+                sizes="36px"
                 priority
                 className="h-9 w-auto object-contain transition-transform duration-300 group-hover:scale-[1.03]"
               />
@@ -262,7 +263,7 @@ export default function Navbar() {
                     alt="ForgeStack Labs"
                     width={1536}
                     height={1024}
-                    priority
+                    sizes="32px"
                     className="h-8 w-auto object-contain"
                   />
                 </Link>

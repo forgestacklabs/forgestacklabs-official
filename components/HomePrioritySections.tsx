@@ -223,7 +223,15 @@ export default function HomePrioritySections() {
             variants={fadeUp}
             className="overflow-hidden rounded-[1.75rem]"
           >
-            <Image src="/gallery/slide1.png" alt="Fuel station operations platform" width={1600} height={900} className="h-full min-h-72 w-full object-cover" />
+            <Image
+              src="/gallery/slide1.png"
+              alt="Fuel station operations platform"
+              width={1600}
+              height={900}
+              sizes="(max-width: 767px) calc(100vw - 7.5rem), 50vw"
+              quality={70}
+              className="h-full min-h-72 w-full object-cover"
+            />
           </motion.div>
 
           <motion.div
