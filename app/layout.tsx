@@ -1,7 +1,7 @@
 ﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Script from "next/script";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import "@/styles/globals.css";
 import BackgroundField from "@/components/BackgroundField";
@@ -14,6 +14,8 @@ const inter = Inter({
   variable: "--font-sans",
   display: "swap",
 });
+
+const googleTagManagerId = process.env.NEXT_PUBLIC_GTM_ID;
 
 const siteUrl = "https://www.forgestacklabs.com";
 
@@ -178,7 +180,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </div>
         <Analytics />
-        <GoogleAnalytics gaId="G-NS95FD3M96" />
+        {googleTagManagerId ? <GoogleTagManager gtmId={googleTagManagerId} /> : null}
       </body>
     </html>
   );
