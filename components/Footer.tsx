@@ -70,7 +70,7 @@ export default function GlassFooter() {
                 A founder-led engineering lab. We build precise, durable software systems for partners who demand correctness over speed.
               </p>
 
-              <div className="flex flex-wrap items-center gap-3 md:flex-nowrap">
+              <div className="flex flex-col items-start gap-3">
                 <div className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-[#121212]/10 bg-white/40 px-3.5 py-2.5">
                   <Image
                     src="/gov-login-img.png"
@@ -81,45 +81,68 @@ export default function GlassFooter() {
                   />
                 </div>
 
-                <a
-                  href="https://www.goodfirms.co/company/forgestack-labs-llp"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Forgestack Labs GoodFirms profile"
-                  className="group inline-flex shrink-0 items-center gap-3 rounded-2xl border border-[#121212]/10 bg-white/40 px-3.5 py-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-[#8BA888]/50 hover:bg-white/75 hover:shadow-[0_18px_42px_rgba(18,18,18,0.12)]"
-                >
-                  <Image
-                    src="/goodfirms_logo.png"
-                    alt="GoodFirms"
-                    width={800}
-                    height={800}
-                    className="h-11 w-11 object-contain transition-transform duration-300 group-hover:scale-105"
-                  />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.28em] text-[#121212] transition-colors duration-300 group-hover:text-[#8BA888]">
-                    GoodFirms
-                  </span>
-                </a>
-                <a
-                  href="https://www.crunchbase.com/organization/forgestack-labs-llp"
-                  target="_blank"
-                  rel="noreferrer"
-                  aria-label="Forgestack Labs Crunchbase profile"
-                  className="group inline-flex shrink-0 items-center gap-3 rounded-2xl border border-[#121212]/10 bg-white/40 px-4 py-2.5 transition-all duration-300 hover:-translate-y-1 hover:border-[#8BA888]/50 hover:bg-white/75 hover:shadow-[0_18px_42px_rgba(18,18,18,0.12)]"
-                >
-                  <Image
-                    src="/crunbase_logo.jpg"
-                    alt="Crunchbase"
-                    width={220}
-                    height={80}
-                    className="h-9 w-auto object-contain"
-                  />
-                  <div className="text-left">
-                    <p className="text-[9px] font-bold uppercase tracking-[0.24em] text-[#121212]/55 transition-colors duration-300 group-hover:text-[#8BA888]">
-                      Profile Listing
-                    </p>
-                    <p className="mt-1 text-xs font-medium text-[#121212]">Listed on Crunchbase</p>
-                  </div>
-                </a>
+                <div className="flex items-center gap-2.5">
+                  <a
+                    href="https://www.goodfirms.co/company/forgestack-labs-llp"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Forgestack Labs GoodFirms profile"
+                    className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#121212]/10 bg-white/35 p-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8BA888]/50 hover:bg-white/70"
+                  >
+                    <Image
+                      src="/goodfirms_logo.png"
+                      alt="GoodFirms"
+                      width={800}
+                      height={800}
+                      className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </a>
+                  <a
+                    href="https://www.crunchbase.com/organization/forgestack-labs-llp"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Forgestack Labs Crunchbase profile"
+                    className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#121212]/10 bg-white/35 p-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8BA888]/50 hover:bg-white/70"
+                  >
+                    <Image
+                      src="/crunbase_logo.jpg"
+                      alt="Crunchbase"
+                      width={220}
+                      height={80}
+                      className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </a>
+                  <a
+                    href="https://techbehemoths.com/company/forgestack-labs-llp"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Forgestack Labs Tech Behemoths profile"
+                    className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#121212]/10 bg-white/35 p-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8BA888]/50 hover:bg-white/70"
+                  >
+                    <Image
+                      src="/TB-logo-only.svg"
+                      alt="Tech Behemoths"
+                      width={220}
+                      height={80}
+                      className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </a>
+                  <a
+                    href="https://tracxn.com/d/legal-entities/india/forgestack-labs-llp/__WRxqjSfXmCnA7PbUfFNvlD3kIUymGCKAhOGmfKIaaQM"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Forgestack Labs Tracxn profile"
+                    className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#121212]/10 bg-white/35 p-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8BA888]/50 hover:bg-white/70"
+                  >
+                    <Image
+                      src="/tracxn-logo-only.svg"
+                      alt="Tracxn"
+                      width={100}
+                      height={22}
+                      className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </a>
+                </div>
               </div>
 
               <div className="flex items-center gap-2">

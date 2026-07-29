@@ -271,32 +271,19 @@ export default function HomePageClient() {
             </motion.div>
 
             <motion.div
-              className="mx-auto grid max-w-2xl gap-4 sm:grid-cols-2"
+              className="mx-auto grid max-w-md gap-4"
               variants={staggerWrap}
               initial="hidden"
               whileInView="visible"
               viewport={VP}
             >
               <motion.div
-                variants={badgeReveal}
+                variants={cardReveal}
                 whileHover={{ y: -8, scale: 1.03, boxShadow: "0 30px 70px rgba(18,18,18,0.18)", transition: { type: "spring", stiffness: 260, damping: 18 } }}
                 className="flex min-h-[96px] items-center justify-center rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl"
               >
                 <Image src="/gov-login-img.png" alt="DPIIT Recognized" width={260} height={80} className="h-10 w-auto object-contain" />
               </motion.div>
-
-              <motion.a
-                variants={badgeReveal}
-                whileHover={{ y: -8, scale: 1.03, boxShadow: "0 30px 70px rgba(18,18,18,0.18)", transition: { type: "spring", stiffness: 260, damping: 18 } }}
-                href="https://www.goodfirms.co/company/forgestack-labs-llp"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="flex min-h-[96px] items-center justify-center gap-4 rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
-              >
-                <Image src="/partner_badge.png" alt="GoodFirms partner badge" width={180} height={180} className="h-14 w-auto object-contain" />
-                <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#121212]/55">GoodFirms</span>
-              </motion.a>
-
             </motion.div>
 
             <motion.div
@@ -305,37 +292,68 @@ export default function HomePageClient() {
               whileInView="visible"
               viewport={VP}
               whileHover={{ y: -6, scale: 1.02, boxShadow: "0 28px 65px rgba(18,18,18,0.16)", transition: { type: "spring", stiffness: 240, damping: 18 } }}
-              className="mx-auto mt-6 flex w-full max-w-4xl flex-col items-center justify-between gap-6 rounded-[2rem] border border-white/70 bg-white/55 px-8 py-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white md:flex-row md:text-left"
+              className="mx-auto mt-6 grid w-full max-w-5xl gap-8 rounded-[2rem] border border-white/70 bg-white/55 px-8 py-8 text-center shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white md:grid-cols-[0.75fr_1.4fr] md:items-center md:text-left lg:px-10 lg:py-10"
             >
-              <div>
-                <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">Profile Listing</p>
-                <h3 className="text-2xl font-medium tracking-tight text-[#121212] md:text-3xl">Listed for external discovery.</h3>
-                <p className="mt-3 max-w-2xl text-sm leading-relaxed text-[#121212]/60">
+              <motion.div variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP} className="mx-auto max-w-sm md:mx-0">
+                <motion.p variants={labelReveal} className="mb-3 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">Profile Listing</motion.p>
+                <motion.h3 variants={fadeUp} className="text-2xl font-medium tracking-tight text-[#121212] md:text-3xl">Listed for external discovery.</motion.h3>
+                <motion.p variants={fadeUp} className="mt-3 text-sm leading-relaxed text-[#121212]/60">
                   Company profiles and ecosystem listings for external discovery, reference, and business visibility.
-                </p>
-              </div>
+                </motion.p>
+              </motion.div>
 
-              <div className="flex shrink-0 flex-wrap items-center justify-center gap-4">
-                <a
+              <motion.div
+                variants={staggerWrap}
+                initial="hidden"
+                whileInView="visible"
+                viewport={VP}
+                className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4"
+              >
+                <motion.a
+                  variants={staggerItem}
+                  href="https://www.goodfirms.co/company/forgestack-labs-llp"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Forgestack Labs GoodFirms profile"
+                  className="group flex min-h-[126px] flex-col items-center justify-center gap-3 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-5 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                >
+                  <Image src="/partner_badge.png" alt="GoodFirms partner badge" width={180} height={180} className="h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">GoodFirms</span>
+                </motion.a>
+                <motion.a
+                  variants={staggerItem}
                   href="https://www.crunchbase.com/organization/forgestack-labs-llp"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Forgestack Labs Crunchbase profile"
-                  className="flex min-h-[96px] w-[240px] items-center justify-center gap-4 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-7 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                  className="group flex min-h-[126px] flex-col items-center justify-center gap-3 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-5 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
                 >
-                  <Image src="/crunbase_logo.jpg" alt="Crunchbase" width={220} height={80} className="h-10 w-auto object-contain" />
-                  <span className="text-[10px] font-bold uppercase tracking-[0.24em] text-[#121212]/55">Crunchbase</span>
-                </a>
-                <a
+                  <Image src="/crunbase_logo.jpg" alt="Crunchbase" width={220} height={80} className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">Crunchbase</span>
+                </motion.a>
+                <motion.a
+                  variants={staggerItem}
                   href="https://techbehemoths.com/company/forgestack-labs-llp"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Forgestack Labs Tech Behemoths profile"
-                  className="flex min-h-[96px] w-[240px] items-center justify-center rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-7 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                  className="group flex min-h-[126px] flex-col items-center justify-center gap-3 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-5 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
                 >
-                  <Image src="/tech_behemonths_logo.svg" alt="Tech Behemoths" width={220} height={80} className="h-10 w-auto object-contain" />
-                </a>
-              </div>
+                  <Image src="/tech_behemonths_logo.svg" alt="Tech Behemoths" width={220} height={80} className="h-10 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">Tech Behemoths</span>
+                </motion.a>
+                <motion.a
+                  variants={staggerItem}
+                  href="https://tracxn.com/d/legal-entities/india/forgestack-labs-llp/__WRxqjSfXmCnA7PbUfFNvlD3kIUymGCKAhOGmfKIaaQM"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Forgestack Labs Tracxn profile"
+                  className="group flex min-h-[126px] flex-col items-center justify-center gap-3 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-5 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                >
+                  <Image src="/tracxn-logo-full-100x22.svg" alt="Tracxn" width={100} height={22} className="h-6 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">Tracxn</span>
+                </motion.a>
+              </motion.div>
             </motion.div>
 
           </div>

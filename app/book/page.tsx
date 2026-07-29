@@ -25,14 +25,6 @@ const items = [
     points: ["Online reader", "Progress indicator", "Table of contents"],
   },
   {
-    eyebrow: "PDF",
-    title: "Download the capability deck.",
-    copy:
-      "Download a concise PDF capability deck covering what we build, the delivery model, Fuel OS, and how to engage ForgeStack Labs.",
-    href: "/capability-deck/download",
-    points: ["PDF download", "Capability overview", "Engagement summary"],
-  },
-  {
     eyebrow: "Chapters",
     title: "One source of truth for website messaging.",
     copy:
