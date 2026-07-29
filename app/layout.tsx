@@ -1,5 +1,6 @@
 ﻿import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import Script from "next/script";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import "@/styles/globals.css";
@@ -158,6 +159,11 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en-IN" className={inter.variable}>
       <head>
+        <Script
+          id="secure-privacy-consent"
+          src="https://app.secureprivacy.ai/script/6a699f6ddc51712b878013f7.js"
+          strategy="beforeInteractive"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
