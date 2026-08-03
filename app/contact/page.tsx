@@ -26,7 +26,7 @@ const heroItem: Variants = {
   hidden: { opacity: 0, y: 24 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.75, ease: EASE } },
 };
-const VP = { once: false, margin: "-240px" } as const;
+const VP = { once: true, amount: 0.1, margin: "0px 0px -10% 0px" } as const;
 
 // ─── Hover spring configs (exact from home/products) ──────────────────────────
 const cardSpring = { type: "spring", stiffness: 220, damping: 18 } as const;

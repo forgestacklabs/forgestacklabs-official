@@ -4,7 +4,7 @@ import { useState } from "react";
 import { motion, Variants } from "framer-motion";
 
 const EASE = [0.215, 0.61, 0.355, 1] as const;
-const VP = { once: false, margin: "-180px" } as const;
+const VP = { once: true, amount: 0.1, margin: "0px 0px -10% 0px" } as const;
 
 const fadeUp: Variants = {
   hidden: { opacity: 0, y: 30 },

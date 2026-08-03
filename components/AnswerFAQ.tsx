@@ -26,7 +26,7 @@ const itemReveal: Variants = {
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: EASE } },
 };
 
-const VP = { once: false, margin: "-160px" } as const;
+const VP = { once: true, amount: 0.1, margin: "0px 0px -10% 0px" } as const;
 
 type AnswerFAQProps = {
   id: string;

@@ -71,7 +71,7 @@ const cardSpring = { type: "spring", stiffness: 220, damping: 18 } as const;
 const btnSpring  = { type: "spring", stiffness: 320, damping: 20 } as const;
 
 // ─── Viewport config — positive margin means element must be THIS far inside viewport ───
-const VP = { once: false, margin: "-240px" } as const;
+const VP = { once: true, amount: 0.1, margin: "0px 0px -10% 0px" } as const;
 
 // ─── FadeOutSection ───────────────────────────────────────────────────────────
 function FadeOutSection({ children }: { children: React.ReactNode }) {

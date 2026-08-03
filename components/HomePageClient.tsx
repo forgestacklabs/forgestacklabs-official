@@ -90,7 +90,7 @@ const pillSpring = { type: "spring", stiffness: 300, damping: 18 } as const;
 const btnSpring  = { type: "spring", stiffness: 320, damping: 20 } as const;
 const linkSpring = { type: "spring", stiffness: 340, damping: 20 } as const;
 
-const VP = { once: false, margin: "-240px" } as const;
+const VP = { once: true, amount: 0.1, margin: "0px 0px -10% 0px" } as const;
 
 function FadeOutSection({ children }: { children: React.ReactNode }) {
   const ref = useRef<HTMLDivElement>(null);

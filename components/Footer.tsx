@@ -213,6 +213,22 @@ export default function GlassFooter() {
                 />
               </a>
               <a
+                href="https://www.instagram.com/forgestacklabs/"
+                target="_blank"
+                rel="noreferrer"
+                aria-label="Forgestack Labs on Instagram"
+                title="Instagram"
+                className="inline-flex h-9 w-9 items-center justify-center transition-all duration-300 hover:-translate-y-0.5"
+              >
+                <Image
+                  src="/Instagram_icon.png"
+                  alt="Instagram"
+                  width={256}
+                  height={256}
+                  className="h-8 w-8 object-contain mix-blend-multiply"
+                />
+              </a>
+              <a
                 href="https://github.com/forgestacklabs"
                 target="_blank"
                 rel="noreferrer"

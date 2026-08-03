@@ -22,7 +22,7 @@ interface BulletProps {
 
 // ── Animation config ────────────────────────────────────────────────────────
 const EASE = [0.215, 0.61, 0.355, 1] as const;
-const VP   = { once: false, margin: "-60px" } as const;
+const VP   = { once: true, amount: 0.1, margin: "0px 0px -10% 0px" } as const;
 
 // ── Framer Motion Variants (matching Privacy page) ──────────────────────────
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
