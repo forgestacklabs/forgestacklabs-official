@@ -556,6 +556,7 @@
       justify-content: center;
       backdrop-filter: blur(6px);
       transition: .2s;
+      touch-action: manipulation;
     }
 
     .arrow:hover {
@@ -1256,6 +1257,14 @@
       .dragzone {
         width: 34px;
         z-index: 14;
+      }
+
+      .dragzone.right {
+        right: 58px
+      }
+
+      .dragzone.left {
+        left: 58px
       }
 
       .bottombar {
@@ -1975,6 +1984,7 @@
     const leafNext = document.getElementById('leafNext');
     const leafPrev = document.getElementById('leafPrev');
     let animating = false;
+    let pendingTurn = null;
 
     function isMobile() { return window.innerWidth <= 900; }
     function pageStep() { return isMobile() ? 1 : 2; }
@@ -1997,6 +2007,14 @@
     }
 
     function easeInOutCubic(t) { return t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2; }
+
+    function finishTurn() {
+      animating = false;
+      const direction = pendingTurn;
+      pendingTurn = null;
+      if (direction === 'next') requestAnimationFrame(turnNext);
+      if (direction === 'prev') requestAnimationFrame(turnPrev);
+    }
 
     function animateMobilePage(direction, nextIndex, onDone) {
       const next = direction === 'next';
@@ -2053,10 +2071,11 @@
     function turnNext() {
       const mobile = isMobile();
       const step = pageStep();
-      if (animating || idx + step >= total) return;
+      if (idx + step >= total) return;
+      if (animating) { pendingTurn = 'next'; return; }
       animating = true;
       if (mobile) {
-        animateMobilePage('next', idx + step, () => { animating = false; });
+        animateMobilePage('next', idx + step, finishTurn);
         return;
       }
       const frontHTML = mobile ? pageHTML(pages[idx], idx) : pageHTML(pages[idx + 1], idx + 1);
@@ -2071,16 +2090,17 @@
           foldShadow.style.opacity = 0;
           idx += step;
           renderStatic();
-          animating = false;
+          finishTurn();
         });
     }
     function turnPrev() {
       const mobile = isMobile();
       const step = pageStep();
-      if (animating || idx <= 0) return;
+      if (idx <= 0) return;
+      if (animating) { pendingTurn = 'prev'; return; }
       animating = true;
       if (mobile) {
-        animateMobilePage('prev', idx - step, () => { animating = false; });
+        animateMobilePage('prev', idx - step, finishTurn);
         return;
       }
       const currentLeftHTML = pageHTML(pages[idx], idx);
@@ -2096,7 +2116,7 @@
             leafPrev.style.transform = 'rotateY(0deg)';
             leafPrev.style.setProperty('--shade', '0');
             foldShadow.style.opacity = 0;
-            animating = false;
+            finishTurn();
           });
         });
       leftPage.innerHTML = previousLeftHTML;
@@ -2107,8 +2127,15 @@
     }
 
     /* ============ CONTROLS ============ */
-    document.getElementById('nextArrow').onclick = turnNext;
-    document.getElementById('prevArrow').onclick = turnPrev;
+    const nextArrow = document.getElementById('nextArrow');
+    const prevArrow = document.getElementById('prevArrow');
+    [nextArrow, prevArrow].forEach(arrow => {
+      arrow.addEventListener('pointerdown', e => e.stopPropagation());
+      arrow.addEventListener('pointerup', e => e.stopPropagation());
+      arrow.addEventListener('pointercancel', e => e.stopPropagation());
+    });
+    nextArrow.onclick = turnNext;
+    prevArrow.onclick = turnPrev;
     document.getElementById('bbNext').onclick = turnNext;
     document.getElementById('bbPrev').onclick = turnPrev;
 
@@ -2192,7 +2219,7 @@
               leaf.style.transform = 'rotateY(0deg)';
               leaf.style.setProperty('--shade', '0');
               foldShadow.style.opacity = 0;
-              animating = false;
+              finishTurn();
             });
           });
       });
