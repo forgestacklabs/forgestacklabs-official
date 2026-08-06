@@ -1,12 +1,14 @@
 ﻿import { NextResponse } from "next/server";
 
 import { industries, resources, technologies } from "@/lib/seo-content";
+import { services } from "@/app/services/services-data";
 
 const baseUrl = "https://www.forgestacklabs.com";
 
 const pages = [
   { path: "", changefreq: "weekly", priority: "1.0" },
   { path: "/products", changefreq: "weekly", priority: "0.9" },
+  { path: "/services", changefreq: "weekly", priority: "0.9" },
   { path: "/about", changefreq: "monthly", priority: "0.8" },
   { path: "/careers", changefreq: "weekly", priority: "0.7" },
   { path: "/resources", changefreq: "weekly", priority: "0.8" },
@@ -37,6 +39,7 @@ const pages = [
   ...industries.map(({ slug }) => ({ path: `/industries/${slug}`, changefreq: "monthly", priority: "0.7" })),
   ...technologies.map(({ slug }) => ({ path: `/technologies/${slug}`, changefreq: "monthly", priority: "0.7" })),
   ...resources.map(({ slug }) => ({ path: `/resources/${slug}`, changefreq: "monthly", priority: "0.6" })),
+  ...services.map(({ slug }) => ({ path: `/services/${slug}`, changefreq: "monthly", priority: "0.7" })),
 ];
 
 export async function GET() {

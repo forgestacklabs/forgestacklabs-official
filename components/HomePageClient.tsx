@@ -129,8 +129,11 @@ const offerings = [
     accentClass: "text-[#D4A373]",
     title: "Enterprise Product Engineering",
     copy: "We partner with organizations to architect mission-critical software, internal operational platforms, AI workflows, and modern SaaS systems engineered for long-term scalability.",
-    href: "/contact?mode=custom#contact-inquiry",
-    cta: "Discuss Your Project",
+    // Was: "/contact?mode=custom#contact-inquiry" — now routes through the
+    // /services overview first (which ends in its own discovery-call CTA),
+    // per the Clutch blueprint's "internal links from homepage" requirement.
+    href: "/services",
+    cta: "Explore Our Services",
   },
 ];
 

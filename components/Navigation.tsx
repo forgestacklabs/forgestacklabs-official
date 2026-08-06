@@ -1,4 +1,4 @@
-"use client";
+﻿"use client";
 
 import Link from "next/link";
 import Image from "next/image";
@@ -9,6 +9,7 @@ import { motion, AnimatePresence } from "framer-motion";
 const links = [
   { href: "/",              label: "Home" },
   { href: "/products",   label: "Products" },
+  { href: "/services",   label: "Services" },
   { href: "/about",        label: "The Lab" },
   { href: "/careers",      label: "Career" },
   { href: "/resources",   label: "Resources" },
@@ -22,7 +23,7 @@ export default function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hoveredLink, setHoveredLink] = useState<string | null>(null);
 
-  // â”€â”€ Scroll detection â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Scroll detection ────────────────────────────────────────────────
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 50);
     window.addEventListener("scroll", onScroll, { passive: true });
@@ -39,7 +40,7 @@ export default function Navbar() {
     return () => media.removeEventListener("change", onChange);
   }, []);
 
-  // â”€â”€ Lock body scroll when mobile menu is open â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€
+  // ── Lock body scroll when mobile menu is open ──────────────────────
   useEffect(() => {
     document.body.style.overflow = isMenuOpen ? "hidden" : "";
     return () => { document.body.style.overflow = ""; };
@@ -67,7 +68,7 @@ export default function Navbar() {
           className="pointer-events-auto w-full transition-all duration-700 ease-in-out px-4 sm:px-6"
           style={{
             paddingTop: compact ? "12px" : "16px",
-            maxWidth: compact ? "960px" : "100%",
+            maxWidth: compact ? "1120px" : "100%",
           }}
         >
           <motion.div
@@ -96,7 +97,7 @@ export default function Navbar() {
               scale: 1.005,
             }}
           >
-            {/* â”€â”€ BRAND â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* ── BRAND ──────────────────────────────────────────────── */}
             <Link
               href="/"
               className="flex items-center gap-1.5 group transition-all duration-700"
@@ -118,7 +119,7 @@ export default function Navbar() {
               )}
             </Link>
 
-            {/* â”€â”€ DESKTOP NAV â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* ── DESKTOP NAV ────────────────────────────────────────── */}
             <nav
               className="absolute left-1/2 hidden -translate-x-1/2 md:flex items-center gap-0"
               style={{ left: compact ? "calc(50% - 35px)" : "50%" }}
@@ -129,7 +130,7 @@ export default function Navbar() {
                   key={link.href}
                   href={link.href}
                   onMouseEnter={() => setHoveredLink(link.href)}
-                  className="relative px-3.5 py-2 text-[12px] font-medium tracking-wide transition-colors duration-200 z-10"
+                  className="relative whitespace-nowrap px-2.5 py-2 text-[12px] font-medium tracking-wide transition-colors duration-200 z-10"
                   style={{
                     color: isActive(link.href)
                       ? "#222222"
@@ -165,9 +166,9 @@ export default function Navbar() {
               ))}
             </nav>
 
-            {/* â”€â”€ CTA + HAMBURGER â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+            {/* ── CTA + HAMBURGER ────────────────────────────────────── */}
             <div className="flex items-center gap-3">
-              {/* CTA â€” desktop only */}
+              {/* CTA — desktop only */}
               <motion.div className="hidden md:block" whileTap={{ scale: 0.97 }}>
                 <Link
                   href="/contact"
@@ -195,7 +196,7 @@ export default function Navbar() {
                 </Link>
               </motion.div>
 
-              {/* Hamburger â€” mobile only */}
+              {/* Hamburger — mobile only */}
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 className="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-[5px] rounded-full bg-black/[0.05] hover:bg-black/10 transition-colors"
@@ -222,7 +223,7 @@ export default function Navbar() {
         </div>
       </motion.header>
 
-      {/* â”€â”€ MOBILE SIDEBAR â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€ */}
+      {/* ── MOBILE SIDEBAR ────────────────────────────────────────────── */}
       <AnimatePresence>
         {isMenuOpen && (
           <div className="fixed inset-0 z-[60] md:hidden">
@@ -350,21 +351,3 @@ export default function Navbar() {
     </>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
