@@ -142,6 +142,21 @@ export default function GlassFooter() {
                       className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </a>
+                  <a
+                    href="https://www.sensibook.com/companies/3895054/ACU-3315/FORGESTACK-LABS-LLP"
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label="Forgestack Labs SensiBook profile"
+                    className="group inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#121212]/10 bg-white/35 p-2 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8BA888]/50 hover:bg-white/70"
+                  >
+                    <Image
+                      src="/sensibook_logo.png"
+                      alt="Tracxn"
+                      width={100}
+                      height={22}
+                      className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
+                    />
+                  </a>
                 </div>
               </div>
 

@@ -14,6 +14,15 @@ import {
   servicesAnswers,
 } from "./services-data";
 
+// Unique services referenced by an FAQ answer, in FAQ order — powers the
+// "Related Services" links below the FAQ so each linked topic has a real,
+// working internal link to its service page (see services-data.ts SEO notes).
+const relatedFaqServices = Array.from(
+  new Set(servicesAnswers.map((a) => a.relatedSlug).filter((s): s is string => Boolean(s))),
+)
+  .map((slug) => services.find((s) => s.slug === slug))
+  .filter((s): s is (typeof services)[number] => Boolean(s));
+
 const EASE = [0.215, 0.61, 0.355, 1] as const;
 
 // ─── Variants (mirrors /app/products/page.tsx exactly) ────────────────────────
@@ -123,7 +132,7 @@ function FadeOutSection({
 
 const stats = [
   { value: "7", label: "Service Lines" },
-  { value: "1", label: "Own Products" },
+  { value: "3", label: "Own Products" },
   { value: "100%", label: "In-House" },
   { value: "0", label: "Vendor Lock-In" },
 ];
@@ -170,7 +179,7 @@ export default function ServicesPageClient() {
               <motion.div whileHover={{ y: -5, scale: 1.04, transition: btnSpring }} className="inline-block">
                 <Link
                   href="/contact?mode=discovery#contact-inquiry"
-                  className="inline-flex rounded-full bg-[#8BA888] px-9 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
+                  className="inline-flex rounded-full bg-[#5C7859] px-9 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
                 >
                   Book a Discovery Call
                 </Link>
@@ -418,6 +427,28 @@ export default function ServicesPageClient() {
         items={servicesAnswers}
       />
 
+      {/* ── Related Services (internal links from FAQ topics) ── */}
+      {relatedFaqServices.length > 0 && (
+        <section className="px-6 pb-4 pt-16">
+          <div className="mx-auto max-w-7xl">
+            <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4A373]">
+              Related Services
+            </p>
+            <div className="flex flex-wrap gap-3">
+              {relatedFaqServices.map((s) => (
+                <Link
+                  key={s.slug}
+                  href={`/services/${s.slug}`}
+                  className="rounded-full border border-[#121212]/10 bg-white/50 px-5 py-2.5 text-sm font-medium text-[#121212]/75 backdrop-blur-xl transition-colors duration-300 hover:border-[#8BA888]/60 hover:bg-white hover:text-[#121212]"
+                >
+                  {s.title} →
+                </Link>
+              ))}
+            </div>
+          </div>
+        </section>
+      )}
+
       {/* ── Final CTA ── */}
       <FadeOutSection>
         <section className="px-6 py-28">
@@ -442,7 +473,7 @@ export default function ServicesPageClient() {
                 <motion.div whileHover={{ y: -5, scale: 1.04, transition: btnSpring }} className="inline-block">
                   <Link
                     href="/contact?mode=discovery#contact-inquiry"
-                    className="inline-flex rounded-full bg-[#8BA888] px-9 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
+                    className="inline-flex rounded-full bg-[#5C7859] px-9 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
                   >
                     Book a Discovery Call
                   </Link>

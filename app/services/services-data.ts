@@ -200,32 +200,90 @@ export const engagementModels = [
   },
 ];
 
-// Shape assumed to match the existing `AnswerFAQ` / `fuelOsAnswers` pattern.
-// Verify against /lib/aeo-content.ts and adjust field names if they differ.
-export const servicesAnswers = [
+// Sourced from ForgeStack_Labs_SEO_FAQs_Service_Page.docx — real, approved copy.
+// relatedSlug (optional) maps a question's topic to its matching service in
+// `services` above, so /services can surface an internal link — see the
+// "Related Services" strip in ServicesPageClient.tsx.
+export const servicesAnswers: { question: string; answer: string; relatedSlug?: string }[] = [
   {
-    question: "Is ForgeStack Labs a product company or a services agency?",
+    question: "What custom software development services does ForgeStack Labs provide?",
     answer:
-      "Both. We build and operate our own SaaS products, and we partner with businesses to design, build, and scale custom software using the same engineering standards.",
+      "ForgeStack Labs designs, develops, and supports custom software tailored to unique business requirements. Our capabilities include enterprise software, SaaS platforms, AI-powered applications, web applications, mobile applications, API development, workflow automation, and system integration. Rather than offering one-size-fits-all solutions, we engineer software that aligns with business goals, scales with growth, and integrates seamlessly with existing operations.",
+    relatedSlug: "custom-software-development",
+  },
+  {
+    question: "Why should I choose a product engineering company instead of a traditional software agency?",
+    answer:
+      "A product engineering company focuses on long-term product success rather than only project delivery. At ForgeStack Labs, we apply product thinking, user-centric design, scalable architecture, and continuous improvement practices to every engagement. This approach helps businesses build software that remains valuable as requirements evolve.",
+    relatedSlug: "product-engineering",
+  },
+  {
+    question: "Does ForgeStack Labs build both its own products and client solutions?",
+    answer:
+      "Yes. We build proprietary software products while partnering with organizations to develop custom software. Our experience building internal products helps us apply proven engineering standards, modern architecture, and product management practices to client engagements.",
+  },
+  {
+    question: "Which industries does ForgeStack Labs build software for?",
+    answer:
+      "We primarily serve manufacturing, logistics, healthcare, retail, business services, and technology organizations. We also work with businesses undergoing digital transformation or requiring custom internal platforms.",
+  },
+  {
+    question: "Can ForgeStack Labs develop enterprise web and mobile applications?",
+    answer:
+      "Yes. We develop secure web applications, cross-platform mobile applications, and cloud-based business systems designed for performance, scalability, and long-term maintainability.",
+    relatedSlug: "web-application-development",
+  },
+  {
+    question: "Can you modernize legacy software and existing business systems?",
+    answer:
+      "Yes. We modernize legacy applications by improving architecture, migrating to modern technology stacks, integrating APIs, enhancing security, and improving user experience while minimizing disruption.",
+    relatedSlug: "enterprise-software",
+  },
+  {
+    question: "How do you use AI during software development?",
+    answer:
+      "We use AI responsibly to accelerate research, prototyping, testing, documentation, and development workflows. Engineering decisions, architecture, security, and quality assurance remain under the supervision of experienced software professionals.",
+    relatedSlug: "ai-solutions-automation",
+  },
+  {
+    question: "What technologies does ForgeStack Labs specialize in?",
+    answer:
+      "Our primary technologies include Next.js, React, Node.js, TypeScript, Flutter, PostgreSQL, Docker, cloud infrastructure, REST APIs, and modern SaaS architectures.",
+  },
+  {
+    question: "What is your software development process?",
+    answer:
+      "Our process includes discovery, business analysis, solution architecture, UX planning, iterative development, quality assurance, deployment, and post-launch support. Clients receive regular updates and milestone reviews throughout the engagement.",
+  },
+  {
+    question: "Do you work with international clients?",
+    answer:
+      "Yes. ForgeStack Labs partners with organizations globally using structured communication, collaborative planning, secure development practices, and flexible engagement models suited to distributed teams.",
+  },
+  {
+    question: "Who owns the intellectual property after project completion?",
+    answer:
+      "Unless otherwise agreed in the contract, the client owns the intellectual property for the custom software developed specifically for their project after agreed deliverables and payments are completed.",
   },
   {
     question: "What engagement models do you offer?",
     answer:
-      "Fixed Price for well-scoped projects, Dedicated Team for ongoing product work, and Product Partnership for ventures where we take on deeper product-level ownership.",
+      "We offer fixed-price projects, milestone-based delivery, dedicated engineering teams, and long-term product engineering partnerships depending on project scope and business objectives.",
   },
   {
-    question: "What industries do you build for?",
+    question: "How do you ensure software quality?",
     answer:
-      "Manufacturing, logistics, healthcare, SaaS, retail, and business services — anywhere operational software needs to hold up under real-world conditions.",
+      "We follow engineering best practices including code reviews, testing, version control, documentation, and continuous quality assurance to deliver reliable, maintainable software.",
   },
   {
-    question: "Do you build mobile apps as well as web platforms?",
+    question: "Why choose ForgeStack Labs for enterprise software development?",
     answer:
-      "Yes. We build cross-platform Flutter mobile apps, including offline-first architectures, alongside Next.js and React web applications.",
+      "ForgeStack Labs combines product strategy with engineering excellence. Because we actively build our own products, we understand how to create scalable, maintainable, commercially viable software that delivers measurable business value.",
+    relatedSlug: "enterprise-software",
   },
   {
-    question: "How does AI factor into your delivery process?",
+    question: "How can I start a project with ForgeStack Labs?",
     answer:
-      "We use AI-assisted engineering workflows to move faster on implementation, while architecture, testing, and code ownership decisions stay held to the same standard as our own products.",
+      "Contact us through our website to schedule a discovery call. We'll understand your business goals, recommend an appropriate technical approach, define the scope, and prepare a tailored proposal.",
   },
 ];

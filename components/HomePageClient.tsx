@@ -360,6 +360,17 @@ export default function HomePageClient() {
                   <Image src="/tracxn-logo-full-100x22.svg" alt="Tracxn" width={100} height={22} className="h-6 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
                   <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">Tracxn</span>
                 </motion.a>
+                <motion.a
+                  variants={staggerItem}
+                  href="https://tracxn.com/d/legal-entities/india/forgestack-labs-llp/__WRxqjSfXmCnA7PbUfFNvlD3kIUymGCKAhOGmfKIaaQM"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="Forgestack Labs SensiBook profile"
+                  className="group flex min-h-[126px] flex-col items-center justify-center gap-3 rounded-[1.5rem] border border-[#121212]/10 bg-white/70 px-5 py-5 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                >
+                  <Image src="/sensibook_logo.png" alt="SensiBook" width={100} height={22} className="h-6 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
+                  <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">SensiBook</span>
+                </motion.a>
               </motion.div>
             </motion.div>
 
