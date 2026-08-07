@@ -132,7 +132,7 @@ function FadeOutSection({
 
 const stats = [
   { value: "7", label: "Service Lines" },
-  { value: "3", label: "Own Products" },
+  { value: "1", label: "Own Products" },
   { value: "100%", label: "In-House" },
   { value: "0", label: "Vendor Lock-In" },
 ];
