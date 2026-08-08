@@ -136,7 +136,7 @@ export default function Navbar() {
                       ? "#222222"
                       : hoveredLink === link.href
                       ? "#222222"
-                      : "rgba(34,34,34,0.50)",
+                      : "rgba(34,34,34,0.70)",
                   }}
                 >
                   {/* Magnetic capsule */}

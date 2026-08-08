@@ -28,6 +28,17 @@ const nextConfig = {
         ],
       },
 
+      // ✅ Long cache for static image/font assets
+      {
+        source: '/:all*(svg|jpg|jpeg|png|gif|ico|webp|avif|woff|woff2)',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'public, max-age=31536000, immutable',
+          },
+        ],
+      },
+
       // ✅ Global security headers + CSP
       {
         source: '/:path*',

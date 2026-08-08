@@ -18,7 +18,11 @@ import {
 // "Related Services" links below the FAQ so each linked topic has a real,
 // working internal link to its service page (see services-data.ts SEO notes).
 const relatedFaqServices = Array.from(
-  new Set(servicesAnswers.map((a) => a.relatedSlug).filter((s): s is string => Boolean(s))),
+  new Set(
+    servicesAnswers.flatMap((a) =>
+      a.relatedSlug ? (Array.isArray(a.relatedSlug) ? a.relatedSlug : [a.relatedSlug]) : [],
+    ),
+  ),
 )
   .map((slug) => services.find((s) => s.slug === slug))
   .filter((s): s is (typeof services)[number] => Boolean(s));

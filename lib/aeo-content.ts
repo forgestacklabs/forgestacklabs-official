@@ -1,6 +1,7 @@
 ﻿export type AnswerItem = {
   question: string;
   answer: string;
+  relatedFaq?: string;
 };
 
 export const fuelOsAnswers: AnswerItem[] = [

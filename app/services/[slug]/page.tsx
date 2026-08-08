@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import { services } from "../services-data";
 import ServiceDetailClient from "./ServiceDetailClient";
+import BreadcrumbSchema from "@/components/BreadcrumbSchema";
 
 const SITE_URL = "https://www.forgestacklabs.com";
 
@@ -41,6 +42,13 @@ export default function ServiceDetailPage({ params }: { params: { slug: string }
 
   return (
     <>
+      <BreadcrumbSchema
+        items={[
+          { name: "Home", path: "/" },
+          { name: "Services", path: "/services" },
+          { name: service.title, path: `/services/${service.slug}` },
+        ]}
+      />
       <script
         type="application/ld+json"
         // eslint-disable-next-line react/no-danger

@@ -1,0 +1,45 @@
+# Forgestack Labs
+
+> Forgestack Labs LLP is a software engineering company building custom software, operational platforms, SaaS products, Fuel OS, AI workflows, and secure scalable systems for companies in India and international markets. Based in Mangaluru, Karnataka, India. Slogan: "When Vision Meets Precision."
+
+- Contact: hello@forgestacklabs.com
+- Website: https://www.forgestacklabs.com
+
+## Company
+
+- [About](https://www.forgestacklabs.com/about): Who Forgestack Labs is, mission, and team.
+- [Manifesto](https://www.forgestacklabs.com/manifesto): Engineering principles and philosophy.
+- [Careers](https://www.forgestacklabs.com/careers): Open roles and how to join.
+- [Contact](https://www.forgestacklabs.com/contact): Get in touch or start a project.
+- [Book a call](https://www.forgestacklabs.com/book): Schedule a conversation with the team.
+
+## Services & Capabilities
+
+- [Services](https://www.forgestacklabs.com/services): Full list of engineering services offered.
+- [Products](https://www.forgestacklabs.com/products): Products and platforms built by Forgestack Labs.
+- [Engineering](https://www.forgestacklabs.com/engineering): Engineering approach and delivery model.
+- [Engineering Capabilities](https://www.forgestacklabs.com/engineering-capabilities): Detailed technical capabilities.
+- [Operational Software](https://www.forgestacklabs.com/operational-software): Custom operational platforms and dashboards.
+- [Product Engineering](https://www.forgestacklabs.com/product-engineering): End-to-end product engineering.
+- [Enterprise Software](https://www.forgestacklabs.com/enterprise-software): Enterprise-grade software systems.
+- [Offline-First Apps](https://www.forgestacklabs.com/offline-first-apps): Offline-first application engineering.
+- [AI Automation](https://www.forgestacklabs.com/ai-automation): AI workflows and automation.
+- [Digital Transformation](https://www.forgestacklabs.com/digital-transformation): Modernization and transformation services.
+- [Custom Web & Mobile Apps](https://www.forgestacklabs.com/custom-web-mobile-apps): Bespoke web and mobile development.
+- [Industries](https://www.forgestacklabs.com/industries): Industries served.
+- [Technologies](https://www.forgestacklabs.com/technologies): Technology stack and expertise.
+
+## Insights & Resources
+
+- [Case Studies](https://www.forgestacklabs.com/case-studies): Client and project case studies.
+- [Insights](https://www.forgestacklabs.com/insights): Articles and engineering insights.
+- [Resources](https://www.forgestacklabs.com/resources): Guides and downloadable resources.
+- [Research](https://www.forgestacklabs.com/research): Research work and explorations.
+
+## Optional
+
+- [Timeline](https://www.forgestacklabs.com/timeline): Company timeline.
+- [Founder Timeline](https://www.forgestacklabs.com/founder-timeline): Founder's journey.
+- [Architecture Explorer](https://www.forgestacklabs.com/architecture-explorer): Interactive architecture overview.
+- [Privacy Policy](https://www.forgestacklabs.com/privacy): Privacy policy.
+- [Terms](https://www.forgestacklabs.com/terms): Terms of service.

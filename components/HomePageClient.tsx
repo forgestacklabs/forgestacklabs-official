@@ -173,7 +173,7 @@ function StatPill({ value, label }: { value: string; label: string }) {
       className="rounded-[1.75rem] border border-white/60 bg-white/40 px-7 py-6 backdrop-blur-2xl cursor-default"
     >
       <p className="text-3xl font-medium tracking-tight">{value}</p>
-      <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/35">{label}</p>
+      <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/70">{label}</p>
     </motion.div>
   );
 }
@@ -207,7 +207,7 @@ export default function HomePageClient() {
               <motion.h1 variants={heroItem} className="mb-8 max-w-5xl text-5xl font-medium leading-[0.93] tracking-tight text-[#121212] md:text-7xl lg:text-[6.5rem]">
                 Engineer the Solution.
                 <br />
-                <span className="italic text-[#121212]/30">Scale</span> the Impact.
+                <span className="italic text-[#121212]/60">Scale</span> the Impact.
               </motion.h1>
 
               <motion.p variants={heroItem} className="mx-auto mb-12 max-w-4xl text-base font-normal leading-8 text-[#121212]/58 md:text-xl md:leading-9">

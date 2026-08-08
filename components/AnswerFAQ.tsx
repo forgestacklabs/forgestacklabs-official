@@ -68,6 +68,7 @@ export default function AnswerFAQ({ id, eyebrow, title, introduction, items }: A
             return (
               <motion.div
                 key={item.question}
+                id={`${id}-q-${i}`}
                 variants={itemReveal}
                 className="border-b border-[#121212]/10 last:border-b-0"
               >
@@ -99,9 +100,27 @@ export default function AnswerFAQ({ id, eyebrow, title, introduction, items }: A
                       transition={{ duration: 0.4, ease: EASE }}
                       className="overflow-hidden"
                     >
-                      <p className="max-w-3xl pb-7 pr-12 text-sm leading-relaxed text-[#121212]/60 md:text-base">
+                      <p className="max-w-3xl pr-12 text-sm leading-relaxed text-[#121212]/60 md:text-base">
                         {item.answer}
                       </p>
+                      {item.relatedFaq && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const idx = items.findIndex((it) => it.question === item.relatedFaq);
+                            if (idx !== -1) {
+                              setOpenIndex(idx);
+                              document
+                                .getElementById(`${id}-q-${idx}`)
+                                ?.scrollIntoView({ behavior: "smooth", block: "center" });
+                            }
+                          }}
+                          className="mt-5 inline-flex text-left text-xs font-medium text-[#8BA888] transition-colors hover:text-[#121212]"
+                        >
+                          Related question: {item.relatedFaq} →
+                        </button>
+                      )}
+                      <div className="pb-7" />
                     </motion.div>
                   )}
                 </AnimatePresence>
