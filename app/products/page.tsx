@@ -391,7 +391,7 @@ export default function ProductsPage() {
                   className="inline-block"
                 >
                   <Link
-                    href="/contact?mode=demo#contact-inquiry"
+                    href="/contact#contact-inquiry"
                     className="inline-flex rounded-full bg-[#8BA888] px-9 py-4 text-xs font-bold uppercase tracking-[0.3em] text-white shadow-[0_18px_45px_rgba(139,168,136,0.28)] transition-colors duration-300 hover:bg-[#121212] hover:shadow-[0_24px_60px_rgba(18,18,18,0.22)]"
                   >
                     Request a Demo

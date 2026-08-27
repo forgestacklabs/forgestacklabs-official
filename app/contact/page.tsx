@@ -1,7 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { useRef, useState } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 
 const EASE = [0.215, 0.61, 0.355, 1] as const;
@@ -53,7 +52,6 @@ function FadeOutSection({ children }: { children: React.ReactNode }) {
   );
 }
 
-type InquiryMode = "demo" | "custom";
 type FormStatus = "idle" | "submitting" | "success" | "error";
 
 type FormState = {
@@ -126,43 +124,17 @@ const inputClass =
 const labelClass = "mb-2 block text-[10px] font-bold uppercase tracking-[0.32em] text-[#121212]/45";
 
 export default function ContactPage() {
-  const [mode, setMode] = useState<InquiryMode>("demo");
   const [formData, setFormData] = useState<FormState>(initialState);
   const [status, setStatus] = useState<FormStatus>("idle");
-
-  const isDemo = mode === "demo";
-
-  useEffect(() => {
-    const params = new URLSearchParams(window.location.search);
-    const requestedMode = params.get("mode");
-    if (requestedMode === "custom" || requestedMode === "demo") {
-      setMode(requestedMode);
-    }
-  }, []);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = event.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  const handleModeChange = (nextMode: InquiryMode) => {
-    setMode(nextMode);
-    setStatus("idle");
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setStatus("submitting");
-
-    const detailLines = isDemo
-      ? ["Product demo requested."]
-      : [
-          `Industry: ${formData.industry || "Not specified"}`,
-          `Country: ${formData.country || "Not specified"}`,
-          `Timeline: ${formData.timeline || "Not specified"}`,
-          `Estimated Budget Range: ${formData.budget || "Not specified"}`,
-          `Technical Brief: ${formData.message}`,
-        ];
 
     try {
       const response = await fetch("/api/contact", {
@@ -173,13 +145,13 @@ export default function ContactPage() {
           email: formData.email,
           phone: formData.phone,
           organization: formData.organization,
-          message: isDemo ? detailLines.join("\n\n") : formData.message,
-          source: isDemo ? "Product Demo Request" : "Custom Architecture Brief",
-          industry: isDemo ? "" : formData.industry,
-          country: isDemo ? "" : formData.country,
-          targetTimeline: isDemo ? "" : formData.timeline,
-          estimatedBudgetRange: isDemo ? "" : formData.budget,
-          technicalBrief: isDemo ? "" : formData.message,
+          message: formData.message,
+          source: "Custom Architecture Brief",
+          industry: formData.industry,
+          country: formData.country,
+          targetTimeline: formData.timeline,
+          estimatedBudgetRange: formData.budget,
+          technicalBrief: formData.message,
         }),
       });
 
@@ -282,46 +254,25 @@ export default function ContactPage() {
               className="rounded-[2.5rem] border border-white/70 bg-white/45 p-9 backdrop-blur-3xl transition-colors duration-300 hover:border-[#121212]/18 hover:bg-white/80 md:p-12"
             >
               <p className="mb-5 text-[10px] font-bold uppercase tracking-[0.45em] text-[#D4A373]">
-                Dual Conversion Engine
+                Start a Conversation
               </p>
-              <h2 className="mb-6 text-4xl font-medium tracking-tight md:text-5xl">Choose the right lane.</h2>
+              <h2 className="mb-6 text-4xl font-medium tracking-tight md:text-5xl">Tell us what you&apos;re building.</h2>
               <p className="mb-8 text-sm leading-relaxed text-[#121212]/60 md:text-base">
-                Request a technical product demo for the Forgestack ecosystem, or submit a bespoke architecture brief
-                for corporate-grade software engineering.
+                Share your goals, requirements, and timeline. Our engineering team will review your brief and recommend
+                the right next step, whether that is a product walkthrough or a bespoke architecture engagement.
               </p>
-              <div className="grid gap-3">
-                <motion.button
-                  type="button"
-                  onClick={() => handleModeChange("demo")}
-                  whileHover={{ y: -3, scale: 1.03, transition: btnSpring }}
-                  className={`rounded-full px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.25em] transition ${
-                    isDemo ? "bg-[#121212] text-white" : "border border-[#121212]/10 bg-white/45 text-[#121212]/55"
-                  }`}
-                >
-                  Request Product Demo
-                </motion.button>
-                <motion.button
-                  type="button"
-                  onClick={() => handleModeChange("custom")}
-                  whileHover={{ y: -3, scale: 1.03, transition: btnSpring }}
-                  className={`rounded-full px-6 py-4 text-left text-xs font-bold uppercase tracking-[0.25em] transition ${
-                    !isDemo ? "bg-[#121212] text-white" : "border border-[#121212]/10 bg-white/45 text-[#121212]/55"
-                  }`}
-                >
-                  Commission Custom Architecture
-                </motion.button>
-              </div>
+              <p className="text-xs font-bold uppercase tracking-[0.25em] text-[#8BA888]">
+                One brief. The right engineering response.
+              </p>
             </motion.div>
 
             {/* Right panel — form card, no lift hover since it contains inputs */}
             <div className="rounded-[2.5rem] border border-white/70 bg-white/55 p-8 shadow-[0_24px_90px_rgba(0,0,0,0.08)] backdrop-blur-3xl md:p-12">
               <div className="mb-8 border-b border-[#121212]/10 pb-6">
                 <p className="mb-3 text-[10px] font-bold uppercase tracking-[0.35em] text-[#8BA888]">
-                  {isDemo ? "For flagship product deployment" : "For bespoke engineering"}
+                  For products and bespoke engineering
                 </p>
-                <h2 className="text-3xl font-medium tracking-tight">
-                  {isDemo ? "Request Product Demo" : "Submit Project Brief"}
-                </h2>
+                <h2 className="text-3xl font-medium tracking-tight">Submit Project Brief</h2>
               </div>
 
               {status === "success" ? (
@@ -339,7 +290,7 @@ export default function ContactPage() {
                       <input id="name" name="name" required value={formData.name} onChange={handleChange} className={inputClass} />
                     </div>
                     <div>
-                      <label htmlFor="organization" className={labelClass}>{isDemo ? "Business Name" : "Enterprise Name"}</label>
+                      <label htmlFor="organization" className={labelClass}>Business / Enterprise Name</label>
                       <input id="organization" name="organization" required value={formData.organization} onChange={handleChange} className={inputClass} />
                     </div>
                   </div>
@@ -355,27 +306,21 @@ export default function ContactPage() {
                     </div>
                   </div>
 
-                  {!isDemo && (
-                    <div className="grid gap-6 md:grid-cols-3">
-                      <div><label htmlFor="industry" className={labelClass}>Industry</label><input id="industry" name="industry" required value={formData.industry} onChange={handleChange} className={inputClass} /></div>
-                      <div><label htmlFor="country" className={labelClass}>Country</label><input id="country" name="country" required value={formData.country} onChange={handleChange} className={inputClass} /></div>
-                      <div><label htmlFor="timeline" className={labelClass}>Target Timeline</label><input id="timeline" name="timeline" required value={formData.timeline} onChange={handleChange} className={inputClass} /></div>
-                    </div>
-                  )}
+                  <div className="grid gap-6 md:grid-cols-3">
+                    <div><label htmlFor="industry" className={labelClass}>Industry</label><input id="industry" name="industry" required value={formData.industry} onChange={handleChange} className={inputClass} /></div>
+                    <div><label htmlFor="country" className={labelClass}>Country</label><input id="country" name="country" required value={formData.country} onChange={handleChange} className={inputClass} /></div>
+                    <div><label htmlFor="timeline" className={labelClass}>Target Timeline</label><input id="timeline" name="timeline" required value={formData.timeline} onChange={handleChange} className={inputClass} /></div>
+                  </div>
 
-                  {!isDemo && (
-                    <div>
-                      <label htmlFor="budget" className={labelClass}>Estimated Budget Range</label>
-                      <input id="budget" name="budget" required value={formData.budget} onChange={handleChange} className={inputClass} />
-                    </div>
-                  )}
+                  <div>
+                    <label htmlFor="budget" className={labelClass}>Estimated Budget Range</label>
+                    <input id="budget" name="budget" required value={formData.budget} onChange={handleChange} className={inputClass} />
+                  </div>
 
-                  {!isDemo && (
-                    <div>
-                      <label htmlFor="message" className={labelClass}>Technical Brief / Project Scope</label>
-                      <textarea id="message" name="message" rows={5} required value={formData.message} onChange={handleChange} className={`${inputClass} resize-none`} />
-                    </div>
-                  )}
+                  <div>
+                    <label htmlFor="message" className={labelClass}>Technical Brief / Project Scope</label>
+                    <textarea id="message" name="message" rows={5} required value={formData.message} onChange={handleChange} className={`${inputClass} resize-none`} />
+                  </div>
 
                   {status === "error" && (
                     <p className="text-sm text-red-500">Something went wrong. Please try again or email us directly.</p>
@@ -387,7 +332,7 @@ export default function ContactPage() {
                     whileHover={{ y: -5, scale: 1.04, transition: btnSpring }}
                     className="rounded-full bg-[#121212] px-8 py-4 text-xs font-bold uppercase tracking-[0.35em] text-white transition hover:bg-[#121212]/85 disabled:cursor-not-allowed disabled:opacity-50"
                   >
-                    {status === "submitting" ? "Submitting..." : isDemo ? "Request Technical Demo" : "Submit Project Brief"}
+                    {status === "submitting" ? "Submitting..." : "Submit Project Brief"}
                   </motion.button>
                 </form>
               )}

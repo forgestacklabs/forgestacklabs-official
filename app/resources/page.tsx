@@ -602,7 +602,7 @@ export default function ResourcesPage() {
                     className="inline-block"
                   >
                     <Link
-                      href="/contact?mode=demo#contact-inquiry"
+                      href="/contact#contact-inquiry"
                       className="inline-flex rounded-full bg-[#8BA888] px-10 py-4 text-sm text-white backdrop-blur-md transition-all duration-500 hover:bg-white/20"
                     >
                       Request a Live Product Demo

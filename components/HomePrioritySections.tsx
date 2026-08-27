@@ -103,6 +103,7 @@ const industries = [
 const companyFacts = [
   ["2026", "Founded", "Incorporated in India and headquartered in Mangaluru."],
   ["DPIIT", "Recognized", "Recognized as a startup by the Government of India."],
+  ["K-Tech Startup Karnataka", "Certified", "Recognized as a startup by the Government of Karnataka."],
   ["100%", "In-house engineering", "Product, architecture, and delivery remain with our team."],
   ["Direct", "Founder-led", "Technical decisions and delivery accountability stay close to leadership."],
 ];
@@ -319,7 +320,7 @@ export default function HomePrioritySections() {
             <motion.p variants={labelReveal} className="mb-5 text-[10px] font-bold uppercase tracking-[.45em] text-[#8BA888]">Company statistics</motion.p>
             <motion.h2 variants={fadeUp} className="max-w-4xl text-4xl font-medium tracking-tight md:text-6xl">Small by design. Accountable by default.</motion.h2>
           </motion.div>
-          <motion.dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+          <motion.dl className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
             {companyFacts.map(([value, label, detail]) => <motion.div key={label} variants={cardReveal} whileHover={{ y: -10, scale: 1.018, boxShadow: "0 32px 80px rgba(18,18,18,0.16)", transition: cardSpring }} className="rounded-[2rem] border border-white/70 bg-white/50 p-7 shadow-[0_18px_60px_rgba(0,0,0,.06)] backdrop-blur-2xl"><dd className="mb-8 text-3xl font-medium tracking-tight text-[#121212]">{value}</dd><dt className="mb-3 text-[10px] font-bold uppercase tracking-[.28em] text-[#8BA888]">{label}</dt><dd className="text-sm leading-relaxed text-[#121212]/55">{detail}</dd></motion.div>)}
           </motion.dl>
         </div>

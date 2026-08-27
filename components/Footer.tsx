@@ -71,14 +71,25 @@ export default function GlassFooter() {
               </p>
 
               <div className="flex flex-col items-start gap-3">
-                <div className="inline-flex shrink-0 items-center justify-center rounded-2xl border border-[#121212]/10 bg-white/40 px-3.5 py-2.5">
-                  <Image
-                    src="/gov-login-img.png"
-                    alt="DPIIT Recognized"
-                    width={260}
-                    height={80}
-                    className="h-10 w-auto object-contain"
-                  />
+                <div className="grid w-full grid-cols-2 items-stretch gap-3">
+                  <div className="flex min-h-[62px] min-w-0 items-center justify-center rounded-2xl border border-[#121212]/10 bg-white/40 px-3.5 py-2.5">
+                    <Image
+                      src="/gov-login-img.png"
+                      alt="DPIIT Recognized"
+                      width={260}
+                      height={80}
+                      className="h-10 w-auto max-w-full object-contain"
+                    />
+                  </div>
+                  <div className="flex min-h-[62px] min-w-0 items-center justify-center rounded-2xl border border-[#121212]/10 bg-white/40 px-3.5 py-2.5">
+                    <Image
+                      src="/startup_kar.png"
+                      alt="Startup Karnataka"
+                      width={588}
+                      height={141}
+                      className="h-10 w-auto max-w-full object-contain"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex items-center gap-2.5">

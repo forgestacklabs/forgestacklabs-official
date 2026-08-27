@@ -278,7 +278,7 @@ export default function HomePageClient() {
             </motion.div>
 
             <motion.div
-              className="mx-auto grid max-w-md gap-4"
+              className="mx-auto grid max-w-3xl gap-4 sm:grid-cols-2"
               variants={staggerWrap}
               initial="hidden"
               whileInView="visible"
@@ -290,6 +290,13 @@ export default function HomePageClient() {
                 className="flex min-h-[96px] items-center justify-center rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl"
               >
                 <Image src="/gov-login-img.png" alt="DPIIT Recognized" width={260} height={80} className="h-10 w-auto object-contain" />
+              </motion.div>
+              <motion.div
+                variants={cardReveal}
+                whileHover={{ y: -8, scale: 1.03, boxShadow: "0 30px 70px rgba(18,18,18,0.18)", transition: { type: "spring", stiffness: 260, damping: 18 } }}
+                className="flex min-h-[96px] items-center justify-center rounded-[1.5rem] border border-white/70 bg-white/55 px-7 py-5 shadow-[0_18px_50px_rgba(0,0,0,0.06)] backdrop-blur-2xl"
+              >
+                <Image src="/startup_kar.png" alt="Startup Karnataka" width={588} height={141} className="h-12 w-auto max-w-full object-contain" />
               </motion.div>
             </motion.div>
 
