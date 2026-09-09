@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { motion, useScroll, useTransform, Variants } from "framer-motion";
 import HomePrioritySections, { EnterpriseFAQSection } from "@/components/HomePrioritySections";
 
@@ -175,6 +175,37 @@ function StatPill({ value, label }: { value: string; label: string }) {
       <p className="text-3xl font-medium tracking-tight">{value}</p>
       <p className="mt-2 text-[9px] font-bold uppercase tracking-[0.32em] text-[#121212]/70">{label}</p>
     </motion.div>
+  );
+}
+
+function ClutchWidget() {
+  const widgetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://widget.clutch.co/static/js/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => {
+      script.remove();
+      widgetRef.current?.querySelector("iframe")?.remove();
+    };
+  }, []);
+
+  return (
+    <div
+      ref={widgetRef}
+      className="clutch-widget h-20 w-20 shrink-0 overflow-hidden"
+      data-url="https://widget.clutch.co"
+      data-widget-type="10"
+      data-height="auto"
+      data-nofollow="false"
+      data-expandifr="true"
+      data-shape="round"
+      data-scale="100"
+      data-clutchcompany-id="2682759"
+    />
   );
 }
 
@@ -369,7 +400,7 @@ export default function HomePageClient() {
                 </motion.a>
                 <motion.a
                   variants={staggerItem}
-                  href="https://tracxn.com/d/legal-entities/india/forgestack-labs-llp/__WRxqjSfXmCnA7PbUfFNvlD3kIUymGCKAhOGmfKIaaQM"
+                  href="https://sensibook.com/companies/3895054/ACU-3315/FORGESTACK-LABS-LLP"
                   target="_blank"
                   rel="noopener noreferrer"
                   aria-label="Forgestack Labs SensiBook profile"
@@ -378,6 +409,16 @@ export default function HomePageClient() {
                   <Image src="/sensibook_logo.png" alt="SensiBook" width={100} height={22} className="h-6 w-auto object-contain transition-transform duration-300 group-hover:scale-105" />
                   <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">SensiBook</span>
                 </motion.a>
+                <motion.div
+                  variants={staggerItem}
+                  aria-label="Forgestack Labs Clutch profile"
+                  className="relative min-h-[126px] overflow-hidden rounded-[1.5rem] border border-[#121212]/10 bg-white/70 transition-colors duration-300 hover:border-[#121212]/20 hover:bg-white"
+                >
+                  <div className="absolute inset-0 flex -translate-y-7 flex-col items-center justify-center gap-2 px-5 py-2 text-center">
+                    <ClutchWidget />
+                    <span className="text-[9px] font-bold uppercase tracking-[0.22em] text-[#121212]/45">Clutch</span>
+                  </div>
+                </motion.div>
               </motion.div>
             </motion.div>
 

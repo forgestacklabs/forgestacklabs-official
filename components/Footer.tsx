@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect } from "react";
 
 const NAV_COLS = [
   {
@@ -43,6 +44,15 @@ const NAV_COLS = [
 
 export default function GlassFooter() {
   const pathname = usePathname();
+
+  useEffect(() => {
+    const script = document.createElement("script");
+    script.src = "https://widget.clutch.co/static/js/widget.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    return () => script.remove();
+  }, []);
 
   if (pathname.startsWith("/forgeos")) return null;
 
@@ -168,6 +178,23 @@ export default function GlassFooter() {
                       className="h-8 w-8 object-contain transition-transform duration-300 group-hover:scale-105"
                     />
                   </a>
+                  <div
+                    aria-label="Forgestack Labs Clutch profile"
+                    title="Clutch"
+                    className="inline-flex h-11 w-11 shrink-0 items-center justify-center overflow-hidden rounded-xl border border-[#121212]/10 bg-white/35 transition-all duration-300 hover:-translate-y-0.5 hover:border-[#8BA888]/50 hover:bg-white/70"
+                  >
+                    <div
+                      className="clutch-widget h-20 w-20 shrink-0 translate-x-[2px] -translate-y-[22px] overflow-hidden"
+                      data-url="https://widget.clutch.co"
+                      data-widget-type="10"
+                      data-height="auto"
+                      data-nofollow="false"
+                      data-expandifr="true"
+                      data-shape="round"
+                      data-scale="100"
+                      data-clutchcompany-id="2682759"
+                    />
+                  </div>
                 </div>
               </div>
 
