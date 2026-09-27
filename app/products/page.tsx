@@ -358,6 +358,37 @@ export default function ProductsPage() {
         </section>
       </FadeOutSection>
 
+      {/* ── Product directory ── */}
+      <FadeOutSection>
+        <section className="px-6 py-28">
+          <div className="mx-auto max-w-7xl">
+            <motion.div className="mb-14 max-w-4xl" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              <motion.p variants={labelReveal} className="mb-4 text-[10px] font-bold uppercase tracking-[0.45em] text-[#8BA888]">
+                Product portfolio
+              </motion.p>
+              <motion.h2 variants={fadeUp} className="text-4xl font-medium tracking-tight md:text-5xl">
+                Software built for real-world operations.
+              </motion.h2>
+            </motion.div>
+
+            <motion.div className="grid gap-4 md:grid-cols-2" variants={staggerWrap} initial="hidden" whileInView="visible" viewport={VP}>
+              <motion.article variants={cardReveal} className="rounded-[2rem] border border-white/70 bg-white/55 p-8 shadow-[0_20px_70px_rgba(0,0,0,0.06)] backdrop-blur-3xl">
+                <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#D4A373]">Personal finance</p>
+                <h3 className="mt-6 text-3xl font-medium tracking-tight">PocketRun</h3>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#121212]/60">Track personal and shared trip expenses, coordinate collaborators, manage receipts, and understand settlements in one place.</p>
+                <Link href="/products/pocketrun" className="mt-8 inline-flex rounded-full bg-[#121212] px-6 py-3 text-sm font-medium text-white">Explore PocketRun</Link>
+              </motion.article>
+              <motion.article variants={cardReveal} className="rounded-[2rem] border border-white/70 bg-white/55 p-8 shadow-[0_20px_70px_rgba(0,0,0,0.06)] backdrop-blur-3xl">
+                <p className="text-[10px] font-bold uppercase tracking-[0.35em] text-[#8BA888]">Fuel retail operations</p>
+                <h3 className="mt-6 text-3xl font-medium tracking-tight">Fuel OS</h3>
+                <p className="mt-4 max-w-xl text-sm leading-relaxed text-[#121212]/60">Connect billing, inventory, shifts, reconciliation, credit, and reporting for fuel-station teams.</p>
+                <Link href="/products/fuel-os" className="mt-8 inline-flex rounded-full border border-[#121212]/15 px-6 py-3 text-sm font-medium">Explore Fuel OS</Link>
+              </motion.article>
+            </motion.div>
+          </div>
+        </section>
+      </FadeOutSection>
+
       <AnswerFAQ
         id="fuel-os-answers"
         eyebrow="Fuel OS Answers"

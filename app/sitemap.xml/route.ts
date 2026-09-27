@@ -8,6 +8,9 @@ const baseUrl = "https://www.forgestacklabs.com";
 const pages = [
   { path: "", changefreq: "weekly", priority: "1.0" },
   { path: "/products", changefreq: "weekly", priority: "0.9" },
+  { path: "/products/pocketrun", changefreq: "monthly", priority: "0.8" },
+  { path: "/products/pocketrun/privacy", changefreq: "yearly", priority: "0.4" },
+  { path: "/products/pocketrun/terms", changefreq: "yearly", priority: "0.4" },
   { path: "/services", changefreq: "weekly", priority: "0.9" },
   { path: "/about", changefreq: "monthly", priority: "0.8" },
   { path: "/careers", changefreq: "weekly", priority: "0.7" },
