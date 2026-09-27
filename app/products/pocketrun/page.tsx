@@ -47,6 +47,7 @@ export default function PocketRunPage() {
         <div className="mt-10 flex flex-wrap gap-3">
           <Link href="/products/pocketrun/privacy" className="rounded-full bg-[#121212] px-6 py-3 text-sm font-medium text-white">Read the Privacy Policy</Link>
           <Link href="/products/pocketrun/terms" className="rounded-full border border-[#121212]/15 px-6 py-3 text-sm font-medium">Read the Terms &amp; Conditions</Link>
+          <Link href="/products/pocketrun/account-deletion" className="rounded-full border border-[#121212]/15 px-6 py-3 text-sm font-medium">Delete your account</Link>
           <Link href="/contact" className="rounded-full border border-[#121212]/15 px-6 py-3 text-sm font-medium">Contact support</Link>
         </div>
         <section className="mt-20">
