@@ -47,6 +47,7 @@ const sections = [
     body: [
       "You can review or update available profile information in PocketRun and remove content through the controls provided in the app. Shared content may remain visible to other authorized collaborators where required to preserve a trip or workspace record.",
       "You may request access, correction, export, or deletion of your personal information by using the in-app account controls or contacting us. We may need to verify your identity before completing a request.",
+      "When you confirm account deletion in the current PocketRun app, Business Pass renewal is cancelled before account deletion. The account-deletion guide provides Google Play recovery instructions if cancellation fails.",
     ],
   },
   {

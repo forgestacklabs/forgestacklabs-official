@@ -94,6 +94,11 @@ export default function PocketRunAccountDeletionPage() {
             <p>Certain information may remain temporarily in backups, security logs, or legally required records until the applicable retention period expires.</p>
           </InfoCard>
 
+          <InfoCard title="Business Pass cancellation with account deletion">
+            <p>When you confirm account deletion in the current PocketRun app, we stop renewal of Business Pass subscriptions purchased by that PocketRun account before deleting it. If cancellation cannot be confirmed, the account is not deleted; retry or manage the subscription in Google Play and contact support. Previous payments are not automatically refunded. A one-time Trip Pass does not automatically renew.</p>
+            <p><a href="https://play.google.com/store/account/subscriptions" className="font-medium text-[#121212] underline underline-offset-4">Manage Google Play subscriptions</a>. Use this link if renewal cancellation cannot be confirmed.</p>
+          </InfoCard>
+
           <InfoCard title="Legal documents and support">
             <p>Review the <Link href="/products/pocketrun/privacy" className="font-medium text-[#121212] underline underline-offset-4">PocketRun Privacy Policy</Link> and <Link href="/products/pocketrun/terms" className="font-medium text-[#121212] underline underline-offset-4">Terms &amp; Conditions</Link>.</p>
             <p>For help, contact ForgeStack Labs LLP at <a href="mailto:hello@forgestacklabs.com" className="font-medium text-[#121212] underline underline-offset-4">hello@forgestacklabs.com</a>.</p>
