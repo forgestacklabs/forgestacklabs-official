@@ -3,6 +3,7 @@ import { Inter } from "next/font/google";
 import Script from "next/script";
 import { GoogleTagManager } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import "@/styles/globals.css";
 import BackgroundField from "@/components/BackgroundField";
 import Footer from "@/components/Footer";
@@ -180,6 +181,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Footer />
         </div>
         <Analytics />
+        <SpeedInsights />
         {googleTagManagerId ? <GoogleTagManager gtmId={googleTagManagerId} /> : null}
       </body>
     </html>
