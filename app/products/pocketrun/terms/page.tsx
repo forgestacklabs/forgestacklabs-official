@@ -16,6 +16,7 @@ const terms = [
   ["5. Offline use and synchronization", "Locally stored records may not be immediately available to collaborators. Users should confirm synchronization has completed and review any conflict, duplication, or discrepancy."],
   ["6. Subscriptions and Google Play", "Paid access, Trip Passes, renewals, cancellations, and refunds are subject to the offering shown at purchase and applicable Google Play terms and policies. Confirmed account deletion stops renewal of Business Pass subscriptions purchased by that PocketRun account before account data is deleted. This does not automatically refund previous payments."],
   ["7. User data and acceptable use", "You retain your rights in information you lawfully submit and grant ForgeStack Labs LLP the limited rights needed to operate, secure, and maintain PocketRun. You must not misuse the service, violate law, infringe rights, upload unauthorized content, circumvent access controls, or interfere with service security or availability."],
+  ["Shared-content safety", "Before uploading or sharing content, you must accept the shared-content rules shown in PocketRun. Do not upload or share harassment, threats, hate speech, sexual or exploitative content, child-abuse material, scams, unlawful content, malicious files, or another person's private information without authorization. Report objectionable content or users through Safety & reports in the app, or email hello@forgestacklabs.com. Blocking stops cloud sharing with that account: owners remove the blocked collaborator, while non-owners leave affected shared workspaces. Existing financial records are not erased by blocking. ForgeStack Labs LLP may investigate reports, restrict access, remove offending content and suspend accounts where appropriate."],
   ["8. Availability and termination", "ForgeStack Labs LLP may modify, update, restrict, suspend, or discontinue features where reasonably necessary for security, maintenance, legal compliance, technical development, or business operations. Account and data deletion remain subject to the Privacy Policy and applicable retention requirements."],
 ];
 
@@ -27,7 +28,7 @@ export default function PocketRunTermsPage() {
         <nav aria-label="Breadcrumb" className="text-sm text-[#121212]/55"><Link href="/products/pocketrun">PocketRun</Link> <span aria-hidden>/</span> Terms &amp; Conditions</nav>
         <p className="mt-12 text-xs font-bold uppercase tracking-[.35em] text-[#71896f]">PocketRun legal</p>
         <h1 className="mt-5 text-5xl font-medium tracking-tight md:text-7xl">Terms &amp; Conditions</h1>
-        <p className="mt-6 text-sm text-[#121212]/55">Effective September 27, 2026</p>
+        <p className="mt-6 text-sm text-[#121212]/55">Updated October 2, 2026</p>
         <p className="mt-8 max-w-3xl text-lg leading-relaxed text-[#121212]/65">These terms govern access to and use of PocketRun, an Android application operated by ForgeStack Labs LLP.</p>
 
         <div className="mt-16 space-y-6">

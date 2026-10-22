@@ -13,7 +13,8 @@ const deletedItems = [
   "Personal cloud trips and expenses owned by your account.",
   "Cloud receipts and attachments associated with your account.",
   "Collaboration and notification data associated with your account.",
-  "Business data associated with your account where deletion is permitted and does not adversely affect other authorized workspace members.",
+  "Business Workspaces owned by your account, including their cloud records. Other members will lose access to those owned workspaces.",
+  "Account-linked feedback text and diagnostics in current Notion records, followed by moving the cleared records to Trash. See the provider-retention limits below.",
 ];
 
 const retainedItems = [
@@ -59,7 +60,7 @@ export default function PocketRunAccountDeletionPage() {
         <div className="mt-16 space-y-6">
           <InfoCard title="Delete your account in PocketRun">
             <p>If you can access the Android app, open:</p>
-            <p className="font-semibold text-[#121212]">Profile / Settings → Account → Delete Account</p>
+            <p className="font-semibold text-[#121212]">Settings → Profile → Delete account</p>
             <p>Follow the instructions shown in the app to confirm your deletion request.</p>
           </InfoCard>
 
@@ -82,15 +83,16 @@ export default function PocketRunAccountDeletionPage() {
           <InfoCard title="Information that may be retained">
             <p>Some information may need to be retained for a limited period or where deletion is not appropriate or legally permitted:</p>
             <ul className="list-disc space-y-2 pl-5">{retainedItems.map((item) => <li key={item}>{item}</li>)}</ul>
+            <p>Notion does not offer permanent page deletion through its API. Feedback is cleared from current records before they are moved to Trash. Provider-managed revision history, Trash and backup copies may remain according to Notion&apos;s retention settings; contact us for additional provider-removal assistance. Previously trashed feedback that predates our page-ID tracking may require a manual support review.</p>
           </InfoCard>
 
           <InfoCard title="Shared trips and Business Workspaces">
-            <p>Deleting your account does not necessarily remove every record previously shared with another authorized participant. Shared expense information may remain relevant to other trip members, while Business Workspace records may be accessible to multiple authorized users.</p>
+            <p>Cloud trips and Business Workspaces owned by your account are deleted, so collaborators lose access to those owned records. In trips or workspaces owned by someone else, your access is removed and shared financial records may remain for other participants; linked personal traveler entries are anonymized.</p>
             <p>These records will be handled according to the PocketRun Privacy Policy and applicable requirements.</p>
           </InfoCard>
 
           <InfoCard title="Processing time and identity verification">
-            <p>Verified deletion requests will be reviewed and processed within a reasonable period. Additional identity verification may be required to protect accounts from unauthorized deletion.</p>
+            <p>Verified email deletion requests will be completed within 30 days after identity verification. Additional identity verification may be required to protect accounts from unauthorized deletion. The in-app deletion path attempts automated cleanup; if it fails, retry or contact support instead of assuming all data has been removed.</p>
             <p>Certain information may remain temporarily in backups, security logs, or legally required records until the applicable retention period expires.</p>
           </InfoCard>
 
